@@ -18,7 +18,7 @@ Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/gnu/emacs/leim-%{version}.tar.gz
 # Source1-md5:	e6d614671b5d7d7670d18799c6668a46
 Source2:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
-# Source2-md5:	85bf29bd09f2a824647e639c139b60b5
+# Source2-md5:	71500b6aaa3d80ea1df1b46c5055c43d
 Source3:	%{name}.desktop
 Source4:	%{name}-dot%{name}
 Source5:	%{name}-site-start.el
