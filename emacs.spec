@@ -206,7 +206,7 @@ System; install emacs if you will be using X.
 libtoolize --force --copy
 autoconf
 
-CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -DMAIL_USE_LOCKF -DNCURSES_OSPEED_T" 
+CFLAGS="%{rpmcflags} -DMAIL_USE_LOCKF -DNCURSES_OSPEED_T" 
 export CFLAGS
 
 # Build binary with X support
