@@ -12,7 +12,7 @@ Patch1:		emacs-20.2-gctags.patch
 Patch2:		emacs-20.3-tmprace.patch
 Patch3:		emacs-20.3-linkscr.patch
 Patch4:		emacs-20.4-nmhlocation.patch
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 #
 # more info on multibyte support: http://sourcery.naggum.no/emacs/
 #
