@@ -366,18 +366,21 @@ cd ..
 
 mv lisp/term/README README.term
 
+sed s!@SITE_START_DIR@!%{_libdir}/emacs/site-lisp/site-start.d! \
+	< %{SOURCE5} > site-start.el
+
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_infodir},%{_libdir}/emacs/site-lisp} \
+install -d $RPM_BUILD_ROOT{%{_infodir},%{_datadir}/emacs/site-lisp/site-start.d} \
 	$RPM_BUILD_ROOT{%{_desktopdir},/etc/skel,%{_pixmapsdir}} \
 
 %{makeinstall} -C build-withx
 install build-nox/src/emacs	$RPM_BUILD_ROOT%{_bindir}/emacs-nox
+install site-start.el $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/
 
 install %{SOURCE3} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.emacs
-install %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/site-start.el
 install %{SOURCE6} $RPM_BUILD_ROOT%{_pixmapsdir}
 
 install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
@@ -446,6 +449,7 @@ fi
 
 %dir %{_libdir}/emacs
 %dir %{_libdir}/emacs/site-lisp
+%dir %{_libdir}/emacs/site-lisp/site-start.d
 %dir %{_libdir}/emacs/%{version}
 %dir %{_libdir}/emacs/%{version}/*
 
