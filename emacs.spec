@@ -108,7 +108,7 @@ programs included with the main Emacs text editor package.
 You need to install emacs-el only if you intend to modify any of the
 Emacs packages or see some elisp examples.
 
-%description -l es el
+%description el -l es
 Este paquete contiene los fuentes emacs-lisp para muchos de los
 programas elisp incluido en el programa principal del paquete emacs.
 Tu no necesitas de este paquete a menos que quieras modificarlos o
@@ -125,7 +125,7 @@ Emacs-el zawiera ¼ród³a w emacs-elispie wielu programów do³±czonych do
 g³ównego pakietu edytora Emacs. Ten pakiet jest potrzebny tylko do
 modyfikowania elementów Emacsa lub obejrzenia przyk³adów w elispie.
 
-%description -l pt_BR el
+%description el -l pt_BR
 Este pacote contém os fontes emacs-lisp para muitos dos programas
 elisp incluído com o programa principal do pacote emacs. Você não
 necessita deste pacote a menos que você queira modificar estes pacotes
@@ -152,7 +152,7 @@ user must press in order to input a particular character in a
 non-English character set. Input methods for many different language's
 character sets are included in this package.
 
-%description -l es leim
+%description leim -l es
 Código Lisp para internacionalización en Emacs.
 
 %description leim -l pl
@@ -162,7 +162,7 @@ klawiszy, które u¿ytkownik musi nacisn±æ, by uzyskaæ dany znak spoza
 zestawu angielskiego. Pakiet zawiera sposoby wprowadzania znaków w
 wielu ró¿nych jêzykach.
 
-%description -l pt_BR leim
+%description leim -l pt_BR
 Código Lisp para para internacionalização no Emacs.
 
 %package leim-el
@@ -204,7 +204,7 @@ funktioniert zwar einwandfrei außerhalb von X-Windows (z.B. auf der
 Konsole), die Version in diesem Paket hat jedoch ein kleineres
 Speicherabbild.
 
-%description -l es nox
+%description nox -l es
 Este paquete contiene un binario emacs sin soporte al X Window. Aunque
 el binario emacs, en el paquete principal, funcione bien fuera del X
 Window (en la consola, por ejemplo) lo que se encuentra en este
@@ -219,7 +219,7 @@ fonctionne bien sans X Window (sur un terminal, par exemple), celui-ci
 %description nox -l pl
 Emacs-nox to edytor tekstu Emacs bez wsparcia dla X Window System.
 
-%description -l pt_BR nox
+%description nox -l pt_BR
 Este pacote contém um binário emacs sem suporte ao X Window. Embora o
 binário emacs no pacote principal funcione bem fora do X Window (na
 console por exemplo) o que está neste pacote utiliza menos memória.
@@ -306,7 +306,7 @@ mkdir build-withx && cd build-withx
 	--with-png \
 	%{_target_platform}
 
-%{__make} 
+%{__make}
 cd ..
 
 #Build binary without X support
@@ -365,7 +365,7 @@ gzip -9nf etc/NEWS BUGS README
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-  
+
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
