@@ -12,22 +12,20 @@ Summary(pl):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
-Version:	21.3
-Release:	6
+Version:	21.3.50
+Release:	0.1
 License:	GPL
 Group:		Applications/Editors/Emacs
-Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
-# Source0-md5:	a0bab457cbf5b4f8eb99d1d0a3ada420
-Source1:	ftp://ftp.gnu.org/gnu/emacs/leim-%{version}.tar.gz
-# Source1-md5:	1c968c37e22be0f0d8f8cd57cebe5a5e
-Source2:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
-# Source2-md5:	71500b6aaa3d80ea1df1b46c5055c43d
-Source3:	%{name}.desktop
-Source4:	%{name}-dot%{name}
-Source5:	%{name}-site-start.el
-Source6:	%{name}.png
-Patch0:		%{name}-amd64.patch
-Patch1:		%{name}-loadup.patch
+Source0:        http://pawelb.pld-dc.org/%{name}/%{name}-21.3.50.tar.gz
+# Source0-md5:	34c14d624bab5ca8f3e88573f8d7fe37
+Source1:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
+# Source1-md5:	71500b6aaa3d80ea1df1b46c5055c43d
+Source2:	%{name}.desktop
+Source3:	%{name}-dot%{name}
+Source4:	%{name}-site-start.el
+Source5:	%{name}.png
+Source6:       	%{name}-tuareg.el 
+Source7:       	%{name}-nemerle.el 
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel >= 1.5E-3
@@ -283,10 +281,9 @@ These files are common between GNU Emacs and XEmacs.
 %description extras -l pl
 S± to wspólne pliki GNU Emacs i XEmacs.
 
-%prep
-%setup -q -b 1 -a 2
-%patch0 -p1
-%patch1 -p1
+%prep 
+%setup -q -a 1 
+
 
 # /usr/sbin is not in standard path
 for file in Makefile.in elisp-manual-21-2.8/Makefile.in; do
@@ -377,7 +374,7 @@ cd ..
 mv lisp/term/README README.term
 
 sed s!@SITE_START_DIR@!%{_datadir}/emacs/site-lisp/site-start.d! \
-	< %{SOURCE5} > site-start.el
+	< %{SOURCE4} > site-start.el
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -389,9 +386,11 @@ install -d $RPM_BUILD_ROOT{%{_infodir},%{_datadir}/emacs/site-lisp/site-start.d}
 install build-nox/src/emacs	$RPM_BUILD_ROOT%{_bindir}/emacs-nox
 install site-start.el $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/
 
-install %{SOURCE3} $RPM_BUILD_ROOT%{_desktopdir}
-install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.emacs
-install %{SOURCE6} $RPM_BUILD_ROOT%{_pixmapsdir}
+install %{SOURCE2} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.emacs
+install %{SOURCE5} $RPM_BUILD_ROOT%{_pixmapsdir}
+install %{SOURCE6} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
+install %{SOURCE7} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/nemerle.el
 
 install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
 
@@ -440,6 +439,7 @@ fi
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs
+%attr(755,root,root) %{_bindir}/emacs-21.3.50
 %{_datadir}/emacs/%{version}/lisp/*.xpm
 %{?with_gnus: %{_datadir}/emacs/%{version}/lisp/gnus/*.xpm}
 %dir %{_datadir}/emacs/%{version}/lisp/toolbar
@@ -451,7 +451,7 @@ fi
 %files common
 %defattr(644,root,root,755)
 %config(noreplace) /etc/skel/.emacs
-%doc BUGS README README.term etc/NEWS
+#%doc BUGS README README.term etc/NEWS
 %attr(755,root,root) %{_bindir}/emacsclient
 %attr(755,root,root) %{_bindir}/ebrowse
 %{_mandir}/man1/emacs*
@@ -464,7 +464,7 @@ fi
 %attr(2755,root,mail) %{_libdir}/emacs/%{version}/*-linux/movemail
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/cvtmail
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/digest-doc
-%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/emacsserver
+#%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/emacsserver
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/fakemail
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/hexl
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/profile
@@ -472,7 +472,8 @@ fi
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/sorted-doc
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/vcdiff
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/yow
-%{_libdir}/emacs/%{version}/*/fns-*.el
+%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/update-game-score
+#%{_libdir}/emacs/%{version}/*/fns-*.el
 
 %dir %{_datadir}/emacs
 %dir %{_datadir}/emacs/%{version}
@@ -480,6 +481,7 @@ fi
 %dir %{_datadir}/emacs/%{version}/lisp
 %dir %{_datadir}/emacs/%{version}/leim
 %dir %{_datadir}/emacs/%{version}/lisp/calendar
+%dir %{_datadir}/emacs/%{version}/lisp/calc
 %dir %{_datadir}/emacs/%{version}/lisp/emacs-lisp
 %dir %{_datadir}/emacs/%{version}/lisp/emulation
 %{?with_gnus: %dir %{_datadir}/emacs/%{version}/lisp/gnus}
@@ -493,6 +495,8 @@ fi
 %dir %{_datadir}/emacs/%{version}/lisp/eshell
 %dir %{_datadir}/emacs/%{version}/lisp/net
 %dir %{_datadir}/emacs/%{version}/lisp/obsolete
+%dir %{_datadir}/emacs/%{version}/lisp/mh-e
+
 
 %{_datadir}/emacs/site-lisp
 %{_datadir}/emacs/%{version}/etc
@@ -500,6 +504,7 @@ fi
 %{_datadir}/emacs/%{version}/lisp/README
 %{_datadir}/emacs/%{version}/lisp/cus-load.el
 %{_datadir}/emacs/%{version}/lisp/cus-start.el
+%{_datadir}/emacs/%{version}/lisp/cus-theme.el
 %{_datadir}/emacs/%{version}/lisp/finder-inf.el
 %{_datadir}/emacs/%{version}/lisp/forms-pass.el
 %{_datadir}/emacs/%{version}/lisp/generic-x.el
@@ -510,9 +515,11 @@ fi
 %{_datadir}/emacs/%{version}/lisp/version.el
 
 %{_datadir}/emacs/%{version}/lisp/language/*.elc
-%{?with_gnus: %{_datadir}/emacs/%{version}/lisp/gnus/*.elc}
+%{?with_gnus: %{_datadir}/emacs/%{version}/lisp/gnus/*}
 %{_datadir}/emacs/%{version}/lisp/mail/*.elc
 %{_datadir}/emacs/%{version}/lisp/mail/blessmail.el
+%{_datadir}/emacs/%{version}/lisp/mail/reply2.xpm
+%{_datadir}/emacs/%{version}/lisp/mail/reply2.pbm
 %{_datadir}/emacs/%{version}/lisp/play/*.elc
 %{_datadir}/emacs/%{version}/lisp/play/bruce.el
 %{_datadir}/emacs/%{version}/lisp/term/*.elc
@@ -525,6 +532,7 @@ fi
 %{_datadir}/emacs/%{version}/lisp/term/linux.el
 %{_datadir}/emacs/%{version}/lisp/term/lk201.el
 %{_datadir}/emacs/%{version}/lisp/term/news.el
+%{_datadir}/emacs/%{version}/lisp/term/rxvt.el
 %{_datadir}/emacs/%{version}/lisp/term/vt102.el
 %{_datadir}/emacs/%{version}/lisp/term/vt125.el
 %{_datadir}/emacs/%{version}/lisp/term/vt2*
@@ -537,6 +545,7 @@ fi
 %{_datadir}/emacs/%{version}/lisp/international/latin-*.el
 %{_datadir}/emacs/%{version}/lisp/international/mule-conf.el
 %{_datadir}/emacs/%{version}/lisp/calendar/*.elc
+%{_datadir}/emacs/%{version}/lisp/calc/*.el
 %{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.elc
 %{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-specs.el
 %{_datadir}/emacs/%{version}/lisp/textmodes/*.elc
@@ -545,8 +554,19 @@ fi
 %{_datadir}/emacs/%{version}/lisp/eshell/esh-groups.el
 %{_datadir}/emacs/%{version}/lisp/net/*.elc
 %{_datadir}/emacs/%{version}/lisp/obsolete/*.elc
+%{_datadir}/emacs/%{version}/lisp/url/*.elc
+%{_datadir}/emacs/%{version}/lisp/url/*.el
+%{_datadir}/emacs/%{version}/lisp/calc/*.elc
+%{_datadir}/emacs/%{version}/lisp/toolbar/*
+%{_datadir}/emacs/%{version}/lisp/mh-e/*.el
+%{_datadir}/emacs/%{version}/lisp/mh-e/*.elc
+
+/var/games/emacs/tetris-scores
+/var/games/emacs/snake-scores
 
 %{_datadir}/emacs/%{version}/site-lisp/subdirs.el
+%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
+%{_datadir}/emacs/%{version}/site-lisp/nemerle.el
 
 %files extras
 %defattr(644,root,root,755)
