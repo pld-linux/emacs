@@ -1,24 +1,17 @@
 Summary:	The libraries needed to run the GNU Emacs text editor.
 Name:		emacs
-Version:	20.3
-Release:	16
+Version:	20.4
+Release:	5
 Copyright:	GPL
 Group:		Applications/Editors
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/pub/gnu/leim-%{version}.tar.gz
 Source2:	emacs.wmconfig
-Source3:	mh-utils.elc
-Patch0:		emacs-20.3-gnu.patch
-Patch1:		emacs-20.2-xaw3d.patch
-Patch2:		emacs-20.2-gctags.patch
-# patch4 (signal patch) not needed for emacs > 20.2
-Patch4:		emacs-20.2-signal.patch
-Patch5:		emacs-20.3-tmprace.patch
-Patch6:		emacs-20.3-ufix.patch
-Patch7:		emacs-armconfig.patch
-Patch8:		emacs-20.3-linkscr.patch
-Patch9:		emacs-20.3-nmhlocation.patch
-Patch10:	emacs-20.3-dxpc.patch
+Patch0:		emacs-20.2-xaw3d.patch
+Patch1:		emacs-20.2-gctags.patch
+Patch2:		emacs-20.3-tmprace.patch
+Patch3:		emacs-20.3-linkscr.patch
+Patch4:		emacs-20.4-nmhlocation.patch
 Buildroot:	/tmp/%{name}-%{version}-root
 #
 # more info on multibyte support: http://sourcery.naggum.no/emacs/
@@ -57,6 +50,15 @@ Requires:	%{name} = %{version}
 The Emacs Lisp code for input methods for various international
 character scripts.
 
+%package leim-el
+Summary:	Source code for leim.
+Group:		Applications/Editors
+Requires:	%{name}-leim = %{version}
+
+%description leim-el
+The Emacs Lisp source code for input methods for various international
+character scripts.
+
 %package nox
 Summary:	The Emacs text editor without support for the X Window System.
 Group:		Applications/Editors
@@ -90,17 +92,11 @@ install the emacs package in order to run Emacs.
 
 %prep
 %setup -q -b 1
-cp -f $RPM_SOURCE_DIR/mh-utils.elc lisp/mail
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-# patch4 (signal patch) not needed for emacs > 20.2
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p2
+%patch3 -p1
+%patch4 -p1
 
 # clean out remnants of patching
 find . -name "*.orig" -exec rm -f {} \;
@@ -109,7 +105,13 @@ find . -name "*.orig" -exec rm -f {} \;
 PUREDEF=""
 XPUREDEF=""
 libtoolize --force --copy
-CONFOPTS="--prefix=%{_prefix} --libexecdir=%{_libdir} --sharedstatedir=/var --with-gcc --with-pop"
+CONFOPTS="--prefix=%{_prefix} \
+	--libexecdir=%{_libdir} \
+	--mandir=%{_mandir} \
+	--infodir=%{_infodir} \
+	--sharedstatedir=/var \
+	--with-gcc \
+	--with-pop"
 
 #Build binary without X support
 [ -d build-nox ] && rm -rf build-nox
@@ -135,54 +137,33 @@ ARCHDIR=%{_target_platform}
 make install -C build-withx \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
 	libexecdir=$RPM_BUILD_ROOT%{_libdir} \
+	mandir=$RPM_BUILD_ROOT%{_mandir} \
+	infodir=$RPM_BUILD_ROOT%{_infodir} \
 	sharedstatedir=$RPM_BUILD_ROOT/var
 
-rm -f $RPM_BUILD_ROOT/usr/info/dir
-gzip -9nf $RPM_BUILD_ROOT/usr/info/*
-install -m755 build-nox/src/emacs $RPM_BUILD_ROOT/usr/bin/emacs-nox
+rm -f $RPM_BUILD_ROOT%{_infodir}/dir
+gzip -9nf $RPM_BUILD_ROOT%{_infodir}/*
+install -m755 build-nox/src/emacs $RPM_BUILD_ROOT%{_bindir}/emacs-nox
 
 # For some reason, when emacs is stripped on the Alpha, it dumps core
 # Lucky for us it started doing this on the Intel as well. Yeah.
 #strip $RPM_BUILD_ROOT/usr/bin/* ||:
 for I in cvtmail digest-doc emacsserver fakemail hexl movemail profile \
 	sorted-doc timer wakeup yow; do
-	strip $RPM_BUILD_ROOT/usr/lib/emacs/$RPM_PACKAGE_VERSION/$ARCHDIR/$I||:
+	strip $RPM_BUILD_ROOT%{_libdir}/emacs/$RPM_PACKAGE_VERSION/$ARCHDIR/$I||:
 done
 
-chown root.mail $RPM_BUILD_ROOT/usr/lib/emacs/$RPM_PACKAGE_VERSION/$ARCHDIR/movemail
-chmod 2755 $RPM_BUILD_ROOT/usr/lib/emacs/$RPM_PACKAGE_VERSION/$ARCHDIR/movemail
+install -d $RPM_BUILD_ROOT%{_libdir}/emacs/site-lisp
 
-mkdir -p $RPM_BUILD_ROOT/usr/lib/emacs/site-lisp
-
-mv $RPM_BUILD_ROOT/usr/man/man1/ctags.1 $RPM_BUILD_ROOT/usr/man/man1/gctags.1
-mv $RPM_BUILD_ROOT/usr/bin/ctags $RPM_BUILD_ROOT/usr/bin/gctags
+mv $RPM_BUILD_ROOT%{_mandir}/man1/ctags.1 $RPM_BUILD_ROOT%{_mandir}/man1/gctags.1
+mv $RPM_BUILD_ROOT%{_bindir}/ctags $RPM_BUILD_ROOT%{_bindir}/gctags
 
 # wmconfig file
-mkdir -p $RPM_BUILD_ROOT/etc/X11/wmconfig
-install -m 0644 $RPM_SOURCE_DIR/emacs.wmconfig $RPM_BUILD_ROOT/etc/X11/wmconfig/emacs
+install -d $RPM_BUILD_ROOT/etc/X11/wmconfig
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/X11/wmconfig/emacs
 
-#
-# create file lists
-#
-
-find $RPM_BUILD_ROOT/usr/share/emacs/%{PACKAGE_VERSION}/lisp \
-  -name '*.elc' -print | sed "s^$RPM_BUILD_ROOT^^" > elc-filelist
-find $RPM_BUILD_ROOT/usr/lib/emacs/%{PACKAGE_VERSION} -type f | \
-    sed "s^$RPM_BUILD_ROOT^^" | grep -v movemail >> elc-filelist
-
-find $RPM_BUILD_ROOT/usr/share/emacs/%{PACKAGE_VERSION}/leim \
-  -name '*.elc' -print | sed "s^$RPM_BUILD_ROOT^^" > leim-filelist
-
-#
-# be sure to exclude some files which are need in core package
-#
-find $RPM_BUILD_ROOT/usr/share/emacs/%{PACKAGE_VERSION}/lisp \
-  -name '*.el' -print | sed "s^$RPM_BUILD_ROOT^^" |\
-  grep -v "international\/latin-[0-9]*.el" > el-filelist
-
-find $RPM_BUILD_ROOT/usr/share/emacs/%{PACKAGE_VERSION}/leim \
-  -name '*.el' -print | sed "s^$RPM_BUILD_ROOT^^" |\
-  grep -v "leim\/leim-list.el" >> el-filelist
+gzip -9nf etc/NEWS BUGS README etc/FAQ \
+	$RPM_BUILD_ROOT%{_mandir}/man*/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -190,129 +171,138 @@ rm -rf build-nox
 rm -rf build-withx
 
 %post
-/sbin/install-info /usr/info/ccmode.gz /usr/info/dir --entry="* CC mode: (ccmode).    The GNU Emacs mode for editing C, C++, Objective-C and Java code." --section="Emacs"
-/sbin/install-info /usr/info/ediff.gz /usr/info/dir --entry="* Ediff: (ediff).       A comprehensive visual interface to diff & patch." --section="Emacs"
-/sbin/install-info /usr/info/dired-x.gz /usr/info/dir --entry="* Dired-X: (dired-x).   Dired Extra Features." --section="Emacs"
-/sbin/install-info /usr/info/sc.gz /usr/info/dir --entry="* SC: (sc).             Supercite lets you cite parts of messages you're replying to, in flexible ways." --section="Emacs"
-/sbin/install-info /usr/info/cl.gz /usr/info/dir --entry="* CL: (cl).             Partial Common Lisp support for Emacs Lisp." --section="Emacs"
-/sbin/install-info /usr/info/mh-e.gz /usr/info/dir --entry="* MH-E: (mh-e).         Emacs interface to the MH mail system." --section="Emacs"
-/sbin/install-info /usr/info/message.gz /usr/info/dir --entry="* Message: (message).   Mail and news composition mode that goes with Gnus." --section="Emacs"
-/sbin/install-info /usr/info/gnus.gz /usr/info/dir --entry="* Gnus: (gnus).         The news reader Gnus." --section="Emacs"
-/sbin/install-info /usr/info/forms.gz /usr/info/dir --entry="* Forms: (forms).       Emacs package for editing data bases by filling in forms." --section="Emacs"
-/sbin/install-info /usr/info/viper.gz /usr/info/dir --entry="* VIPER: (viper).       The new VI-emulation mode in Emacs-19.29." --section="Emacs"
-/sbin/install-info /usr/info/vip.gz /usr/info/dir --entry="* VIP: (vip).           A VI-emulation for Emacs." --section="Emacs"
-/sbin/install-info /usr/info/emacs.gz /usr/info/dir --entry="* Emacs: (emacs).       The extensible self-documenting text editor." --section="Emacs"
-/sbin/install-info /usr/info/info.gz /usr/info/dir --entry="* Info: (info).         Documentation browsing system." --section="Emacs"
-/sbin/install-info /usr/info/reftex.gz /usr/info/dir --entry="* RefTeX: (reftex).         Manage labels, references, and citations with Emacs." --section="Emacs"
-/sbin/install-info /usr/info/widget.gz /usr/info/dir --entry="* Widget: (widget).         Emacs widget library." --section="Emacs"
-/sbin/install-info /usr/info/customize.gz /usr/info/dir --entry="* Customize: (customize).         Declaring customization items." --section="Emacs"
+/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
-%preun
-if [ "$1" = 0 ]; then
-/sbin/install-info --delete /usr/info/ccmode.gz /usr/info/dir --entry="* CC mode: (ccmode).    The GNU Emacs mode for editing C, C++, Objective-C and Java code." --section="Emacs"
-/sbin/install-info --delete /usr/info/ediff.gz /usr/info/dir --entry="* Ediff: (ediff).       A comprehensive visual interface to diff & patch." --section="Emacs"
-/sbin/install-info --delete /usr/info/dired-x.gz /usr/info/dir --entry="* Dired-X: (dired-x).   Dired Extra Features." --section="Emacs"
-/sbin/install-info --delete /usr/info/sc.gz /usr/info/dir --entry="* SC: (sc).             Supercite lets you cite parts of messages you're replying to, in flexible ways." --section="Emacs"
-/sbin/install-info --delete /usr/info/cl.gz /usr/info/dir --entry="* CL: (cl).             Partial Common Lisp support for Emacs Lisp." --section="Emacs"
-/sbin/install-info --delete /usr/info/mh-e.gz /usr/info/dir --entry="* MH-E: (mh-e).         Emacs interface to the MH mail system." --section="Emacs"
-/sbin/install-info --delete /usr/info/message.gz /usr/info/dir --entry="* Message: (message).   Mail and news composition mode that goes with Gnus." --section="Emacs"
-/sbin/install-info --delete /usr/info/gnus.gz /usr/info/dir --entry="* Gnus: (gnus).         The news reader Gnus." --section="Emacs"
-/sbin/install-info --delete /usr/info/forms.gz /usr/info/dir --entry="* Forms: (forms).       Emacs package for editing data bases by filling in forms." --section="Emacs"
-/sbin/install-info --delete /usr/info/viper.gz /usr/info/dir --entry="* VIPER: (viper).       The new VI-emulation mode in Emacs-19.29." --section="Emacs"
-/sbin/install-info --delete /usr/info/vip.gz /usr/info/dir --entry="* VIP: (vip).           A VI-emulation for Emacs." --section="Emacs"
-/sbin/install-info --delete /usr/info/emacs.gz /usr/info/dir --entry="* Emacs: (emacs).       The extensible self-documenting text editor." --section="Emacs"
-/sbin/install-info --delete /usr/info/info.gz /usr/info/dir --entry="* Info: (info).         Documentation browsing system." --section="Emacs"
-/sbin/install-info /usr/info/reftex.gz /usr/info/dir --entry="* RefTeX: (reftex).         Manage labels, references, and citations with Emacs." --section="Emacs"
-/sbin/install-info --delete /usr/info/widget.gz /usr/info/dir --entry="* Widget: (widget).         Emacs widget library." --section="Emacs"
-/sbin/install-info --delete /usr/info/customize.gz /usr/info/dir --entry="* Customize: (customize).         Declaring customization items." --section="Emacs"
-fi
+%postun
+/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
-%files -f elc-filelist
-%defattr(-,root,root)
-%doc etc/NEWS BUGS README etc/FAQ
-/usr/bin/b2m
-/usr/bin/emacsclient
-/usr/bin/etags
-/usr/bin/gctags
-/usr/bin/rcs-checkin
-/usr/man/*/*
-/usr/info/*
+%files
+%defattr(644,root,root,755)
+%doc {etc/NEWS,BUGS,README,etc/FAQ}.gz
+%dir %{_libdir}/emacs
+%dir %{_datadir}/emacs
+%dir %{_datadir}/emacs/site-lisp
+%dir %{_datadir}/emacs/%{version}
+%dir %{_datadir}/emacs/%{version}/etc
+%dir %{_datadir}/emacs/%{version}/lisp
+%dir %{_datadir}/emacs/%{version}/site-lisp
+%dir %{_datadir}/emacs/%{version}/lisp/calendar
+%dir %{_datadir}/emacs/%{version}/lisp/emacs-lisp
+%dir %{_datadir}/emacs/%{version}/lisp/emulation
+%dir %{_datadir}/emacs/%{version}/lisp/gnus
+%dir %{_datadir}/emacs/%{version}/lisp/international
+%dir %{_datadir}/emacs/%{version}/lisp/language
+%dir %{_datadir}/emacs/%{version}/lisp/mail
+%dir %{_datadir}/emacs/%{version}/lisp/play
+%dir %{_datadir}/emacs/%{version}/lisp/progmodes
+%dir %{_datadir}/emacs/%{version}/lisp/term
+%dir %{_datadir}/emacs/%{version}/lisp/textmodes
 #%dir /var/lock/emacs
+%attr(755,root,root) %{_bindir}/b2m
+%attr(755,root,root) %{_bindir}/emacsclient
+%attr(755,root,root) %{_bindir}/etags
+%attr(755,root,root) %{_bindir}/gctags
+%attr(755,root,root) %{_bindir}/rcs-checkin
+%attr(2755,root,mail) %{_libdir}/emacs/%{version}/%{_target_cpu}-*/movemail
+%attr(755,root,root) %{_libdir}/emacs/%{version}/%{_target_cpu}-*/cvtmail
+%attr(755,root,root) %{_libdir}/emacs/%{version}/%{_target_cpu}-*/digest-doc
+%attr(755,root,root) %{_libdir}/emacs/%{version}/%{_target_cpu}-*/emacsserver
+%attr(755,root,root) %{_libdir}/emacs/%{version}/%{_target_cpu}-*/fakemail
+%attr(755,root,root) %{_libdir}/emacs/%{version}/%{_target_cpu}-*/hexl
+%attr(755,root,root) %{_libdir}/emacs/%{version}/%{_target_cpu}-*/profile
+%attr(755,root,root) %{_libdir}/emacs/%{version}/%{_target_cpu}-*/rcs2log
+%attr(755,root,root) %{_libdir}/emacs/%{version}/%{_target_cpu}-*/sorted-doc
+%attr(755,root,root) %{_libdir}/emacs/%{version}/%{_target_cpu}-*/vcdiff
+%attr(755,root,root) %{_libdir}/emacs/%{version}/%{_target_cpu}-*/yow
+%{_libdir}/emacs/%{version}/%{_target_cpu}-*/fns-20.4.1.el
+%{_datadir}/emacs/%{version}/etc/*
+%{_datadir}/emacs/site-lisp/*
+%{_datadir}/emacs/%{version}/site-lisp/*
+%{_datadir}/emacs/%{version}/lisp/COPYING
+%{_datadir}/emacs/%{version}/lisp/README
+%{_datadir}/emacs/%{version}/lisp/forms-d2.dat
+%{_datadir}/emacs/%{version}/lisp/forms-d2.el
+%{_datadir}/emacs/%{version}/lisp/forms-pass.el
+%{_datadir}/emacs/%{version}/lisp/loaddefs.el
+%{_datadir}/emacs/%{version}/lisp/loadup.el
+%{_datadir}/emacs/%{version}/lisp/patcomp.el
+%{_datadir}/emacs/%{version}/lisp/paths.el
+%{_datadir}/emacs/%{version}/lisp/version.el
+%{_datadir}/emacs/%{version}/lisp/subdirs.el
+%{_datadir}/emacs/%{version}/lisp/*.elc
+%{_datadir}/emacs/%{version}/lisp/calendar/*.elc
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.elc
+%{_datadir}/emacs/%{version}/lisp/emulation/*.elc
+%{_datadir}/emacs/%{version}/lisp/gnus/*.elc
+%{_datadir}/emacs/%{version}/lisp/international/latin-1.el
+%{_datadir}/emacs/%{version}/lisp/international/latin-2.el
+%{_datadir}/emacs/%{version}/lisp/international/latin-3.el
+%{_datadir}/emacs/%{version}/lisp/international/latin-4.el
+%{_datadir}/emacs/%{version}/lisp/international/latin-5.el
+%{_datadir}/emacs/%{version}/lisp/international/*.elc
+%{_datadir}/emacs/%{version}/lisp/language/*.elc
+%{_datadir}/emacs/%{version}/lisp/mail/blessmail.el
+%{_datadir}/emacs/%{version}/lisp/mail/sc.el
+%{_datadir}/emacs/%{version}/lisp/mail/*.elc
+%{_datadir}/emacs/%{version}/lisp/play/*.elc
+%{_datadir}/emacs/%{version}/lisp/progmodes/*.elc
+%{_datadir}/emacs/%{version}/lisp/term/README
+%{_datadir}/emacs/%{version}/lisp/term/AT386.el
+%{_datadir}/emacs/%{version}/lisp/term/bobcat.el
+%{_datadir}/emacs/%{version}/lisp/term/internal.el
+%{_datadir}/emacs/%{version}/lisp/term/iris-ansi.el
+%{_datadir}/emacs/%{version}/lisp/term/keyswap.el
+%{_datadir}/emacs/%{version}/lisp/term/linux.el
+%{_datadir}/emacs/%{version}/lisp/term/lk201.el
+%{_datadir}/emacs/%{version}/lisp/term/vt*.el
+%{_datadir}/emacs/%{version}/lisp/term/*.elc
+%{_datadir}/emacs/%{version}/lisp/textmodes/*.elc
+%{_mandir}/man*/*
+%{_infodir}/*
 
-%dir /usr/lib/emacs
-%attr(2755,root,mail) /usr/lib/emacs/%{PACKAGE_VERSION}/%{_target_cpu}-redhat-linux/movemail
-%dir /usr/lib/emacs/site-lisp
+%files el
+%defattr(644,root,root,755)
+%{_datadir}/emacs/%{version}/lisp/*.el
+%{_datadir}/emacs/%{version}/lisp/calendar/*.el
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.el
+%{_datadir}/emacs/%{version}/lisp/emulation/*.el
+%{_datadir}/emacs/%{version}/lisp/gnus/*.el
+%{_datadir}/emacs/%{version}/lisp/international/[a-k]*.el
+%{_datadir}/emacs/%{version}/lisp/international/[m-z]*.el
+%{_datadir}/emacs/%{version}/lisp/language/*.el
+%{_datadir}/emacs/%{version}/lisp/mail/[e-r]*.el
+%{_datadir}/emacs/%{version}/lisp/mail/sendmail.el
+%{_datadir}/emacs/%{version}/lisp/mail/smtpmail.el
+%{_datadir}/emacs/%{version}/lisp/mail/supercite.el
+%{_datadir}/emacs/%{version}/lisp/mail/[u-v]*.el
+%{_datadir}/emacs/%{version}/lisp/play/*.el
+%{_datadir}/emacs/%{version}/lisp/progmodes/*.el
+%{_datadir}/emacs/%{version}/lisp/term/apollo.el
+%{_datadir}/emacs/%{version}/lisp/term/bg-mouse.el
+%{_datadir}/emacs/%{version}/lisp/term/[n-t]*.el
+%{_datadir}/emacs/%{version}/lisp/term/[w-x]*.el
+%{_datadir}/emacs/%{version}/lisp/textmodes/*.el
 
-%dir /usr/share/emacs/site-lisp
-%dir /usr/share/emacs/%{PACKAGE_VERSION}
-%dir /usr/share/emacs/%{PACKAGE_VERSION}/site-lisp
-%dir /usr/share/emacs/%{PACKAGE_VERSION}/leim
-%dir /usr/share/emacs/%{PACKAGE_VERSION}/lisp
-%dir /usr/share/emacs/%{PACKAGE_VERSION}/lisp/term
-/usr/share/emacs/%{PACKAGE_VERSION}/etc
+%files leim
+%defattr(644,root,root,755)
+%dir %{_datadir}/emacs/%{version}/leim
+%dir %{_datadir}/emacs/%{version}/leim/quail
+%dir %{_datadir}/emacs/%{version}/leim/skk
+%{_datadir}/emacs/%{version}/leim/leim-list.el
+%{_datadir}/emacs/%{version}/leim/quail/*.elc
+%{_datadir}/emacs/%{version}/leim/skk/*.elc
 
-# handled by dynamically generated file lists
-#/usr/share/emacs/%{PACKAGE_VERSION}/lisp/*.elc
-#/usr/share/emacs/%{PACKAGE_VERSION}/lisp/*/*.elc
-#/usr/share/emacs/%{PACKAGE_VERSION}/lisp/*.elc
-#/usr/share/emacs/20.2/lisp/mail/*.elc
-
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/README
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/AT386.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/bobcat.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/internal.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/keyswap.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/lk201.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/vt102.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/vt125.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/vt201.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/vt220.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/vt240.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/vt300.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/vt320.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/vt400.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term/vt420.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/COPYING
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/forms-d2.dat
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/README
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/mail/blessmail.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/forms-d2.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/forms-pass.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/loaddefs.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/loadup.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/patcomp.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/paths.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/mail/sc.el
-#/usr/share/emacs/%{PACKAGE_VERSION}/lisp/term-nasty.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/version.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/subdirs.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/international/latin-1.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/international/latin-2.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/international/latin-3.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/international/latin-4.el
-/usr/share/emacs/%{PACKAGE_VERSION}/lisp/international/latin-5.el
-
-%files -f el-filelist el
-%defattr(-,root,root)
-# handled by dynamically generated file lists
-#/usr/share/emacs/%{PACKAGE_VERSION}/lisp/*.el
-#/usr/share/emacs/%{PACKAGE_VERSION}/lisp/*/*.el
-#/usr/share/emacs/%{PACKAGE_VERSION}/leim/*.el
-#/usr/share/emacs/%{PACKAGE_VERSION}/leim/*/*.el
-
-%files -f leim-filelist leim
-%defattr(-,root,root)
-/usr/share/emacs/%{PACKAGE_VERSION}/leim/leim-list.el
-# handled by dynamically generated file lists
-#/usr/share/emacs/%{PACKAGE_VERSION}/leim/*.elc
-#/usr/share/emacs/%{PACKAGE_VERSION}/leim/*/*.elc
+%files leim-el
+%defattr(644,root,root,755)
+%{_datadir}/emacs/%{version}/leim/quail/*.el
+%{_datadir}/emacs/%{version}/leim/skk/*.el
 
 %files nox
-%defattr(-,root,root)
-/usr/bin/emacs-nox
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/emacs-nox
 
 %files X11
-%defattr(-,root,root)
-/usr/bin/emacs
-/usr/bin/emacs-%{version}
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/emacs
+%attr(755,root,root) %{_bindir}/emacs-%{version}
 %config(missingok) /etc/X11/wmconfig/emacs
