@@ -1,6 +1,7 @@
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
 Summary(fr):	GNU Emacs
+Summary(pl):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	20.7
@@ -36,6 +37,8 @@ BuildRequires:	ncurses-devel
 BuildRequires:	Xaw3d-devel
 BuildRequires:	XFree86-devel
 BuildRequires:	XFree86
+BuildRequires:	autoconf
+BuildRequires:	libtool
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Requires:	ctags
 Requires:	emacs-common
@@ -49,7 +52,7 @@ larger memory footprint than the 'non-X' Emacs package (emacs-nox).
 Install emacs-X11 if you're going to use Emacs with the X Window
 System. You should also install emacs-X11 if you're going to run Emacs
 both with and without X (it will work fine both ways). You'll also
-need to install the emacs package in order to run Emacs.
+need to install the emacs-common package in order to run Emacs.
 
 %description -l de
 Emacs ist der erweiterbare, veränderbare, selbst-dokumentierende
@@ -61,6 +64,12 @@ Dieses Paket enthält die zum Ausführen des emacs-Editors notwendig
 sind. Das eigentliche Programm ist im Paket 'emacs-nox' bzw.
 'emacs-X11' enthalten, je nachdem, ob Sie X-Windows verwenden oder
 nicht.
+
+%description -l pl
+Emacs-X11 zawiera edytor tekstu Emacs do u¿ytku z X Window System (ma
+wsparcie dla myszy in innych elementów interfejsu graficznego).
+Emacs-X11 mo¿e dzia³aæ tak¿e bez X, ale wymaga wiêcej pamiêci ni¿
+wersja nie-X Emacsa (emacs-nox).
 
 %description -l tr
 Emacs, son derece geliþmiþ bir metin düzenleyicisidir. Bir çok
@@ -75,6 +84,7 @@ veya emacs-X11 paketinde yer alýr.
 Summary:	The sources for elisp programs included with Emacs
 Summary(de):	el Quelldateien - zum Betrieb von Emacs nicht erforderlich
 Summary(fr):	Fichiers sources .el - non nécessaires pour exécuter Emacs
+Summary(pl):	¬ród³a programów w elispie do³±czonych do Emacsa
 Summary(tr):	Lisp kaynak dosyalarý -- Emacs çalýþtýrmak için gerekmez
 Group:		Applications/Editors/Emacs
 Group(de):	Applikationen/Editors/Emacs
@@ -89,19 +99,25 @@ programs included with the main Emacs text editor package.
 You need to install emacs-el only if you intend to modify any of the
 Emacs packages or see some elisp examples.
 
-%description -l fr el
+%description el -l fr
 Ce paquetage contient les sources emacs-lisp de la plupart des
 programmes elisp inclus avec le paquetage emacs principal. Vous n'avez
 pas besoin de ce paquetage sauf si vous voulez modifier ces paquetages
 ou voir quelques exemples elisp.
 
-%description -l tr el
+%description el -l pl
+Emacs-el zawiera ¼ród³a w emacs-elispie wielu programów do³±czonych do
+g³ównego pakietu edytora Emacs. Ten pakiet jest potrzebny tylko do
+modyfikowania elementów Emacsa lub obejrzenia przyk³adów w elispie.
+
+%description el -l tr
 Bu paket, ana emacs paketinde yer alan çoðu programýn lisp kaynak
 kodlarýný içerir. Bu programlarý deðiþtirmeyi düþünmüyorsanýz gerek
 duymayacaksýnýz.
 
 %package leim
 Summary:	Emacs Lisp code for input methods for international characters
+Summary(pl):	Kod w Emacs Lispie do wprowadzania znaków narodowych
 Group:		Applications/Editors/Emacs
 Group(de):	Applikationen/Editors/Emacs
 Group(pl):	Aplikacje/Edytory/Emacs
@@ -116,8 +132,16 @@ user must press in order to input a particular character in a
 non-English character set. Input methods for many different language's
 character sets are included in this package.
 
+%description leim -l pl
+Pakiet emacs-leim zawiera kod w Emacs Lispie do wprowadzania ró¿nych
+narodowych znaków. Kod zawarty w tym pakiecie opisuje sekwencje
+klawiszy, które u¿ytkownik musi nacisn±æ, by uzyskaæ dany znak spoza
+zestawu angielskiego. Pakiet zawiera sposoby wprowadzania znaków w
+wielu ró¿nych jêzykach.
+
 %package leim-el
 Summary:	Emacs Lisp source code for input methods for international characters
+Summary(pl):	Kod ¼ród³owy w Emacs Lispie do wprowadzania znaków narodowych
 Group:		Applications/Editors/Emacs
 Group(de):	Applikationen/Editors/Emacs
 Group(pl):	Aplikacje/Edytory/Emacs
@@ -127,10 +151,14 @@ Requires:	emacs-leim
 %description leim-el
 Emacs Lisp source code for input methods for international characters.
 
+%description leim-el -l pl
+Kod ¼ród³owy w Emacs Lispie do wprowadzania znaków narodowych.
+
 %package nox
 Summary:	The Emacs text editor without support for the X Window System
 Summary(de):	emacs-nox -- keine X-Libraries erforderlich
 Summary(fr):	emacs-nox -- les bibliothèques X ne sont pas nécessaires
+Summary(pl):	emacs-nox - edytor tekstu Emacs bez wsparcia dla X Window System
 Summary(tr):	X gerektirmeyen emacs paketi
 Group:		Applications/Editors/Emacs
 Group(de):	Applikationen/Editors/Emacs
@@ -145,27 +173,31 @@ Window System.
 You need to install this package only if you plan on exclusively using
 Emacs without the X Window System (emacs-X11 will work both in X and
 out of X, but emacs-nox will only work outside of X). You'll also need
-to install the emacs package in order to run Emacs.
+to install the emacs-common package in order to run Emacs.
 
-%description -l de nox
+%description nox -l de
 Dieses Paket enthält eine Binärversion von emacs ohne X-Windows-
 Unterstützung. Das emacs-Binärprogramm im emacs-Hauptpaket
 funktioniert zwar einwandfrei außerhalb von X-Windows (z.B. auf der
 Konsole), die Version in diesem Paket hat jedoch ein kleineres
 Speicherabbild.
 
-%description -l fr nox
+%description nox -l fr
 Ce paquetage contient un binaire emacs construit sans gestion X
 Window. Bien que le binaire emacs du paquetage emacs principal
 fonctionne bien sans X Window (sur un terminal, par exemple), celui-ci
 à une image mémoire plus petite.
 
-%description -l tr nox
+%description nox -l pl
+Emacs-nox to edytor tekstu Emacs bez wsparcia dla X Window System.
+
+%description nox -l tr
 Bu paket içinde yer alan emacs programý, X11 desteði içermez ve
 çalýþmak için daha az belleðe gereksinim duyar.
 
 %package common
 Summary:	The libraries needed to run the GNU Emacs text editor
+Summary(pl):	Biblioteki potrzebne do uruchomienia edytora tekstu GNU Emacs
 Group:		Applications/Editors/Emacs
 Group(de):	Applikationen/Editors/Emacs
 Group(pl):	Aplikacje/Edytory/Emacs
@@ -182,6 +214,17 @@ so you need to install this package if you intend to use Emacs. You
 also need to install the actual Emacs program package (emacs-nox or
 emacs). Install emacs-nox if you are not going to use the X Window
 System; install emacs if you will be using X.
+
+%description common -l pl
+Emacs jest konfigurowalnym, samo-udokumentowanym edytorem tekstu o
+du¿ych mo¿liwo¶ciach. Zawiera u³atwienia do pisania kodu, jêzyk
+skryptowy (elisp), daje mo¿liwo¶æ czytania poczty, newsów i wiele
+innych rzeczy bez opuszczania edytora.
+
+Ten pakiet zawiera biblioteki potrzebne do uruchomienia Emacsa. Oprócz
+tego pakietu potrzebny jest jeszcze w³a¶ciwy program (emacs-nox lub
+emacs). Zainstaluj emacs-nox je¿eli nie zamierzasz u¿ywasz Emacsa pod
+X Window System; zainstaluj emacs je¿eli u¿ywasz X.
 
 %prep
 %setup -q -b 1
