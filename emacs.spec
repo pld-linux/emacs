@@ -31,9 +31,13 @@ BuildRequires:	libpng-devel
 BuildRequires:	autoconf
 BuildRequires:	libtool
 BuildRequires:	texinfo
-Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Requires:	ctags
 Requires:	emacs-common = %{version}
+
+%ifarch ppc
+%define no_install_post_strip 1
+%endif
 
 %description
 Emacs-X11 includes the Emacs text editor program for use with the X
@@ -361,7 +365,6 @@ install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
-gzip -9nf etc/NEWS BUGS README
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -408,7 +411,7 @@ fi
 %files common
 %defattr(644,root,root,755)
 %config(noreplace) /etc/skel/.emacs
-%doc *.gz */*.gz
+%doc BUGS README etc/NEWS
 %attr(755,root,root) %{_bindir}/b2m
 %attr(755,root,root) %{_bindir}/emacsclient
 %attr(755,root,root) %{_bindir}/rcs-checkin
