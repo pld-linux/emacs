@@ -4,7 +4,7 @@ Summary(fr):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	20.7
-Release:	16
+Release:	32
 License:	GPL
 Group:		Applications/Editors/Emacs
 Group(de):	Applikationen/Editors/Emacs
@@ -28,6 +28,10 @@ Patch8:		%{name}-ia64-2.patch
 Patch9:		%{name}-ia64-3.patch
 Patch10:	%{name}-lisp-startup-localealias.patch
 Patch11:	%{name}-proto.patch
+Patch12:	%{name}-10buttons.patch
+Patch13:	%{name}-s390.patch
+Patch14:	%{name}-expand.patch
+Patch15:	%{name}-paths.patch
 BuildRequires:	ncurses-devel
 BuildRequires:	Xaw3d-devel
 BuildRequires:	XFree86-devel
@@ -193,6 +197,10 @@ System; install emacs if you will be using X.
 %patch9 -p1
 %patch10 -p0
 %patch11 -p1
+%patch12 -p0
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 %build
 libtoolize --force --copy
@@ -303,9 +311,8 @@ fi
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs
-%attr(755,root,root) %{_bindir}/emacs-%{version}
 %{_applnkdir}/Development/Editors/emacs.desktop
-/usr/X11R6/share/pixmaps/*
+%{_pixmapsdir}/*
 
 %files common
 %defattr(644,root,root,755)
