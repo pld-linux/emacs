@@ -1,10 +1,12 @@
-Summary:	The libraries needed to run the GNU Emacs text editor.
+Summary:	The libraries needed to run the GNU Emacs text editor
 Name:		emacs
 Version:	20.4
 Release:	5
-Copyright:	GPL
+License:	GPL
 Group:		Applications/Editors
-Source0:	ftp://ftp.gnu.org/pub/gnu/emacs-%{version}.tar.gz
+Group(pl):	Aplikacje/Edytory
+Group(pt):	X11/Aplicações/Editores
+Source0:	ftp://ftp.gnu.org/pub/gnu/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/pub/gnu/leim-%{version}.tar.gz
 Source2:	emacs.wmconfig
 Patch0:		emacs-20.2-xaw3d.patch
@@ -20,30 +22,33 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Emacs is a powerful, customizable, self-documenting, modeless text
 editor. Emacs contains special code editing features, a scripting
-language (elisp), and the capability to read mail, news and more without
-leaving the editor.
+language (elisp), and the capability to read mail, news and more
+without leaving the editor.
 
-This package includes the libraries you need to run the Emacs editor, so
-you need to install this package if you intend to use Emacs.  You also
-need to install the actual Emacs program package (emacs-nox or emacs-X11).
-Install emacs-nox if you are not going to use the X Window System; install
-emacs-X11 if you will be using X.
+This package includes the libraries you need to run the Emacs editor,
+so you need to install this package if you intend to use Emacs. You
+also need to install the actual Emacs program package (emacs-nox or
+emacs-X11). Install emacs-nox if you are not going to use the X Window
+System; install emacs-X11 if you will be using X.
 
 %description -l pl
 Emacs jest potê¿nym, konfigurowalnym, samodokumentuj±cym sie edytorem
 niezale¿nym od trybu pracy. Emacs zawiera wiele funkcji wspomagaj±cych
 edycjê kodu, jêzyk skryptowy (elisp) oraz zdolno¶æ do czytania poczty
-elektronicznej, grup dyskusyjnych itd. bez potzreby opuszczania edytora.
+elektronicznej, grup dyskusyjnych itd. bez potzreby opuszczania
+edytora.
 
 Pakiet ten zawiera biblioteki niezbêdne do uruchomienia Emacsa, nale¿y
 wiêc go zainstalowaæ je¶li pragnie siê u¿ywaæ Emacsa. Nale¿y równie¿
-zainstalowaæ samego Emacsa (emacs-nox lub emacs-X11). Emacs-nox jest dla
-osób, które nie zamierzaj± u¿ywaæ systemu X Window, za¶ emacs-x11 dla tych,
-którzy planuj± z niego korzystaæ. 
+zainstalowaæ samego Emacsa (emacs-nox lub emacs-X11). Emacs-nox jest
+dla osób, które nie zamierzaj± u¿ywaæ systemu X Window, za¶ emacs-x11
+dla tych, którzy planuj± z niego korzystaæ.
 
 %package el
 Summary:	The sources for elisp programs included with Emacs.
 Group:		Applications/Editors
+Group(pl):	Aplikacje/Edytory
+Group(pt):	X11/Aplicações/Editores
 Requires:	%{name} = %{version}
 
 %description el
@@ -56,6 +61,8 @@ Emacs packages or see some elisp examples.
 %package leim
 Summary:	Emacs Lisp code for input methods for internationalization.
 Group:		Applications/Editors
+Group(pl):	Aplikacje/Edytory
+Group(pt):	X11/Aplicações/Editores
 Requires:	%{name} = %{version}
 
 %description leim
@@ -65,6 +72,8 @@ character scripts.
 %package leim-el
 Summary:	Source code for leim.
 Group:		Applications/Editors
+Group(pl):	Aplikacje/Edytory
+Group(pt):	X11/Aplicações/Editores
 Requires:	%{name}-leim = %{version}
 
 %description leim-el
@@ -74,33 +83,36 @@ character scripts.
 %package nox
 Summary:	The Emacs text editor without support for the X Window System.
 Group:		Applications/Editors
+Group(pl):	Aplikacje/Edytory
+Group(pt):	X11/Aplicações/Editores
 Requires:	%{name} = %{version}
 
 %description nox
-Emacs-nox is the Emacs text editor program without support for
-the X Window System.
+Emacs-nox is the Emacs text editor program without support for the X
+Window System.
 
 You need to install this package only if you plan on exclusively using
-Emacs without the X Window System (emacs-X11 will work both in X and out
-of X, but emacs-nox will only work outside of X).  You'll also need to
-install the emacs package in order to run Emacs.
+Emacs without the X Window System (emacs-X11 will work both in X and
+out of X, but emacs-nox will only work outside of X). You'll also need
+to install the emacs package in order to run Emacs.
 
 %package X11
 Summary:	The Emacs text editor for the X Window System.
 Group:		Applications/Editors
+Group(pl):	Aplikacje/Edytory
+Group(pt):	X11/Aplicações/Editores
 Requires:	%{name} = %{version}
 
 %description X11
-Emacs-X11 includes the Emacs text editor program for use with the
-X Window System (it provides support for the mouse and other GUI
-elements). Emacs-X11 will also run Emacs outside of X, but it has
-a larger memory footprint than the 'non-X' Emacs package
-(emacs-nox).
+Emacs-X11 includes the Emacs text editor program for use with the X
+Window System (it provides support for the mouse and other GUI
+elements). Emacs-X11 will also run Emacs outside of X, but it has a
+larger memory footprint than the 'non-X' Emacs package (emacs-nox).
 
-Install emacs-X11 if you're going to use Emacs with the X Window System.
-You should also install emacs-X11 if you're going to run Emacs both
-with and without X (it will work fine both ways). You'll also need to
-install the emacs package in order to run Emacs.
+Install emacs-X11 if you're going to use Emacs with the X Window
+System. You should also install emacs-X11 if you're going to run Emacs
+both with and without X (it will work fine both ways). You'll also
+need to install the emacs package in order to run Emacs.
 
 %prep
 %setup -q -b 1
@@ -159,7 +171,7 @@ install -m755 build-nox/src/emacs $RPM_BUILD_ROOT%{_bindir}/emacs-nox
 
 # For some reason, when emacs is stripped on the Alpha, it dumps core
 # Lucky for us it started doing this on the Intel as well. Yeah.
-#strip $RPM_BUILD_ROOT/usr/bin/* ||:
+#strip $RPM_BUILD_ROOT%{_bindir}/* ||:
 for I in cvtmail digest-doc emacsserver fakemail hexl movemail profile \
 	sorted-doc timer wakeup yow; do
 	strip $RPM_BUILD_ROOT%{_libdir}/emacs/$RPM_PACKAGE_VERSION/$ARCHDIR/$I||:
