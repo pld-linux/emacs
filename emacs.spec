@@ -29,6 +29,18 @@ need to install the actual Emacs program package (emacs-nox or emacs-X11).
 Install emacs-nox if you are not going to use the X Window System; install
 emacs-X11 if you will be using X.
 
+%description -l pl
+Emacs jest potê¿nym, konfigurowalnym, samodokumentuj±cym sie edytorem
+niezale¿nym od trybu pracy. Emacs zawiera wiele funkcji wspomagaj±cych
+edycjê kodu, jêzyk skryptowy (elisp) oraz zdolno¶æ do czytania poczty
+elektronicznej, grup dyskusyjnych itd. bez potzreby opuszczania edytora.
+
+Pakiet ten zawiera biblioteki niezbêdne do uruchomienia Emacsa, nale¿y
+wiêc go zainstalowaæ je¶li pragnie siê u¿ywaæ Emacsa. Nale¿y równie¿
+zainstalowaæ samego Emacsa (emacs-nox lub emacs-X11). Emacs-nox jest dla
+osób, które nie zamierzaj± u¿ywaæ systemu X Window, za¶ emacs-x11 dla tych,
+którzy planuj± z niego korzystaæ. 
+
 %package el
 Summary:	The sources for elisp programs included with Emacs.
 Group:		Applications/Editors
