@@ -1,0 +1,70 @@
+X-From-Line: cookedm@physics.mcmaster.ca  Sat Apr  1 07:05:16 2000
+Return-Path: <cookedm@physics.mcmaster.ca>
+Received: from localhost (IDENT:flepied@localhost [127.0.0.1])
+	by skywalker.mandrakesoft.com (8.9.3/8.9.3) with ESMTP id HAA15589
+	for <flepied@localhost>; Sat, 1 Apr 2000 07:05:15 +0200
+Received: from mandrakesoft.com
+	by localhost with POP3 (fetchmail-5.1.0)
+	for flepied@localhost (single-drop); Sat, 01 Apr 2000 07:05:16 +0200 (CEST)
+Received: from arbutus.physics.mcmaster.ca (arbutus.Physics.McMaster.CA [130.113.172.142])
+	by mandrakesoft.mandrakesoft.com (8.8.5/8.8.5) with ESMTP id WAA26223
+	for <flepied@mandrakesoft.com>; Fri, 31 Mar 2000 22:33:59 -0600
+Received: (from cookedm@localhost)
+	by arbutus.physics.mcmaster.ca (8.9.3/8.9.3) id AAA01490;
+	Sat, 1 Apr 2000 00:04:03 -0500
+X-Authentication-Warning: arbutus.physics.mcmaster.ca: cookedm set sender to cookedm@physics.mcmaster.ca using -f
+Sender: cookedm@arbutus.physics.mcmaster.ca
+To: Frederic Lepied <flepied@mandrakesoft.com>
+Subject: Emacs doesn't like mouse buttons > 5
+From: cookedm@physics.mcmaster.ca (David M. Cooke)
+Date: 01 Apr 2000 00:04:03 -0500
+Message-ID: <qnk7leiif98.fsf@arbutus.physics.mcmaster.ca>
+User-Agent: Gnus/5.0803 (Gnus v5.8.3) Emacs/20.6
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Status: RO
+X-Content-Length: 1783
+Lines: 51
+Xref: skywalker.mandrakesoft.com mail.mbox.mandrake:747
+
+This is a bug that comes from the upstream Emacs source (20.6 at least). I
+recently upgraded to XFree86 4.0, which can have more than 5 mouse
+buttons (my mouse has 6). However, when the sixth button is pressed,
+Emacs crashes. In fact, it aborts deliberately: there is code in
+src/keyboard.c that does this if the button number is less than
+NUM_MOUSE_BUTTONS, which is defined in termhooks.h as 5. I *think*
+that if the NUM_MOUSE_BUTTONS was defined to be, say, 10, nothing
+would go wrong. (It works so far...)
+
+This error occurs with the 20.5-3 release in Mandrake 7.0 and the
+20.6-2 release in the Mandrake Cooker. I have sent in a bug report to
+the upstream emacs maintainers, but here is a suggested patch:
+
+
+--- src/termhooks.h.fred	Mon Feb 22 11:11:25 1999
++++ src/termhooks.h	Wed Apr 19 12:12:10 2000
+@@ -350,7 +350,7 @@
+ 
+ /* This is used in keyboard.c, to tell how many buttons we will need
+    to track the positions of.  */
+-#define NUM_MOUSE_BUTTONS (5)
++#define NUM_MOUSE_BUTTONS (10)
+ 
+ /* Bits in the modifiers member of the input_event structure.
+    Note that reorder_modifiers assumes that the bits are in canonical
+
+
+Note that it probably isn't enough to just change the check for
+button > NUM_MOUSE_BUTTONS to not abort in keyboard.c, as there are
+some structures which depend on button being less than
+NUM_MOUSE_BUTTONS.
+
+I hope this helps.
+
+-- 
+|>|\/|<
+----------------------------------------------------------------------------
+David M. Cooke
+cookedm@mcmaster.ca
+
+
