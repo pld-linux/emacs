@@ -44,8 +44,8 @@ BuildRequires:	setarch
 %endif
 BuildRequires:	texinfo
 Requires:	ctags
-Requires:	%{name}-common = %{sver}-%{release}
-BuildRoot:	%{tmpdir}/%{name}-%{sver}-root-%(id -u -n)
+Requires:	%{name}-common = %{version}-%{release}
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Emacs-X11 includes the Emacs text editor program for use with the X
@@ -111,7 +111,7 @@ Summary(pl):	¬ród³a programów w elispie do³±czonych do Emacsa
 Summary(pt_BR):	Fontes .el -- não são necessários para rodar o Emacs
 Summary(tr):	Lisp kaynak dosyalarý -- Emacs çalýþtýrmak için gerekmez
 Group:		Applications/Editors/Emacs
-Requires:	%{name}-common = %{sver}-%{release}
+Requires:	%{name}-common = %{version}-%{release}
 
 %description el
 Emacs-el contains the emacs-elisp sources for many of the elisp
@@ -154,7 +154,7 @@ Summary(es):	Código Lisp para internacionalización en Emacs
 Summary(pl):	Kod w Emacs Lispie do wprowadzania znaków narodowych
 Summary(pt_BR):	Código Lisp para para internacionalização no Emacs
 Group:		Applications/Editors/Emacs
-Requires:	%{name}-common = %{sver}-%{release}
+Requires:	%{name}-common = %{version}-%{release}
 
 %description leim
 The emacs-leim package contains Emacs Lisp code for input methods for
@@ -181,7 +181,7 @@ Código Lisp para para internacionalização no Emacs.
 Summary:	Emacs Lisp source code for input methods for international characters
 Summary(pl):	Kod ¼ród³owy w Emacs Lispie do wprowadzania znaków narodowych
 Group:		Applications/Editors/Emacs
-Requires:	%{name}-leim = %{sver}-%{release}
+Requires:	%{name}-leim = %{version}-%{release}
 
 %description leim-el
 Emacs Lisp source code for input methods for international characters.
@@ -198,7 +198,7 @@ Summary(pl):	emacs-nox - edytor tekstu Emacs bez wsparcia dla X Window System
 Summary(pt_BR):	emacs-nox - Emacs sem precisar de bibliotecas X
 Summary(tr):	X gerektirmeyen emacs paketi
 Group:		Applications/Editors/Emacs
-Requires:	%{name}-common = %{sver}-%{release}
+Requires:	%{name}-common = %{version}-%{release}
 
 %description nox
 Emacs-nox is the Emacs text editor program without support for the X
