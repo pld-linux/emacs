@@ -347,7 +347,7 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT{%{_infodir},%{_libdir}/emacs/site-lisp} \
 	$RPM_BUILD_ROOT{%{_applnkdir}/Editors,/etc/skel} \
-	$RPM_BUILD_ROOT%{_pixmapsdir}
+	$RPM_BUILD_ROOT/usr/X11R6/share/pixmaps
 
 %{makeinstall} -C build-withx
 install build-nox/src/emacs	$RPM_BUILD_ROOT%{_bindir}/emacs-nox
@@ -399,7 +399,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs
 %{_applnkdir}/Editors/emacs.desktop
-%{_pixmapsdir}/*
+/usr/X11R6/share/pixmaps/*
 %{_datadir}/emacs/%{version}/lisp/*.xpm
 %{_datadir}/emacs/%{version}/lisp/gnus/*.xpm
 %dir %{_datadir}/emacs/%{version}/lisp/toolbar
