@@ -29,6 +29,7 @@ URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel >= 1.5E-3
 BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
@@ -36,9 +37,9 @@ BuildRequires:	libtool
 BuildRequires:	libungif-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	texinfo
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Requires:	ctags
-Requires:	emacs-common = %{version}
+Requires:	emacs-common = %{version}-%{release}
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %ifarch ppc
 %define no_install_post_strip 1
@@ -108,7 +109,7 @@ Summary(pl):	¬ród³a programów w elispie do³±czonych do Emacsa
 Summary(pt_BR):	Fontes .el -- não são necessários para rodar o Emacs
 Summary(tr):	Lisp kaynak dosyalarý -- Emacs çalýþtýrmak için gerekmez
 Group:		Applications/Editors/Emacs
-Requires:	emacs-common = %{version}
+Requires:	emacs-common = %{version}-%{release}
 
 %description el
 Emacs-el contains the emacs-elisp sources for many of the elisp
@@ -151,7 +152,7 @@ Summary(es):	Código Lisp para internacionalización en Emacs
 Summary(pl):	Kod w Emacs Lispie do wprowadzania znaków narodowych
 Summary(pt_BR):	Código Lisp para para internacionalização no Emacs
 Group:		Applications/Editors/Emacs
-Requires:	emacs-common = %{version}
+Requires:	emacs-common = %{version}-%{release}
 
 %description leim
 The emacs-leim package contains Emacs Lisp code for input methods for
@@ -178,7 +179,7 @@ Código Lisp para para internacionalização no Emacs.
 Summary:	Emacs Lisp source code for input methods for international characters
 Summary(pl):	Kod ¼ród³owy w Emacs Lispie do wprowadzania znaków narodowych
 Group:		Applications/Editors/Emacs
-Requires:	emacs-leim = %{version}
+Requires:	emacs-leim = %{version}-%{release}
 
 %description leim-el
 Emacs Lisp source code for input methods for international characters.
@@ -195,7 +196,7 @@ Summary(pl):	emacs-nox - edytor tekstu Emacs bez wsparcia dla X Window System
 Summary(pt_BR):	emacs-nox - Emacs sem precisar de bibliotecas X
 Summary(tr):	X gerektirmeyen emacs paketi
 Group:		Applications/Editors/Emacs
-Requires:	emacs-common = %{version}
+Requires:	emacs-common = %{version}-%{release}
 
 %description nox
 Emacs-nox is the Emacs text editor program without support for the X
@@ -296,6 +297,7 @@ done
 #aclocal
 #autoconf
 #touch aclocal.m4
+cp -f /usr/share/automake/config.* .
 
 cd elisp-manual-*
 %configure2_13
@@ -366,12 +368,12 @@ cd ..
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT{%{_infodir},%{_libdir}/emacs/site-lisp} \
-	$RPM_BUILD_ROOT{%{_applnkdir}/Editors,/etc/skel,%{_pixmapsdir}} \
+	$RPM_BUILD_ROOT{%{_desktopdir},/etc/skel,%{_pixmapsdir}} \
 
 %{makeinstall} -C build-withx
 install build-nox/src/emacs	$RPM_BUILD_ROOT%{_bindir}/emacs-nox
 
-install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Editors
+install %{SOURCE3} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.emacs
 install %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/site-start.el
 install %{SOURCE6} $RPM_BUILD_ROOT%{_pixmapsdir}
@@ -422,7 +424,7 @@ fi
 %dir %{_datadir}/emacs/%{version}/lisp/toolbar
 %{_datadir}/emacs/%{version}/lisp/toolbar/*.elc
 %{_datadir}/emacs/%{version}/lisp/toolbar/*.xpm
-%{_applnkdir}/Editors/emacs.desktop
+%{_desktopdir}/emacs.desktop
 %{_pixmapsdir}/*
 
 %files common
