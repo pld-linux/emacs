@@ -17,7 +17,7 @@ Release:	0.1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:        http://pawelb.pld-dc.org/%{name}/%{name}-21.3.50.tar.gz
-# Source0-md5:	34c14d624bab5ca8f3e88573f8d7fe37
+# Source0-md5:	dd8cd6d40b1e5a1c110734c26a1fa53b
 Source1:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
 # Source1-md5:	71500b6aaa3d80ea1df1b46c5055c43d
 Source2:	%{name}.desktop
