@@ -25,7 +25,6 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libungif-devel
 BuildRequires:	libpng-devel
-BuildRequires:	libelf-devel
 BuildRequires:	autoconf
 BuildRequires:	libtool
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
