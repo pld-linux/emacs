@@ -3,15 +3,14 @@ Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
 Summary(es):	GNU Emacs
 Summary(fr):	GNU Emacs
-Summary(pl):	GNU Emacs
+Summary(pl):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.2
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/Editors/Emacs
-URL:		http://www.gnu.org/software/emacs/
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/gnu/emacs/leim-%{version}.tar.gz
 Source2:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
@@ -20,15 +19,16 @@ Source4:	%{name}-dot%{name}
 Source5:	%{name}-site-start.el
 Source6:	%{name}.png
 Patch1:		%{name}-loadup.patch
-BuildRequires:	ncurses-devel
-BuildRequires:	Xaw3d-devel
+URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	XFree86-devel
-BuildRequires:	libjpeg-devel
-BuildRequires:	libtiff-devel
-BuildRequires:	libungif-devel
-BuildRequires:	libpng-devel
+BuildRequires:	Xaw3d-devel
 BuildRequires:	autoconf
+BuildRequires:	libjpeg-devel
+BuildRequires:	libpng-devel
+BuildRequires:	libtiff-devel
 BuildRequires:	libtool
+BuildRequires:	libungif-devel
+BuildRequires:	ncurses-devel
 BuildRequires:	texinfo
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Requires:	ctags
@@ -517,10 +517,17 @@ fi
 %{_datadir}/emacs/%{version}/lisp/custom.el
 %{_datadir}/emacs/%{version}/lisp/generic.el
 %{_datadir}/emacs/%{version}/lisp/g[f-z]*.el
-%{_datadir}/emacs/%{version}/lisp/[d-f]*.el
+%{_datadir}/emacs/%{version}/lisp/[de]*.el
+%{_datadir}/emacs/%{version}/lisp/f[^io]*.el
+%{_datadir}/emacs/%{version}/lisp/fi[^n]*.el
+%{_datadir}/emacs/%{version}/lisp/find[^e]*.el
+%{_datadir}/emacs/%{version}/lisp/finder.el
+%{_datadir}/emacs/%{version}/lisp/fo[^r]*.el
+%{_datadir}/emacs/%{version}/lisp/form[^s]*.el
+%{_datadir}/emacs/%{version}/lisp/forms.el
+%{_datadir}/emacs/%{version}/lisp/forms-d2.el
 %{_datadir}/emacs/%{version}/lisp/[h-k]*.el
 %{_datadir}/emacs/%{version}/lisp/l[a-n]*.el
-%{_datadir}/emacs/%{version}/lisp/loadhist.el
 %{_datadir}/emacs/%{version}/lisp/locate.el
 %{_datadir}/emacs/%{version}/lisp/l[p-z]*.el
 %{_datadir}/emacs/%{version}/lisp/[m-o]*.el
