@@ -14,7 +14,7 @@ Summary(tr):	GNU Emacs
 Name:		emacs
 %define	sver	21.4
 Version:	21.4a
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
