@@ -183,10 +183,10 @@ rm -rf build-nox
 rm -rf build-withx
 
 %post
-/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+[ -x /usr/sbin/fix-info-dir ] && /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %postun
-/usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+[ -x /usr/sbin/fix-info-dir ] && /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %files
 %defattr(644,root,root,755)
