@@ -62,7 +62,7 @@ alles im Editor.
 
 Dieses Paket enthält die zum Ausführen des emacs-Editors notwendig
 sind. Das eigentliche Programm ist im Paket 'emacs-nox' bzw.
-'emacs-X11' enthalten, je nachdem, ob Sie X-Windows verwenden oder
+'emacs-X11' enthalten, je nachdem, ob Sie X-Window verwenden oder
 nicht.
 
 %description -l es
@@ -206,9 +206,9 @@ out of X, but emacs-nox will only work outside of X). You'll also need
 to install the emacs-common package in order to run Emacs.
 
 %description nox -l de
-Dieses Paket enthält eine Binärversion von emacs ohne X-Windows-
+Dieses Paket enthält eine Binärversion von emacs ohne X-Window-
 Unterstützung. Das emacs-Binärprogramm im emacs-Hauptpaket
-funktioniert zwar einwandfrei außerhalb von X-Windows (z.B. auf der
+funktioniert zwar einwandfrei außerhalb von X-Window (z.B. auf der
 Konsole), die Version in diesem Paket hat jedoch ein kleineres
 Speicherabbild.
 
@@ -305,17 +305,17 @@ cd ..
 [ -d build-withx ] && rm -rf build-withx
 mkdir build-withx && cd build-withx
 ../configure \
-        --prefix=%{_prefix} \
-        --exec-prefix=%{_exec_prefix} \
-        --bindir=%{_bindir} \
-        --sbindir=%{_sbindir} \
-        --sysconfdir=%{_sysconfdir} \
-        --datadir=%{_datadir} \
-        --includedir=%{_includedir} \
-        --libdir=%{_libdir} \
-        --localstatedir=%{_localstatedir} \
-        --mandir=%{_mandir} \
-        --infodir=%{_infodir} \
+	--prefix=%{_prefix} \
+	--exec-prefix=%{_exec_prefix} \
+	--bindir=%{_bindir} \
+	--sbindir=%{_sbindir} \
+	--sysconfdir=%{_sysconfdir} \
+	--datadir=%{_datadir} \
+	--includedir=%{_includedir} \
+	--libdir=%{_libdir} \
+	--localstatedir=%{_localstatedir} \
+	--mandir=%{_mandir} \
+	--infodir=%{_infodir} \
 	--libexecdir=%{_libdir} \
 	--sharedstatedir=%{_var} \
 	--with-gcc \
@@ -335,17 +335,17 @@ cd ..
 [ -d build-nox ] && rm -rf build-nox
 mkdir build-nox && cd build-nox
 ../configure \
-        --prefix=%{_prefix} \
-        --exec-prefix=%{_exec_prefix} \
-        --bindir=%{_bindir} \
-        --sbindir=%{_sbindir} \
-        --sysconfdir=%{_sysconfdir} \
-        --datadir=%{_datadir} \
-        --includedir=%{_includedir} \
-        --libdir=%{_libdir} \
-        --localstatedir=%{_localstatedir} \
-        --mandir=%{_mandir} \
-        --infodir=%{_infodir} \
+	--prefix=%{_prefix} \
+	--exec-prefix=%{_exec_prefix} \
+	--bindir=%{_bindir} \
+	--sbindir=%{_sbindir} \
+	--sysconfdir=%{_sysconfdir} \
+	--datadir=%{_datadir} \
+	--includedir=%{_includedir} \
+	--libdir=%{_libdir} \
+	--localstatedir=%{_localstatedir} \
+	--mandir=%{_mandir} \
+	--infodir=%{_infodir} \
 	--libexecdir=%{_libdir} \
 	--sharedstatedir=%{_var} \
 	--with-gcc \
