@@ -1,9 +1,13 @@
-Summary:	The Emacs text editor for the X Window System.
+Summary:	The Emacs text editor for the X Window System
+Summary(de):	GNU Emacs
+Summary(fr):	GNU Emacs
+Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	20.7
-Release:	1
+Release:	16
 License:	GPL
 Group:		Applications/Editors/Emacs
+Group(de):	Applikationen/Editors/Emacs
 Group(pl):	Aplikacje/Edytory/Emacs
 Group(pt):	Aplicações/Editores/Emacs
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
@@ -11,6 +15,7 @@ Source1:	ftp://ftp.gnu.org/gnu/emacs/leim-%{version}.tar.gz
 Source3:	%{name}.desktop
 Source4:	%{name}-dotemacs
 Source5:	%{name}-site-start.el
+Source6:	emacs.png
 Patch0:		%{name}-xaw3d.patch
 Patch1:		%{name}-manboption.patch
 Patch2:		%{name}-tmprace.patch
@@ -22,8 +27,9 @@ Patch7:		%{name}-ia64.patch
 Patch8:		%{name}-ia64-2.patch
 Patch9:		%{name}-ia64-3.patch
 Patch10:	%{name}-lisp-startup-localealias.patch
+Patch11:	%{name}-proto.patch
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Prereq:		/usr/sbin/fix-info-dir
+Requires:	ctags
 Requires:	emacs-common
 
 %description
@@ -37,9 +43,33 @@ System. You should also install emacs-X11 if you're going to run Emacs
 both with and without X (it will work fine both ways). You'll also
 need to install the emacs package in order to run Emacs.
 
+%description -l de
+Emacs ist der erweiterbare, veränderbare, selbst-dokumentierende
+Echtzeit-Editor. Emacs enthält spezielle Modi zum Bearbeiten von Code,
+eine Script-Sprache (elisp) und Pakete für Mail, News und vieles mehr,
+alles im Editor.
+
+Dieses Paket enthält die zum Ausführen des emacs-Editors notwendig
+sind. Das eigentliche Programm ist im Paket 'emacs-nox' bzw.
+'emacs-X11' enthalten, je nachdem, ob Sie X-Windows verwenden oder
+nicht.
+
+%description -l tr
+Emacs, son derece geliþmiþ bir metin düzenleyicisidir. Bir çok
+geliþtirme ortamýnda kullanýlmak üzere ayarlanabilir (C, Java, VHDL
+gibi). E-posta okuyabilmek, haber gruplarýna eriþmek gibi birçok
+deðiþik amaç için kullanýlabilecek ek yazýlýmlarla yetenekli bir
+çalýþma ortamý saðlar. Bu paket emacs çalýþtýrmak için gereken
+kütüphaneleri içerir. Asýl program kullandýðýnýz ortama göre emacs-nox
+veya emacs-X11 paketinde yer alýr.
+
 %package el
-Summary:	The sources for elisp programs included with Emacs.
+Summary:	The sources for elisp programs included with Emacs
+Summary(de):	el Quelldateien - zum Betrieb von Emacs nicht erforderlich
+Summary(fr):	Fichiers sources .el - non nécessaires pour exécuter Emacs
+Summary(tr):	Lisp kaynak dosyalarý -- Emacs çalýþtýrmak için gerekmez
 Group:		Applications/Editors/Emacs
+Group(de):	Applikationen/Editors/Emacs
 Group(pl):	Aplikacje/Edytory/Emacs
 Group(pt):	Aplicações/Editores/Emacs
 Requires:	emacs-common
@@ -51,9 +81,21 @@ programs included with the main Emacs text editor package.
 You need to install emacs-el only if you intend to modify any of the
 Emacs packages or see some elisp examples.
 
+%description -l fr el
+Ce paquetage contient les sources emacs-lisp de la plupart des
+programmes elisp inclus avec le paquetage emacs principal. Vous n'avez
+pas besoin de ce paquetage sauf si vous voulez modifier ces paquetages
+ou voir quelques exemples elisp.
+
+%description -l tr el
+Bu paket, ana emacs paketinde yer alan çoðu programýn lisp kaynak
+kodlarýný içerir. Bu programlarý deðiþtirmeyi düþünmüyorsanýz gerek
+duymayacaksýnýz.
+
 %package leim
-Summary:	Emacs Lisp code for input methods for international characters.
+Summary:	Emacs Lisp code for input methods for international characters
 Group:		Applications/Editors/Emacs
+Group(de):	Applikationen/Editors/Emacs
 Group(pl):	Aplikacje/Edytory/Emacs
 Group(pt):	Aplicações/Editores/Emacs
 Requires:	emacs-common
@@ -67,8 +109,9 @@ non-English character set. Input methods for many different language's
 character sets are included in this package.
 
 %package leim-el
-Summary:	Emacs Lisp source code for input methods for international characters.
+Summary:	Emacs Lisp source code for input methods for international characters
 Group:		Applications/Editors/Emacs
+Group(de):	Applikationen/Editors/Emacs
 Group(pl):	Aplikacje/Edytory/Emacs
 Group(pt):	Aplicações/Editores/Emacs
 Requires:	emacs-leim
@@ -77,8 +120,12 @@ Requires:	emacs-leim
 Emacs Lisp source code for input methods for international characters.
 
 %package nox
-Summary:	The Emacs text editor without support for the X Window System.
+Summary:	The Emacs text editor without support for the X Window System
+Summary(de):	emacs-nox -- keine X-Libraries erforderlich
+Summary(fr):	emacs-nox -- les bibliothèques X ne sont pas nécessaires
+Summary(tr):	X gerektirmeyen emacs paketi
 Group:		Applications/Editors/Emacs
+Group(de):	Applikationen/Editors/Emacs
 Group(pl):	Aplikacje/Edytory/Emacs
 Group(pt):	Aplicações/Editores/Emacs
 Requires:	emacs-common
@@ -92,9 +139,27 @@ Emacs without the X Window System (emacs-X11 will work both in X and
 out of X, but emacs-nox will only work outside of X). You'll also need
 to install the emacs package in order to run Emacs.
 
+%description -l de nox
+Dieses Paket enthält eine Binärversion von emacs ohne X-Windows-
+Unterstützung. Das emacs-Binärprogramm im emacs-Hauptpaket
+funktioniert zwar einwandfrei außerhalb von X-Windows (z.B. auf der
+Konsole), die Version in diesem Paket hat jedoch ein kleineres
+Speicherabbild.
+
+%description -l fr nox
+Ce paquetage contient un binaire emacs construit sans gestion X
+Window. Bien que le binaire emacs du paquetage emacs principal
+fonctionne bien sans X Window (sur un terminal, par exemple), celui-ci
+à une image mémoire plus petite.
+
+%description -l tr nox
+Bu paket içinde yer alan emacs programý, X11 desteði içermez ve
+çalýþmak için daha az belleðe gereksinim duyar.
+
 %package common
-Summary:	The libraries needed to run the GNU Emacs text editor.
+Summary:	The libraries needed to run the GNU Emacs text editor
 Group:		Applications/Editors/Emacs
+Group(de):	Applikationen/Editors/Emacs
 Group(pl):	Aplikacje/Edytory/Emacs
 Group(pt):	Aplicações/Editores/Emacs
 
@@ -123,15 +188,18 @@ System; install emacs if you will be using X.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p0
+%patch11 -p1
 
 %build
 libtoolize --force --copy
 autoconf
 
+CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} -DMAIL_USE_LOCKF -DNCURSES_OSPEED_T" 
+export CFLAGS
+
 # Build binary with X support
 [ -d build-withx ] && rm -rf build-withx
 mkdir build-withx && cd build-withx
-CFLAGS="$RPM_OPT_FLAGS -DNCURSES_OSPEED_T" LDFLAGS=-s \
 ../configure \
 	--mandir=%{_mandir} \
 	--infodir=%{_infodir} \
@@ -149,7 +217,6 @@ cd ..
 #Build binary without X support
 [ -d build-nox ] && rm -rf build-nox
 mkdir build-nox && cd build-nox
-CFLAGS="$RPM_OPT_FLAGS -DNCURSES_OSPEED_T" LDFLAGS=-s \
 ../configure \
 	--mandir=%{_mandir} \
 	--infodir=%{_infodir} \
@@ -175,7 +242,8 @@ build-withx/src/emacs \
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_infodir},%{_libdir}/emacs/site-lisp} \
-	$RPM_BUILD_ROOT{%{_applnkdir}/Development/Editors,/etc/skel}
+	$RPM_BUILD_ROOT{%{_applnkdir}/Development/Editors,/etc/skel} \
+	$RPM_BUILD_ROOT/usr/X11R6/share/pixmaps
 
 %{__make} install -C build-withx \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
@@ -189,15 +257,13 @@ install build-nox/src/emacs $RPM_BUILD_ROOT%{_bindir}/emacs-nox
 install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Development/Editors
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.emacs
 install %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/site-start.el
+install %{SOURCE6} $RPM_BUILD_ROOT/usr/X11R6/share/pixmaps
 
 install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
 
-strip --strip-unneeded $RPM_BUILD_ROOT%{_bindir}/* || :
-strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/emacs/*-linux/* || :
-
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
-gzip -9nf $RPM_BUILD_ROOT%{_infodir}/* $RPM_BUILD_ROOT%{_mandir}/man1/* \
-	etc/NEWS BUGS README etc/FAQ
+
+gzip -9nf etc/NEWS BUGS README etc/FAQ
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -235,6 +301,7 @@ fi
 %attr(755,root,root) %{_bindir}/emacs
 %attr(755,root,root) %{_bindir}/emacs-%{version}
 %{_applnkdir}/Development/Editors/emacs.desktop
+/usr/X11R6/share/pixmaps/*
 
 %files common
 %defattr(644,root,root,755)
