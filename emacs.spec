@@ -1,8 +1,5 @@
 #
 # Conditional build:
-%bcond_with	gnus	# Include old Gnus newsreader and MUA version
-			# (obsoleted by emacsen-gnus-pkg-emacs)
-#
 %define         snap 20041228
 %define		elisp_man_version	21-2.8
 Summary:	The Emacs text editor for the X Window System
@@ -17,7 +14,7 @@ Version:	21.3.50
 Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
-Source0:        http://pawelb.pld-dc.org/%{name}/%{name}-21.3.50.tar.gz
+Source0:	http://pawelb.pld-dc.org/%{name}/%{name}-21.3.50.tar.gz
 # Source0-md5:	dd8cd6d40b1e5a1c110734c26a1fa53b
 Source1:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
 # Source1-md5:	71500b6aaa3d80ea1df1b46c5055c43d
@@ -25,8 +22,8 @@ Source2:	%{name}.desktop
 Source3:	%{name}-dot%{name}
 Source4:	%{name}-site-start.el
 Source5:	%{name}.png
-Source6:       	%{name}-tuareg.el 
-Source7:       	%{name}-nemerle.el 
+Source6:	%{name}-tuareg.el
+Source7:	%{name}-nemerle.el
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel >= 1.5E-3
@@ -282,6 +279,19 @@ These files are common between GNU Emacs and XEmacs.
 %description extras -l pl
 S± to wspólne pliki GNU Emacs i XEmacs.
 
+%package gnus
+Summary:	Gnus is flexible message reader under Emacs
+Summary(pl):	Gnus jest czytnikiem grup dyskusyjnych pod Emacsa
+Group:		Application/Editors/Emacs
+Requires:	%{name}-common = %{version}-%{release}
+
+%description gnus
+Gnus is flexible message reader under Emacs.
+
+%description gnus -l pl
+Gnus jest czytnikiem grup dyskusyjnych pod Emacsa.
+
+
 %prep 
 %setup -q -a 1 
 
@@ -331,7 +341,7 @@ mkdir build-withx && cd build-withx
 	--with-tiff \
 	--with-gif \
 	--with-png \
-	%{_target_platform} 
+	%{_target_platform}
 
 %ifarch %{ix86}
 setarch i386 \
@@ -364,7 +374,7 @@ mkdir build-nox && cd build-nox
 	--without-gif \
 	--without-png \
 	--with-x=no \
-	%{_target_platform} 
+	%{_target_platform}
 
 %ifarch %{ix86}
 setarch i386 \
@@ -399,12 +409,6 @@ install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
 	infodir=$RPM_BUILD_ROOT%{_infodir}
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
-
-%if %{without gnus}
-rm -rf $RPM_BUILD_ROOT%{_infodir}/{emacs-mime,gnus,message,pgg,sieve}* \
-	$RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/lisp/gnus \
-	$RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc/gnus*
-%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -442,7 +446,6 @@ fi
 %attr(755,root,root) %{_bindir}/emacs
 %attr(755,root,root) %{_bindir}/emacs-21.3.50
 %{_datadir}/emacs/%{version}/lisp/*.xpm
-%{?with_gnus: %{_datadir}/emacs/%{version}/lisp/gnus/*.xpm}
 %dir %{_datadir}/emacs/%{version}/lisp/toolbar
 %{_datadir}/emacs/%{version}/lisp/toolbar/*.elc
 %{_datadir}/emacs/%{version}/lisp/toolbar/*.xpm
@@ -485,7 +488,6 @@ fi
 %dir %{_datadir}/emacs/%{version}/lisp/calc
 %dir %{_datadir}/emacs/%{version}/lisp/emacs-lisp
 %dir %{_datadir}/emacs/%{version}/lisp/emulation
-%{?with_gnus: %dir %{_datadir}/emacs/%{version}/lisp/gnus}
 %dir %{_datadir}/emacs/%{version}/lisp/international
 %dir %{_datadir}/emacs/%{version}/lisp/language
 %dir %{_datadir}/emacs/%{version}/lisp/mail
@@ -497,7 +499,6 @@ fi
 %dir %{_datadir}/emacs/%{version}/lisp/net
 %dir %{_datadir}/emacs/%{version}/lisp/obsolete
 %dir %{_datadir}/emacs/%{version}/lisp/mh-e
-
 
 %{_datadir}/emacs/site-lisp
 %{_datadir}/emacs/%{version}/etc
@@ -514,9 +515,7 @@ fi
 %{_datadir}/emacs/%{version}/lisp/paths.el
 %{_datadir}/emacs/%{version}/lisp/subdirs.el
 %{_datadir}/emacs/%{version}/lisp/version.el
-
 %{_datadir}/emacs/%{version}/lisp/language/*.elc
-%{?with_gnus: %{_datadir}/emacs/%{version}/lisp/gnus/*}
 %{_datadir}/emacs/%{version}/lisp/mail/*.elc
 %{_datadir}/emacs/%{version}/lisp/mail/blessmail.el
 %{_datadir}/emacs/%{version}/lisp/mail/reply2.xpm
@@ -578,7 +577,6 @@ fi
 %files el
 %defattr(644,root,root,755)
 %{_datadir}/emacs/%{version}/lisp/forms-d2.dat
-
 %{_datadir}/emacs/%{version}/lisp/a*.el
 %{_datadir}/emacs/%{version}/lisp/b*.el
 %{_datadir}/emacs/%{version}/lisp/c[a-tv]*.el
@@ -611,9 +609,7 @@ fi
 %{_datadir}/emacs/%{version}/lisp/[w-z]*.el
 %{_datadir}/emacs/%{version}/lisp/v[a-d]*.el
 %{_datadir}/emacs/%{version}/lisp/v[f-z]*.el
-
 %{_datadir}/emacs/%{version}/lisp/language/*.el
-%{?with_gnus: %{_datadir}/emacs/%{version}/lisp/gnus/*.el}
 %{_datadir}/emacs/%{version}/lisp/mail/[c-r]*.el
 %{_datadir}/emacs/%{version}/lisp/mail/[t-z]*.el
 %{_datadir}/emacs/%{version}/lisp/mail/sendmail.el
@@ -669,3 +665,10 @@ fi
 %files nox
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs-nox
+
+%files gnus
+%defattr(644,root,root,755)
+%dir %{_datadir}/emacs/%{version}/lisp/gnus
+%{_datadir}/emacs/%{version}/lisp/gnus/*.el
+%{_datadir}/emacs/%{version}/lisp/gnus/*
+%{_datadir}/emacs/%{version}/lisp/gnus/*.xpm
