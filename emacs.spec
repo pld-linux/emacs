@@ -17,7 +17,7 @@ Version:	21.4a
 Release:	0.1
 License:	GPL
 Group:		Applications/Editors/Emacs
-Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{sver}.tar.gz
+Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
 # Source0-md5:	8f9d97cbd126121bd5d97e5e31168a87
 Source1:	ftp://ftp.gnu.org/gnu/emacs/leim-%{sver}.tar.gz
 # Source1-md5:	32938cb5a7505d995a1e835639d19707
