@@ -1,0 +1,17 @@
+diff -uNr emacs-20.7.orig/etc/emacs.1 emacs-20.7/etc/emacs.1
+--- emacs-20.7.orig/etc/emacs.1	Mon Apr 22 14:48:40 1996
++++ emacs-20.7/etc/emacs.1	Tue Jul 25 12:19:57 2000
+@@ -180,13 +180,6 @@
+ When you specify a font, be sure to put a space between the
+ switch and the font name.
+ .TP
+-.BI \-b " pixels"
+-Set the
+-.I Emacs
+-window's border width to the number of pixels specified by
+-.I pixels.
+-Defaults to one pixel on each side of the window.
+-.TP
+ .BI \-ib " pixels"
+ Set the window's internal border width to the number of pixels specified
+ by 
