@@ -4,8 +4,8 @@ Summary(fr):	GNU Emacs
 Summary(pl):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
-Version:	20.7
-Release:	32
+Version:	21.1
+Release:	1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Group(de):	Applikationen/Editors/Emacs
@@ -17,26 +17,15 @@ Source3:	%{name}.desktop
 Source4:	%{name}-dotemacs
 Source5:	%{name}-site-start.el
 Source6:	emacs.png
-Patch0:		%{name}-xaw3d.patch
-Patch1:		%{name}-manboption.patch
-Patch2:		%{name}-tmprace.patch
-Patch3:		%{name}-linkscr.patch
-Patch4:		%{name}-nmhlocation.patch
-Patch5:		%{name}-loadup.patch
-Patch6:		%{name}-kbdbuffer.patch
-Patch7:		%{name}-ia64.patch
-Patch8:		%{name}-ia64-2.patch
-Patch9:		%{name}-ia64-3.patch
-Patch10:	%{name}-lisp-startup-localealias.patch
-Patch11:	%{name}-proto.patch
-Patch12:	%{name}-10buttons.patch
-Patch13:	%{name}-s390.patch
-Patch14:	%{name}-expand.patch
-Patch15:	%{name}-paths.patch
+Patch1:		%{name}-loadup.patch
 BuildRequires:	ncurses-devel
 BuildRequires:	Xaw3d-devel
 BuildRequires:	XFree86-devel
-BuildRequires:	XFree86
+BuildRequires:	libjpeg-devel
+BuildRequires:	libtiff-devel
+BuildRequires:	libungif-devel
+BuildRequires:	libpng-devel
+BuildRequires:	libelf-devel
 BuildRequires:	autoconf
 BuildRequires:	libtool
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -228,42 +217,41 @@ X Window System; zainstaluj emacs je¿eli u¿ywasz X.
 
 %prep
 %setup -q -b 1
-%patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p0
-%patch11 -p1
-%patch12 -p0
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
 
 %build
-libtoolize --force --copy
-autoconf
-
-CFLAGS="%{rpmcflags} -DMAIL_USE_LOCKF -DNCURSES_OSPEED_T" 
-export CFLAGS
+# Regeneration breaks things --misiek
+#rm aclocal.m4
+#libtoolize --force --copy
+#aclocal
+#autoconf
+#touch aclocal.m4
 
 # Build binary with X support
 [ -d build-withx ] && rm -rf build-withx
 mkdir build-withx && cd build-withx
 ../configure \
-	--mandir=%{_mandir} \
-	--infodir=%{_infodir} \
-	--prefix=%{_prefix} \
+        --prefix=%{_prefix} \
+        --exec-prefix=%{_exec_prefix} \
+        --bindir=%{_bindir} \
+        --sbindir=%{_sbindir} \
+        --sysconfdir=%{_sysconfdir} \
+        --datadir=%{_datadir} \
+        --includedir=%{_includedir} \
+        --libdir=%{_libdir} \
+        --localstatedir=%{_localstatedir} \
+        --mandir=%{_mandir} \
+        --infodir=%{_infodir} \
 	--libexecdir=%{_libdir} \
-	--sharedstatedir=/var \
+	--sharedstatedir=%{_var} \
 	--with-gcc \
 	--with-pop \
 	--with-x-toolkit \
+	--with-xpm \
+	--with-jpeg \
+	--with-tiff \
+	--with-gif \
+	--with-png \
 	%{_target_platform}
 
 %{__make} 
@@ -273,41 +261,41 @@ cd ..
 [ -d build-nox ] && rm -rf build-nox
 mkdir build-nox && cd build-nox
 ../configure \
-	--mandir=%{_mandir} \
-	--infodir=%{_infodir} \
-	--prefix=%{_prefix} \
+        --prefix=%{_prefix} \
+        --exec-prefix=%{_exec_prefix} \
+        --bindir=%{_bindir} \
+        --sbindir=%{_sbindir} \
+        --sysconfdir=%{_sysconfdir} \
+        --datadir=%{_datadir} \
+        --includedir=%{_includedir} \
+        --libdir=%{_libdir} \
+        --localstatedir=%{_localstatedir} \
+        --mandir=%{_mandir} \
+        --infodir=%{_infodir} \
 	--libexecdir=%{_libdir} \
-	--sharedstatedir=/var \
+	--sharedstatedir=%{_var} \
 	--with-gcc \
 	--with-pop \
+	--without-xpm \
+	--without-jpeg \
+	--without-tiff \
+	--without-gif \
+	--without-png \
 	--with-x=no \
 	%{_target_platform}
 
 %{__make}
 cd ..
 
-# recompile patched .el files
-build-withx/src/emacs \
-	-batch \
-	--no-init-file \
-	--no-site-file \
-	-f batch-byte-compile \
-	lisp/mail/mh-utils.el
-
 %install
 rm -rf $RPM_BUILD_ROOT
+
 install -d $RPM_BUILD_ROOT{%{_infodir},%{_libdir}/emacs/site-lisp} \
 	$RPM_BUILD_ROOT{%{_applnkdir}/Development/Editors,/etc/skel} \
 	$RPM_BUILD_ROOT%{_pixmapsdir}
 
-%{__make} install -C build-withx \
-	prefix=$RPM_BUILD_ROOT%{_prefix} \
-	libexecdir=$RPM_BUILD_ROOT%{_libdir} \
-	sharedstatedir=$RPM_BUILD_ROOT/var \
-	mandir=$RPM_BUILD_ROOT/%{_mandir} \
-	infodir=$RPM_BUILD_ROOT/%{_infodir}
-
-install build-nox/src/emacs $RPM_BUILD_ROOT%{_bindir}/emacs-nox
+%{makeinstall} -C build-withx
+install build-nox/src/emacs	$RPM_BUILD_ROOT%{_bindir}/emacs-nox
 
 install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Development/Editors
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.emacs
@@ -318,7 +306,7 @@ install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
-gzip -9nf etc/NEWS BUGS README etc/FAQ
+gzip -9nf etc/NEWS BUGS README
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -356,14 +344,20 @@ fi
 %attr(755,root,root) %{_bindir}/emacs
 %{_applnkdir}/Development/Editors/emacs.desktop
 %{_pixmapsdir}/*
+%{_datadir}/emacs/%{version}/lisp/*.xpm
+%{_datadir}/emacs/%{version}/lisp/gnus/*.xpm
+%dir %{_datadir}/emacs/%{version}/lisp/toolbar
+%{_datadir}/emacs/%{version}/lisp/toolbar/*.elc
+%{_datadir}/emacs/%{version}/lisp/toolbar/*.xpm
 
 %files common
 %defattr(644,root,root,755)
 %config(noreplace) /etc/skel/.emacs
-%doc {etc/NEWS,BUGS,README,etc/FAQ}.gz
+%doc *.gz */*.gz
 %attr(755,root,root) %{_bindir}/b2m
 %attr(755,root,root) %{_bindir}/emacsclient
 %attr(755,root,root) %{_bindir}/rcs-checkin
+%attr(755,root,root) %{_bindir}/ebrowse
 %{_mandir}/man1/emacs*
 %{_infodir}/*
 
@@ -383,7 +377,7 @@ fi
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/sorted-doc
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/vcdiff
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/yow
-%{_libdir}/emacs/%{version}/*/fns-20.7.1.el
+%{_libdir}/emacs/%{version}/*/fns-*.el
 
 %dir %{_datadir}/emacs/%{version}
 %dir %{_datadir}/emacs/%{version}/site-lisp
@@ -399,18 +393,21 @@ fi
 %dir %{_datadir}/emacs/%{version}/lisp/progmodes
 %dir %{_datadir}/emacs/%{version}/lisp/term
 %dir %{_datadir}/emacs/%{version}/lisp/textmodes
+%dir %{_datadir}/emacs/%{version}/lisp/eshell
+%dir %{_datadir}/emacs/%{version}/lisp/net
+%dir %{_datadir}/emacs/%{version}/lisp/obsolete
 
 %{_datadir}/emacs/site-lisp
 %{_datadir}/emacs/%{version}/etc
 %{_datadir}/emacs/%{version}/lisp/*.elc
 %{_datadir}/emacs/%{version}/lisp/README
 %{_datadir}/emacs/%{version}/lisp/COPYING
-%{_datadir}/emacs/%{version}/lisp/bindings.el
 %{_datadir}/emacs/%{version}/lisp/cus-load.el
 %{_datadir}/emacs/%{version}/lisp/cus-start.el
+%{_datadir}/emacs/%{version}/lisp/finder-inf.el
+%{_datadir}/emacs/%{version}/lisp/forms-pass.el
 %{_datadir}/emacs/%{version}/lisp/generic-x.el
-%{_datadir}/emacs/%{version}/lisp/loaddefs.el
-%{_datadir}/emacs/%{version}/lisp/loadup.el
+%{_datadir}/emacs/%{version}/lisp/load*.el
 %{_datadir}/emacs/%{version}/lisp/patcomp.el
 %{_datadir}/emacs/%{version}/lisp/paths.el
 %{_datadir}/emacs/%{version}/lisp/subdirs.el
@@ -419,27 +416,46 @@ fi
 %{_datadir}/emacs/%{version}/lisp/language/*.elc
 %{_datadir}/emacs/%{version}/lisp/gnus/*.elc
 %{_datadir}/emacs/%{version}/lisp/mail/*.elc
-%{_datadir}/emacs/%{version}/lisp/mail/sc.el
 %{_datadir}/emacs/%{version}/lisp/mail/blessmail.el
 %{_datadir}/emacs/%{version}/lisp/play/*.elc
 %{_datadir}/emacs/%{version}/lisp/play/bruce.el
 %{_datadir}/emacs/%{version}/lisp/term/*.elc
+%{_datadir}/emacs/%{version}/lisp/term/AT386.el
+%{_datadir}/emacs/%{version}/lisp/term/apollo.el
+%{_datadir}/emacs/%{version}/lisp/term/bobcat.el
+%{_datadir}/emacs/%{version}/lisp/term/internal.el
+%{_datadir}/emacs/%{version}/lisp/term/iris-ansi.el
+%{_datadir}/emacs/%{version}/lisp/term/keyswap.el
+%{_datadir}/emacs/%{version}/lisp/term/linux.el
+%{_datadir}/emacs/%{version}/lisp/term/lk201.el
+%{_datadir}/emacs/%{version}/lisp/term/news.el
+%{_datadir}/emacs/%{version}/lisp/term/vt102.el
+%{_datadir}/emacs/%{version}/lisp/term/vt125.el
+%{_datadir}/emacs/%{version}/lisp/term/vt2*
+%{_datadir}/emacs/%{version}/lisp/term/vt3*
+%{_datadir}/emacs/%{version}/lisp/term/vt4*
+%{_datadir}/emacs/%{version}/lisp/term/wyse50.el
+%{_datadir}/emacs/%{version}/lisp/term/xterm.el
 %{_datadir}/emacs/%{version}/lisp/emulation/*.elc
 %{_datadir}/emacs/%{version}/lisp/international/*.elc
 %{_datadir}/emacs/%{version}/lisp/international/latin-*.el
 %{_datadir}/emacs/%{version}/lisp/international/mule-conf.el
 %{_datadir}/emacs/%{version}/lisp/calendar/*.elc
 %{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.elc
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-specs.el
 %{_datadir}/emacs/%{version}/lisp/textmodes/*.elc
 %{_datadir}/emacs/%{version}/lisp/progmodes/*.elc
+%{_datadir}/emacs/%{version}/lisp/eshell/*.elc
+%{_datadir}/emacs/%{version}/lisp/eshell/esh-groups.el
+%{_datadir}/emacs/%{version}/lisp/net/*.elc
+%{_datadir}/emacs/%{version}/lisp/obsolete/*.elc
 
 %files el
 %defattr(644,root,root,755)
 %{_datadir}/emacs/%{version}/lisp/forms-d2.dat
 
 %{_datadir}/emacs/%{version}/lisp/a*.el
-%{_datadir}/emacs/%{version}/lisp/ba*.el
-%{_datadir}/emacs/%{version}/lisp/b[j-z]*.el
+%{_datadir}/emacs/%{version}/lisp/b*.el
 %{_datadir}/emacs/%{version}/lisp/c[a-t]*.el
 %{_datadir}/emacs/%{version}/lisp/cus-[a-k]*.el
 %{_datadir}/emacs/%{version}/lisp/custom.el
@@ -458,7 +474,6 @@ fi
 %{_datadir}/emacs/%{version}/lisp/s-*.el
 %{_datadir}/emacs/%{version}/lisp/s[a-t]*.el
 %{_datadir}/emacs/%{version}/lisp/subr.el
-%{_datadir}/emacs/%{version}/lisp/sun*.el
 %{_datadir}/emacs/%{version}/lisp/[t-u]*.el
 %{_datadir}/emacs/%{version}/lisp/[w-z]*.el
 %{_datadir}/emacs/%{version}/lisp/v[a-d]*.el
@@ -474,7 +489,13 @@ fi
 %{_datadir}/emacs/%{version}/lisp/play/blackbox.el
 %{_datadir}/emacs/%{version}/lisp/play/cookie1.el
 %{_datadir}/emacs/%{version}/lisp/play/[^(bruce)]*.el
-%{_datadir}/emacs/%{version}/lisp/term/*.el
+%{_datadir}/emacs/%{version}/lisp/term/bg-*.el
+%{_datadir}/emacs/%{version}/lisp/term/*-win.el
+%{_datadir}/emacs/%{version}/lisp/term/sun.el
+%{_datadir}/emacs/%{version}/lisp/term/sup-mouse.el
+%{_datadir}/emacs/%{version}/lisp/term/tty-colors.el
+%{_datadir}/emacs/%{version}/lisp/term/tvi*.el
+%{_datadir}/emacs/%{version}/lisp/term/vt100.el
 %{_datadir}/emacs/%{version}/lisp/emulation/*.el
 %{_datadir}/emacs/%{version}/lisp/international/[a-k]*.el
 %{_datadir}/emacs/%{version}/lisp/international/[o-z]*.el
@@ -483,23 +504,30 @@ fi
 %{_datadir}/emacs/%{version}/lisp/international/mule-util.el
 %{_datadir}/emacs/%{version}/lisp/international/mule.el
 %{_datadir}/emacs/%{version}/lisp/calendar/*.el
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.el
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/c[a-k]*.el
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/c[m-z]*.el
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-[a-r]*.el
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-seq.el
 %{_datadir}/emacs/%{version}/lisp/textmodes/*.el
 %{_datadir}/emacs/%{version}/lisp/progmodes/*.el
+%{_datadir}/emacs/%{version}/lisp/eshell/e[a-r]*.el
+%{_datadir}/emacs/%{version}/lisp/eshell/esh-[^g]*.el
+%{_datadir}/emacs/%{version}/lisp/net/*.el
+%{_datadir}/emacs/%{version}/lisp/obsolete/*.el
 
 %files leim
 %defattr(644,root,root,755)
 %dir %{_datadir}/emacs/%{version}/leim
-%dir %{_datadir}/emacs/%{version}/leim/skk
+%dir %{_datadir}/emacs/%{version}/leim/ja-dic
 %dir %{_datadir}/emacs/%{version}/leim/quail
 %{_datadir}/emacs/%{version}/leim/leim-list.el
 %{_datadir}/emacs/%{version}/leim/quail/*.elc
-%{_datadir}/emacs/%{version}/leim/skk/*.elc
+%{_datadir}/emacs/%{version}/leim/ja-dic/*.elc
 
 %files leim-el
 %defattr(644,root,root,755)
 %{_datadir}/emacs/%{version}/leim/quail/*.el
-%{_datadir}/emacs/%{version}/leim/skk/*.el
+%{_datadir}/emacs/%{version}/leim/ja-dic/*.el
 
 %files nox
 %defattr(644,root,root,755)
