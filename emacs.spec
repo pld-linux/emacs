@@ -11,6 +11,7 @@ Version:	21.2
 Release:	2
 License:	GPL
 Group:		Applications/Editors/Emacs
+URL:		http://www.gnu.org/software/emacs/
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/gnu/emacs/leim-%{version}.tar.gz
 Source2:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
