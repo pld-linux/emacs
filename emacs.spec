@@ -28,6 +28,10 @@ Patch8:		%{name}-ia64-2.patch
 Patch9:		%{name}-ia64-3.patch
 Patch10:	%{name}-lisp-startup-localealias.patch
 Patch11:	%{name}-proto.patch
+BuildRequires:	ncurses-devel
+BuildRequires:	Xaw3d-devel
+BuildRequires:	XFree86-devel
+BuildRequires:	XFree86
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Requires:	ctags
 Requires:	emacs-common
