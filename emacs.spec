@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_without	gtk
 #
-%define	snap	20050118
+%define	snap	20050317
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
 Summary(es):	GNU Emacs
@@ -11,12 +11,12 @@ Summary(pl):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
-Version:	21.3.50
+Version:	22.0.50
 Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	1abf07a6755caf336b9746d92f68a63e
+# Source0-md5:	998b46f99ec5847af8fdee6e9c9df84a
 Source1:	%{name}.desktop
 Source2:	%{name}-dot%{name}
 Source3:	%{name}-site-start.el
@@ -436,7 +436,7 @@ fi
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs
-%attr(755,root,root) %{_bindir}/emacs-21.3.50
+%attr(755,root,root) %{_bindir}/emacs-%{version}
 %{_datadir}/emacs/%{version}/lisp/*.xpm
 %dir %{_datadir}/emacs/%{version}/lisp/toolbar
 %{_datadir}/emacs/%{version}/lisp/toolbar/*.elc
