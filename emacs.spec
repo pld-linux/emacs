@@ -340,22 +340,18 @@ mkdir build-withx && cd build-withx
 	--sharedstatedir=%{_var} \
 	--with-gcc \
 	--with-pop \
-%if %{without gtk}
-	--with-x-toolkit \
-%endif
 	--with-xpm \
 	--with-jpeg \
 	--with-tiff \
 	--with-gif \
 	--with-png \
-%if %{with gtk}
+%if %{without gtk}
+        --with-x-toolkit \
+%else
 	--with-gtk \
 %endif
 	%{_target_platform}
 
-%ifarch %{ix86}
-setarch i386 \
-%endif
 %{__make} bootstrap
 cd ..
 
@@ -386,9 +382,6 @@ mkdir build-nox && cd build-nox
 	--with-x=no \
 	%{_target_platform}
 
-%ifarch %{ix86}
-setarch i386 \
-%endif
 %{__make} bootstrap
 cd ..
 
