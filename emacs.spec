@@ -8,7 +8,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.2
-Release:	4
+Release:	5
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
@@ -235,6 +235,7 @@ Bu paket içinde yer alan emacs programý, X11 desteði içermez ve
 Summary:	The libraries needed to run the GNU Emacs text editor
 Summary(pl):	Biblioteki potrzebne do uruchomienia edytora tekstu GNU Emacs
 Group:		Applications/Editors/Emacs
+Requires:	emacscommon
 
 %description common
 Emacs is a powerful, customizable, self-documenting, modeless text
@@ -258,6 +259,19 @@ Ten pakiet zawiera biblioteki potrzebne do uruchomienia Emacsa. Oprócz
 tego pakietu potrzebny jest jeszcze w³a¶ciwy program (emacs-nox lub
 emacs). Zainstaluj emacs-nox je¿eli nie zamierzasz u¿ywasz Emacsa pod
 X Window System; zainstaluj emacs je¿eli u¿ywasz X.
+
+%package extras
+Summary:	files which conflict with XEmacs
+Summary(pl):	wspólne pliki XEmacsa i GNU Emacsa
+Group:		Applications/Editors/Emacs
+Provides:	emacscommon
+Obsoletes:	emacscommon
+
+%description extras
+These files are common between GNU Emacs and XEmacs.
+
+%description extras -l pl
+S± to wpólne pliki GNU Emacs i XEmacs.
 
 %prep
 %setup -q -b 1 -a 2
@@ -409,9 +423,7 @@ fi
 %defattr(644,root,root,755)
 %config(noreplace) /etc/skel/.emacs
 %doc BUGS README etc/NEWS
-%attr(755,root,root) %{_bindir}/b2m
 %attr(755,root,root) %{_bindir}/emacsclient
-%attr(755,root,root) %{_bindir}/rcs-checkin
 %attr(755,root,root) %{_bindir}/ebrowse
 %{_mandir}/man1/emacs*
 %{_infodir}/*
@@ -505,6 +517,11 @@ fi
 %{_datadir}/emacs/%{version}/lisp/eshell/esh-groups.el
 %{_datadir}/emacs/%{version}/lisp/net/*.elc
 %{_datadir}/emacs/%{version}/lisp/obsolete/*.elc
+
+%files extras
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/b2m
+%attr(755,root,root) %{_bindir}/rcs-checkin
 
 %files el
 %defattr(644,root,root,755)
