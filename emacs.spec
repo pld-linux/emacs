@@ -8,7 +8,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.1.95
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	ftp://alpha.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
@@ -19,6 +19,7 @@ Source4:	%{name}-dot%{name}
 Source5:	%{name}-site-start.el
 Source6:	%{name}.png
 Patch1:		%{name}-loadup.patch
+Patch2:		%{name}-encoding.patch
 # needed for bilding, not in pre/post in/un
 BuildRequires:	/usr/sbin/install-info
 BuildRequires:	ncurses-devel
@@ -259,6 +260,7 @@ X Window System; zainstaluj emacs je¿eli u¿ywasz X.
 %prep
 %setup -q -b 1 -a 2
 %patch1 -p1
+%patch2 -p1
 
 # /usr/sbin is not in standard path
 for file in Makefile.in elisp-manual-21-2.8/Makefile.in; do
