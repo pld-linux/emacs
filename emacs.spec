@@ -142,7 +142,7 @@ CONFOPTS="--prefix=%{_prefix} \
 mkdir build-nox && cd build-nox
 CFLAGS="$RPM_OPT_FLAGS $PUREDEF" LDFLAGS=-s \
   ../configure ${CONFOPTS} --with-x=no %{_target_platform}
-make
+%{__make}
 cd ..
 
 #Build binary with X support
