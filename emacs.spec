@@ -11,9 +11,6 @@ Version:	21.1.90
 Release:	1
 License:	GPL
 Group:		Applications/Editors/Emacs
-Group(de):	Applikationen/Editors/Emacs
-Group(pl):	Aplikacje/Edytory/Emacs
-Group(pt):	Aplicações/Editores/Emacs
 Source0:	ftp://alpha.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
 Source1:	ftp://alpha.gnu.org/gnu/emacs/leim-%{version}.tar.gz
 Source2:	ftp://alpha.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
@@ -102,9 +99,6 @@ Summary(pl):	¬ród³a programów w elispie do³±czonych do Emacsa
 Summary(pt_BR):	Fontes .el -- não são necessários para rodar o emacs
 Summary(tr):	Lisp kaynak dosyalarý -- Emacs çalýþtýrmak için gerekmez
 Group:		Applications/Editors/Emacs
-Group(de):	Applikationen/Editors/Emacs
-Group(pl):	Aplikacje/Edytory/Emacs
-Group(pt):	Aplicações/Editores/Emacs
 Requires:	emacs-common
 
 %description el
@@ -148,9 +142,6 @@ Summary(es):	Código Lisp para internacionalización en Emacs
 Summary(pl):	Kod w Emacs Lispie do wprowadzania znaków narodowych
 Summary(pt_BR):	Código Lisp para para internacionalização no Emacs
 Group:		Applications/Editors/Emacs
-Group(de):	Applikationen/Editors/Emacs
-Group(pl):	Aplikacje/Edytory/Emacs
-Group(pt):	Aplicações/Editores/Emacs
 Requires:	emacs-common
 
 %description leim
@@ -178,9 +169,6 @@ Código Lisp para para internacionalização no Emacs.
 Summary:	Emacs Lisp source code for input methods for international characters
 Summary(pl):	Kod ¼ród³owy w Emacs Lispie do wprowadzania znaków narodowych
 Group:		Applications/Editors/Emacs
-Group(de):	Applikationen/Editors/Emacs
-Group(pl):	Aplikacje/Edytory/Emacs
-Group(pt):	Aplicações/Editores/Emacs
 Requires:	emacs-leim
 
 %description leim-el
@@ -198,9 +186,6 @@ Summary(pl):	emacs-nox - edytor tekstu Emacs bez wsparcia dla X Window System
 Summary(pt_BR):	Emacs-nox -- emacs sem precisar de bibliotecas X
 Summary(tr):	X gerektirmeyen emacs paketi
 Group:		Applications/Editors/Emacs
-Group(de):	Applikationen/Editors/Emacs
-Group(pl):	Aplikacje/Edytory/Emacs
-Group(pt):	Aplicações/Editores/Emacs
 Requires:	emacs-common
 
 %description nox
@@ -247,9 +232,6 @@ Bu paket içinde yer alan emacs programý, X11 desteði içermez ve
 Summary:	The libraries needed to run the GNU Emacs text editor
 Summary(pl):	Biblioteki potrzebne do uruchomienia edytora tekstu GNU Emacs
 Group:		Applications/Editors/Emacs
-Group(de):	Applikationen/Editors/Emacs
-Group(pl):	Aplikacje/Edytory/Emacs
-Group(pt):	Aplicações/Editores/Emacs
 
 %description common
 Emacs is a powerful, customizable, self-documenting, modeless text
