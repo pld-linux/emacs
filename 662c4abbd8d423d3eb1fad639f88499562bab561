@@ -1,0 +1,83 @@
+almost raw
+
+* Fri Apr 16 1999 Owen Taylor <otaylor@redhat.com>
+- replace bad xemacs compiled .elc file for mh-e with one compiled
+  on emacs
+
+* Thu Apr 15 1999 Bill Nottingham <notting@redhat.com>
+- make sure movemail doesn't get %defattr()'d to root.root
+
+* Wed Apr 14 1999 Cristian Gafton <gafton@redhat.com>
+- patch to make it work with dxpc
+
+* Wed Mar 31 1999 Preston Brown <pbrown@redhat.com>
+- updated mh-utils emacs lisp file to match our nmh path locations
+
+* Sun Mar 21 1999 Cristian Gafton <gafton@redhat.com> 
+- auto rebuild in the new build environment (release 9)
+
+* Fri Feb 26 1999 Cristian Gafton <gafton@redhat.com>
+- linker scripts hack to make it build on the alpha
+
+* Fri Jan  1 1999 Jeff Johnson <jbj@redhat.com>
+- add leim package (thanks to Pavel.Janik@inet.cz).
+
+* Fri Dec 18 1998 Cristian Gafton <gafton@redhat.com>
+- build against glibc 2.1
+
+* Wed Sep 30 1998 Cristian Gafton <gafton@redhat.com>
+- backed up changes to uncompress.el (it seems that the one from 20.2 works
+  much better)
+
+* Mon Sep 28 1998 Jeff Johnson <jbj@redhat.com>
+- eliminate /tmp race in rcs2log
+
+* Wed Sep 09 1998 Cristian Gafton <gafton@redhat.com>
+- upgrade to 20.3
+
+* Tue Jun  9 1998 Jeff Johnson <jbj@redhat.com>
+- add --with-pop to X11 compile.
+- include contents of /usr/share/.../etc with main package.
+
+* Mon Jun 01 1998 Prospector System <bugs@redhat.com>
+- translations modified for de, fr
+
+* Mon Jun 01 1998 David S. Miller <davem@dm.cobaltmicro.com>
+- fix signals when linked with glibc on non-Intel architectures
+  NOTE: This patch is not needed with emacs >20.2
+
+* Thu May 07 1998 Prospector System <bugs@redhat.com>
+
+- translations modified for de, fr, tr
+
+* Thu May 07 1998 Cristian Gafton <gafton@redhat.com>
+- added /usr/lib/emacs/20.2/*-redhat-linux directory in the filelist
+
+* Thu Apr 09 1998 Cristian Gafton <gafton@redhat.com>
+- alpha started to like emacs-nox again :-)
+
+* Thu Nov  6 1997 Michael Fulbright <msf@redhat.com>
+- alpha just doesnt like emacs-nox, taking it out for now
+
+* Mon Nov  3 1997 Michael Fulbright <msf@redhat.com>
+- added multibyte support back into emacs 20.2
+- added wmconfig for X11 emacs
+- fixed some errant buildroot references
+
+* Thu Oct 23 1997 Michael Fulbright <msf@redhat.com>
+- joy a new version of emacs! Of note - no lockdir any more.
+- use post/preun sections to handle numerous GNU info files
+
+* Mon Oct 06 1997 Erik Troan <ewt@redhat.com>
+- stopped stripping it as it seems to break things
+
+* Sun Sep 14 1997 Erik Troan <ewt@redhat.com>
+- turned off ecoff support on the Alpha (which doesn't build anymore)
+
+* Mon Jun 16 1997 Erik Troan <ewt@redhat.com>
+- built against glibc
+
+* Fri Feb 07 1997 Michael K. Johnson <johnsonm@redhat.com>
+- Moved ctags to gctags to fit in the more powerful for C (but less
+  general) exuberant ctags as the binary /usr/bin/ctags and the
+  man page /usr/man/man1/ctags.1
