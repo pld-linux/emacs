@@ -8,7 +8,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.2
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Editors/Emacs
 URL:		http://www.gnu.org/software/emacs/
@@ -348,13 +348,13 @@ cd ..
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT{%{_infodir},%{_libdir}/emacs/site-lisp} \
-	$RPM_BUILD_ROOT{%{_applnkdir}/Development/Editors,/etc/skel} \
+	$RPM_BUILD_ROOT{%{_applnkdir}/Editors,/etc/skel} \
 	$RPM_BUILD_ROOT%{_pixmapsdir}
 
 %{makeinstall} -C build-withx
 install build-nox/src/emacs	$RPM_BUILD_ROOT%{_bindir}/emacs-nox
 
-install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Development/Editors
+install %{SOURCE3} $RPM_BUILD_ROOT%{_applnkdir}/Editors
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.emacs
 install %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/site-start.el
 install %{SOURCE6} $RPM_BUILD_ROOT/usr/X11R6/share/pixmaps
@@ -400,7 +400,7 @@ fi
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs
-%{_applnkdir}/Development/Editors/emacs.desktop
+%{_applnkdir}/Editors/emacs.desktop
 %{_pixmapsdir}/*
 %{_datadir}/emacs/%{version}/lisp/*.xpm
 %{_datadir}/emacs/%{version}/lisp/gnus/*.xpm
