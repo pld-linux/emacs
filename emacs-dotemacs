@@ -19,3 +19,20 @@
 
 ;; Stop at the end of the file, not just add lines
 (setq next-line-add-newlines nil)
+
+;; Nemerle
+(autoload 'nemerle-mode "nemerle.el"
+  "Major mode for editing nemerle programs." t)
+(setq auto-mode-alist (cons '("\\.n$" . nemerle-mode) auto-mode-alist))
+
+;; If you'd like to have every line indented right after new line put
+;; these lines into your ~/.emacs files.
+
+(defun my-nemerle-mode-hook ()
+  (setq nemerle-basic-offset 2)
+  (define-key nemerle-mode-map "\C-m" 'newline-and-indent))
+(add-hook 'nemerle-mode-hook 'my-nemerle-mode-hook)
+
+;; Tuareg Mode (ocaml)
+(setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
+(autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
