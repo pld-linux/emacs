@@ -7,7 +7,7 @@ Summary(pl):	GNU Emacs
 Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
-Version:	21.1.90
+Version:	21.1.95
 Release:	1
 License:	GPL
 Group:		Applications/Editors/Emacs
