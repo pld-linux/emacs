@@ -1,5 +1,7 @@
 #
 # Conditional build:
+%bcond_with	gtk
+#
 %define         snap 20041228
 %define		elisp_man_version	21-2.8
 Summary:	The Emacs text editor for the X Window System
@@ -36,6 +38,9 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libtool
 BuildRequires:	libungif-devel
 BuildRequires:	ncurses-devel
+%if %{with gtk}
+BuildRequires:	gtk+2-devel
+%endif
 %ifarch %{ix86}
 BuildRequires:	setarch
 %endif
@@ -335,12 +340,17 @@ mkdir build-withx && cd build-withx
 	--sharedstatedir=%{_var} \
 	--with-gcc \
 	--with-pop \
+%if %{without gtk}
 	--with-x-toolkit \
+%endif
 	--with-xpm \
 	--with-jpeg \
 	--with-tiff \
 	--with-gif \
 	--with-png \
+%if %{with gtk}
+	--with-gtk \
+%endif
 	%{_target_platform}
 
 %ifarch %{ix86}
