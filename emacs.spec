@@ -281,7 +281,7 @@ Obsoletes:	emacscommon
 These files are common between GNU Emacs and XEmacs.
 
 %description extras -l pl
-S± to wpólne pliki GNU Emacs i XEmacs.
+S± to wspólne pliki GNU Emacs i XEmacs.
 
 %prep
 %setup -q -b 1 -a 2
