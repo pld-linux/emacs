@@ -1,4 +1,4 @@
-%define		elisp_man_version	21-2.7a
+%define		elisp_man_version	21-2.8
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
 Summary(es):	GNU Emacs
@@ -7,16 +7,16 @@ Summary(pl):	GNU Emacs
 Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
-Version:	21.1
-Release:	3
+Version:	21.1.90
+Release:	1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Group(de):	Applikationen/Editors/Emacs
 Group(pl):	Aplikacje/Edytory/Emacs
 Group(pt):	Aplicações/Editores/Emacs
-Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
-Source1:	ftp://ftp.gnu.org/gnu/emacs/leim-%{version}.tar.gz
-Source2:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
+Source0:	ftp://alpha.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
+Source1:	ftp://alpha.gnu.org/gnu/emacs/leim-%{version}.tar.gz
+Source2:	ftp://alpha.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
 Source3:	%{name}.desktop
 Source4:	%{name}-dot%{name}
 Source5:	%{name}-site-start.el
@@ -279,7 +279,7 @@ X Window System; zainstaluj emacs je¿eli u¿ywasz X.
 %patch1 -p1
 
 # /usr/sbin is not in standard path
-for file in Makefile.in elisp-manual-21-2.7/Makefile.in; do
+for file in Makefile.in elisp-manual-21-2.8/Makefile.in; do
 	sed "s/install\-info/\/usr\/sbin\/install\-info/" < $file > $file.new
 	mv $file.new $file
 done
