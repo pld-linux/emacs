@@ -12,14 +12,14 @@ Summary(pl):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
-Version:	21.3
-Release:	7
+Version:	21.4
+Release:	0.1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
-# Source0-md5:	a0bab457cbf5b4f8eb99d1d0a3ada420
+# Source0-md5:	0a68ea5b29bb2f081ba8dd85d37bb9bc
 Source1:	ftp://ftp.gnu.org/gnu/emacs/leim-%{version}.tar.gz
-# Source1-md5:	1c968c37e22be0f0d8f8cd57cebe5a5e
+# Source1-md5:	32938cb5a7505d995a1e835639d19707
 Source2:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
 # Source2-md5:	71500b6aaa3d80ea1df1b46c5055c43d
 Source3:	%{name}.desktop
