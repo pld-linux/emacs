@@ -39,6 +39,7 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libtool
 BuildRequires:	libungif-devel
 BuildRequires:	ncurses-devel
+BuildRequires:	sed >= 4.0
 %ifarch %{ix86}
 BuildRequires:	setarch
 %endif
