@@ -1,26 +1,25 @@
-Summary: The libraries needed to run the GNU Emacs text editor.
-Name: emacs
-%define	version	20.3
-Version: %{version}
-Release: 15
-Copyright: GPL
-Group: Applications/Editors
-Source0: ftp://ftp.gnu.org/pub/gnu/emacs-%{version}.tar.gz
-Source1: ftp://ftp.gnu.org/pub/gnu/leim-%{version}.tar.gz
-Source2: emacs.wmconfig
-Source3: mh-utils.elc
-Patch0: emacs-20.3-gnu.patch
-Patch1: emacs-20.2-xaw3d.patch
-Patch2: emacs-20.2-gctags.patch
+Summary:	The libraries needed to run the GNU Emacs text editor.
+Name:		emacs
+Version:	20.3
+Release:	16
+Copyright:	GPL
+Group:		Applications/Editors
+Source0:	ftp://ftp.gnu.org/pub/gnu/emacs-%{version}.tar.gz
+Source1:	ftp://ftp.gnu.org/pub/gnu/leim-%{version}.tar.gz
+Source2:	emacs.wmconfig
+Source3:	mh-utils.elc
+Patch0:		emacs-20.3-gnu.patch
+Patch1:		emacs-20.2-xaw3d.patch
+Patch2:		emacs-20.2-gctags.patch
 # patch4 (signal patch) not needed for emacs > 20.2
-Patch4: emacs-20.2-signal.patch
-Patch5: emacs-20.3-tmprace.patch
-Patch6: emacs-20.3-ufix.patch
-Patch7: emacs-armconfig.patch
-Patch8: emacs-20.3-linkscr.patch
-Patch9: emacs-20.3-nmhlocation.patch
-Patch10: emacs-20.3-dxpc.patch
-Buildroot: /var/tmp/%{name}-root
+Patch4:		emacs-20.2-signal.patch
+Patch5:		emacs-20.3-tmprace.patch
+Patch6:		emacs-20.3-ufix.patch
+Patch7:		emacs-armconfig.patch
+Patch8:		emacs-20.3-linkscr.patch
+Patch9:		emacs-20.3-nmhlocation.patch
+Patch10:	emacs-20.3-dxpc.patch
+Buildroot:	/tmp/%{name}-%{version}-root
 #
 # more info on multibyte support: http://sourcery.naggum.no/emacs/
 #
@@ -38,9 +37,9 @@ Install emacs-nox if you are not going to use the X Window System; install
 emacs-X11 if you will be using X.
 
 %package el
-Summary: The sources for elisp programs included with Emacs.
-Group: Applications/Editors
-Requires: emacs
+Summary:	The sources for elisp programs included with Emacs.
+Group:		Applications/Editors
+Requires:	%{name} = %{version}
 
 %description el
 Emacs-el contains the emacs-elisp sources for many of the elisp
@@ -50,18 +49,18 @@ You need to install emacs-el only if you intend to modify any of the
 Emacs packages or see some elisp examples.
 
 %package leim
-Summary: Emacs Lisp code for input methods for internationalization.
-Group: Applications/Editors
-Requires: emacs
+Summary:	Emacs Lisp code for input methods for internationalization.
+Group:		Applications/Editors
+Requires:	%{name} = %{version}
 
 %description leim
 The Emacs Lisp code for input methods for various international
 character scripts.
 
 %package nox
-Summary: The Emacs text editor without support for the X Window System.
-Group: Applications/Editors
-Requires: emacs
+Summary:	The Emacs text editor without support for the X Window System.
+Group:		Applications/Editors
+Requires:	%{name} = %{version}
 
 %description nox
 Emacs-nox is the Emacs text editor program without support for
@@ -73,9 +72,9 @@ of X, but emacs-nox will only work outside of X).  You'll also need to
 install the emacs package in order to run Emacs.
 
 %package X11
-Summary: The Emacs text editor for the X Window System.
-Group: Applications/Editors
-Requires: emacs
+Summary:	The Emacs text editor for the X Window System.
+Group:		Applications/Editors
+Requires:	%{name} = %{version}
 
 %description X11
 Emacs-X11 includes the Emacs text editor program for use with the
@@ -92,7 +91,6 @@ install the emacs package in order to run Emacs.
 %prep
 %setup -q -b 1
 cp -f $RPM_SOURCE_DIR/mh-utils.elc lisp/mail
-
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -111,32 +109,32 @@ find . -name "*.orig" -exec rm -f {} \;
 PUREDEF=""
 XPUREDEF=""
 libtoolize --force --copy
-CONFOPTS="--prefix=/usr --libexecdir=/usr/lib --sharedstatedir=/var --with-gcc --with-pop"
+CONFOPTS="--prefix=%{_prefix} --libexecdir=%{_libdir} --sharedstatedir=/var --with-gcc --with-pop"
 
 #Build binary without X support
 [ -d build-nox ] && rm -rf build-nox
 mkdir build-nox && cd build-nox
-CFLAGS="$RPM_OPT_FLAGS -g -O0 $PUREDEF" LDFLAGS=-s \
-  ../configure ${CONFOPTS} --with-x=no ${RPM_ARCH}-redhat-linux
+CFLAGS="$RPM_OPT_FLAGS $PUREDEF" LDFLAGS=-s \
+  ../configure ${CONFOPTS} --with-x=no %{_target_platform}
 make
 cd ..
 
 #Build binary with X support
 [ -d build-withx ] && rm -rf build-withx
 mkdir build-withx && cd build-withx
-CFLAGS="$RPM_OPT_FLAGS -g -O0 $XPUREDEF" LDFLAGS=-s \
-  ../configure ${CONFOPTS} --with-x-toolkit ${RPM_ARCH}-redhat-linux
+CFLAGS="$RPM_OPT_FLAGS $XPUREDEF" LDFLAGS=-s \
+  ../configure ${CONFOPTS} --with-x-toolkit %{_target_platform}
 make 
 cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/usr
+install -d $RPM_BUILD_ROOT%{_prefix}
 
-ARCHDIR=${RPM_ARCH}-redhat-linux
+ARCHDIR=%{_target_platform}
 make install -C build-withx \
-	prefix=$RPM_BUILD_ROOT/usr \
-	libexecdir=$RPM_BUILD_ROOT/usr/lib \
+	prefix=$RPM_BUILD_ROOT%{_prefix} \
+	libexecdir=$RPM_BUILD_ROOT%{_libdir} \
 	sharedstatedir=$RPM_BUILD_ROOT/var
 
 rm -f $RPM_BUILD_ROOT/usr/info/dir
