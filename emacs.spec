@@ -1,3 +1,4 @@
+%define		elisp_man_version	21-2.7a
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
 Summary(es):	GNU Emacs
@@ -7,7 +8,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Editors/Emacs
 Group(de):	Applikationen/Editors/Emacs
@@ -15,6 +16,7 @@ Group(pl):	Aplikacje/Edytory/Emacs
 Group(pt):	Aplicações/Editores/Emacs
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/gnu/emacs/leim-%{version}.tar.gz
+Source2:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
 Source3:	%{name}.desktop
 Source4:	%{name}-dot%{name}
 Source5:	%{name}-site-start.el
@@ -29,6 +31,7 @@ BuildRequires:	libungif-devel
 BuildRequires:	libpng-devel
 BuildRequires:	autoconf
 BuildRequires:	libtool
+BuildRequires:	texinfo
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Requires:	ctags
 Requires:	emacs-common
@@ -270,7 +273,7 @@ emacs). Zainstaluj emacs-nox je¿eli nie zamierzasz u¿ywasz Emacsa pod
 X Window System; zainstaluj emacs je¿eli u¿ywasz X.
 
 %prep
-%setup -q -b 1
+%setup -q -b 1 -a 2
 %patch1 -p1
 
 %build
@@ -280,6 +283,11 @@ X Window System; zainstaluj emacs je¿eli u¿ywasz X.
 #aclocal
 #autoconf
 #touch aclocal.m4
+
+cd elisp-manual-*
+%configure2_13
+%{__make}
+cd ..
 
 # Build binary with X support
 [ -d build-withx ] && rm -rf build-withx
@@ -357,6 +365,9 @@ install %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/site-start.el
 install %{SOURCE6} $RPM_BUILD_ROOT/usr/X11R6/share/pixmaps
 
 install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
+
+%{__make} -C elisp-manual-* install \
+	infodir=$RPM_BUILD_ROOT%{_infodir}
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
