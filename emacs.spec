@@ -14,8 +14,11 @@ Release:	5
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
+# Source0-md5: f4b58e5c2d923fc92495e0c2f167c5db
 Source1:	ftp://ftp.gnu.org/gnu/emacs/leim-%{version}.tar.gz
+# Source1-md5: e6d614671b5d7d7670d18799c6668a46
 Source2:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
+# Source2-md5: da1e26fa836db918914c48a9b0c6a8dc
 Source3:	%{name}.desktop
 Source4:	%{name}-dot%{name}
 Source5:	%{name}-site-start.el
