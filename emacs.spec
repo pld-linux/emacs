@@ -36,9 +36,6 @@ BuildRequires:	gtk+2-devel
 %else
 BuildRequires:	Xaw3d-devel >= 1.5E-3
 %endif
-%ifarch %{ix86}
-BuildRequires:	setarch
-%endif
 BuildRequires:	texinfo
 Requires:	ctags
 Requires:	%{name}-common = %{version}-%{release}
