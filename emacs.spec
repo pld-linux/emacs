@@ -33,7 +33,7 @@ BuildRequires:	libtool
 BuildRequires:	texinfo
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Requires:	ctags
-Requires:	emacs-common
+Requires:	emacs-common = %{version}
 
 %description
 Emacs-X11 includes the Emacs text editor program for use with the X
@@ -99,7 +99,7 @@ Summary(pl):	¬ród³a programów w elispie do³±czonych do Emacsa
 Summary(pt_BR):	Fontes .el -- não são necessários para rodar o emacs
 Summary(tr):	Lisp kaynak dosyalarý -- Emacs çalýþtýrmak için gerekmez
 Group:		Applications/Editors/Emacs
-Requires:	emacs-common
+Requires:	emacs-common = %{version}
 
 %description el
 Emacs-el contains the emacs-elisp sources for many of the elisp
@@ -142,7 +142,7 @@ Summary(es):	Código Lisp para internacionalización en Emacs
 Summary(pl):	Kod w Emacs Lispie do wprowadzania znaków narodowych
 Summary(pt_BR):	Código Lisp para para internacionalização no Emacs
 Group:		Applications/Editors/Emacs
-Requires:	emacs-common
+Requires:	emacs-common = %{version}
 
 %description leim
 The emacs-leim package contains Emacs Lisp code for input methods for
@@ -169,7 +169,7 @@ Código Lisp para para internacionalização no Emacs.
 Summary:	Emacs Lisp source code for input methods for international characters
 Summary(pl):	Kod ¼ród³owy w Emacs Lispie do wprowadzania znaków narodowych
 Group:		Applications/Editors/Emacs
-Requires:	emacs-leim
+Requires:	emacs-leim = %{version}
 
 %description leim-el
 Emacs Lisp source code for input methods for international characters.
@@ -186,7 +186,7 @@ Summary(pl):	emacs-nox - edytor tekstu Emacs bez wsparcia dla X Window System
 Summary(pt_BR):	Emacs-nox -- emacs sem precisar de bibliotecas X
 Summary(tr):	X gerektirmeyen emacs paketi
 Group:		Applications/Editors/Emacs
-Requires:	emacs-common
+Requires:	emacs-common = %{version}
 
 %description nox
 Emacs-nox is the Emacs text editor program without support for the X
