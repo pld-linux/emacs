@@ -10,7 +10,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.3
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
@@ -366,7 +366,7 @@ cd ..
 
 mv lisp/term/README README.term
 
-sed s!@SITE_START_DIR@!%{_libdir}/emacs/site-lisp/site-start.d! \
+sed s!@SITE_START_DIR@!%{_datadir}/emacs/site-lisp/site-start.d! \
 	< %{SOURCE5} > site-start.el
 
 %install
@@ -448,8 +448,6 @@ fi
 %{_infodir}/*
 
 %dir %{_libdir}/emacs
-%dir %{_libdir}/emacs/site-lisp
-%dir %{_libdir}/emacs/site-lisp/site-start.d
 %dir %{_libdir}/emacs/%{version}
 %dir %{_libdir}/emacs/%{version}/*
 
