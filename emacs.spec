@@ -150,7 +150,7 @@ cd ..
 mkdir build-withx && cd build-withx
 CFLAGS="$RPM_OPT_FLAGS $XPUREDEF" LDFLAGS=-s \
   ../configure ${CONFOPTS} --with-x-toolkit %{_target_platform}
-make 
+%{__make} 
 cd ..
 
 %install
@@ -158,7 +158,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_prefix}
 
 ARCHDIR=%{_target_platform}
-make install -C build-withx \
+%{__make} install -C build-withx \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
 	libexecdir=$RPM_BUILD_ROOT%{_libdir} \
 	mandir=$RPM_BUILD_ROOT%{_mandir} \
