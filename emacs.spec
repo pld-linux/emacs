@@ -1,6 +1,9 @@
+#
+# Conditional build:
+%bcond_with	gnus	# Include old Gnus newsreader and MUA version
+			# (obsoleted by emacsen-gnus-pkg-emacs)
+#
 %define		elisp_man_version	21-2.8
-%bcond_with     gnus # Include old Gnus newsreader and MUA version
-                     # (obsoleted by emacsen-gnus-pkg-emacs)
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
 Summary(es):	GNU Emacs
@@ -37,13 +40,16 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libtool
 BuildRequires:	libungif-devel
 BuildRequires:	ncurses-devel
+%ifarch %{ix86}
+BuildRequires:	setarch
+%endif
 BuildRequires:	texinfo
 Requires:	ctags
-Requires:	emacs-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %ifarch ppc
-%define no_install_post_strip 1
+%define		no_install_post_strip	1
 %endif
 
 %description
@@ -110,7 +116,7 @@ Summary(pl):	¬ród³a programów w elispie do³±czonych do Emacsa
 Summary(pt_BR):	Fontes .el -- não são necessários para rodar o Emacs
 Summary(tr):	Lisp kaynak dosyalarý -- Emacs çalýþtýrmak için gerekmez
 Group:		Applications/Editors/Emacs
-Requires:	emacs-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}-%{release}
 
 %description el
 Emacs-el contains the emacs-elisp sources for many of the elisp
@@ -153,7 +159,7 @@ Summary(es):	Código Lisp para internacionalización en Emacs
 Summary(pl):	Kod w Emacs Lispie do wprowadzania znaków narodowych
 Summary(pt_BR):	Código Lisp para para internacionalização no Emacs
 Group:		Applications/Editors/Emacs
-Requires:	emacs-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}-%{release}
 
 %description leim
 The emacs-leim package contains Emacs Lisp code for input methods for
@@ -180,7 +186,7 @@ Código Lisp para para internacionalização no Emacs.
 Summary:	Emacs Lisp source code for input methods for international characters
 Summary(pl):	Kod ¼ród³owy w Emacs Lispie do wprowadzania znaków narodowych
 Group:		Applications/Editors/Emacs
-Requires:	emacs-leim = %{version}-%{release}
+Requires:	%{name}-leim = %{version}-%{release}
 
 %description leim-el
 Emacs Lisp source code for input methods for international characters.
@@ -197,7 +203,7 @@ Summary(pl):	emacs-nox - edytor tekstu Emacs bez wsparcia dla X Window System
 Summary(pt_BR):	emacs-nox - Emacs sem precisar de bibliotecas X
 Summary(tr):	X gerektirmeyen emacs paketi
 Group:		Applications/Editors/Emacs
-Requires:	emacs-common = %{version}-%{release}
+Requires:	%{name}-common = %{version}-%{release}
 
 %description nox
 Emacs-nox is the Emacs text editor program without support for the X
@@ -333,6 +339,9 @@ mkdir build-withx && cd build-withx
 	--with-png \
 	%{_target_platform}
 
+%ifarch %{ix86}
+setarch i386 \
+%endif
 %{__make}
 cd ..
 
@@ -363,6 +372,9 @@ mkdir build-nox && cd build-nox
 	--with-x=no \
 	%{_target_platform}
 
+%ifarch %{ix86}
+setarch i386 \
+%endif
 %{__make}
 cd ..
 
@@ -558,12 +570,12 @@ fi
 %{_datadir}/emacs/%{version}/lisp/generic.el
 %{_datadir}/emacs/%{version}/lisp/g[f-z]*.el
 %{_datadir}/emacs/%{version}/lisp/[de]*.el
-%{_datadir}/emacs/%{version}/lisp/f[^io]*.el
-%{_datadir}/emacs/%{version}/lisp/fi[^n]*.el
-%{_datadir}/emacs/%{version}/lisp/find[^e]*.el
+%{_datadir}/emacs/%{version}/lisp/f[!io]*.el
+%{_datadir}/emacs/%{version}/lisp/fi[!n]*.el
+%{_datadir}/emacs/%{version}/lisp/find[!e]*.el
 %{_datadir}/emacs/%{version}/lisp/finder.el
-%{_datadir}/emacs/%{version}/lisp/fo[^r]*.el
-%{_datadir}/emacs/%{version}/lisp/form[^s]*.el
+%{_datadir}/emacs/%{version}/lisp/fo[!r]*.el
+%{_datadir}/emacs/%{version}/lisp/form[!s]*.el
 %{_datadir}/emacs/%{version}/lisp/forms.el
 %{_datadir}/emacs/%{version}/lisp/forms-d2.el
 %{_datadir}/emacs/%{version}/lisp/[h-k]*.el
@@ -590,9 +602,8 @@ fi
 %{_datadir}/emacs/%{version}/lisp/mail/sendmail.el
 %{_datadir}/emacs/%{version}/lisp/mail/smtpmail.el
 %{_datadir}/emacs/%{version}/lisp/mail/supercite.el
-%{_datadir}/emacs/%{version}/lisp/play/blackbox.el
-%{_datadir}/emacs/%{version}/lisp/play/cookie1.el
-%{_datadir}/emacs/%{version}/lisp/play/[^(bruce)]*.el
+%{_datadir}/emacs/%{version}/lisp/play/[!b]*.el
+%{_datadir}/emacs/%{version}/lisp/play/b[!r]*.el
 %{_datadir}/emacs/%{version}/lisp/term/bg-*.el
 %{_datadir}/emacs/%{version}/lisp/term/*-win.el
 %{_datadir}/emacs/%{version}/lisp/term/sun.el
@@ -610,16 +621,16 @@ fi
 %{_datadir}/emacs/%{version}/lisp/international/mule-util.el
 %{_datadir}/emacs/%{version}/lisp/international/mule.el
 %{_datadir}/emacs/%{version}/lisp/calendar/*.el
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/[^c]*.el
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/[!c]*.el
 %{_datadir}/emacs/%{version}/lisp/emacs-lisp/c[a-k]*.el
 %{_datadir}/emacs/%{version}/lisp/emacs-lisp/c[m-z]*.el
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-[^s]*.el
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-[!s]*.el
 %{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-seq.el
 %{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl.el
 %{_datadir}/emacs/%{version}/lisp/textmodes/*.el
 %{_datadir}/emacs/%{version}/lisp/progmodes/*.el
 %{_datadir}/emacs/%{version}/lisp/eshell/e[a-r]*.el
-%{_datadir}/emacs/%{version}/lisp/eshell/esh-[^g]*.el
+%{_datadir}/emacs/%{version}/lisp/eshell/esh-[!g]*.el
 %{_datadir}/emacs/%{version}/lisp/eshell/esh[a-z]*.el
 %{_datadir}/emacs/%{version}/lisp/net/*.el
 %{_datadir}/emacs/%{version}/lisp/obsolete/*.el
