@@ -13,7 +13,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.3
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
@@ -402,8 +402,8 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 %if %{without gnus}
 rm -rf $RPM_BUILD_ROOT%{_infodir}/{emacs-mime,gnus,message,pgg,sieve}* \
-    $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/lisp/gnus \
-    $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc/gnus*
+	$RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/lisp/gnus \
+	$RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc/gnus*
 %endif
 
 %clean
