@@ -8,7 +8,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.2
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
@@ -364,7 +364,6 @@ install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
 	infodir=$RPM_BUILD_ROOT%{_infodir}
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
