@@ -1,3 +1,5 @@
+# TODO:
+# - move gnus*.info to separate package (conflict with xemacs-gnus-info-pkg)
 %define		elisp_man_version	21-2.8
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
