@@ -8,7 +8,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.1
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Editors/Emacs
 Group(de):	Applikationen/Editors/Emacs
@@ -22,6 +22,8 @@ Source4:	%{name}-dot%{name}
 Source5:	%{name}-site-start.el
 Source6:	%{name}.png
 Patch1:		%{name}-loadup.patch
+# needed for bilding, not in pre/post in/un
+BuildRequires:	/usr/sbin/install-info
 BuildRequires:	ncurses-devel
 BuildRequires:	Xaw3d-devel
 BuildRequires:	XFree86-devel
@@ -275,6 +277,12 @@ X Window System; zainstaluj emacs je¿eli u¿ywasz X.
 %prep
 %setup -q -b 1 -a 2
 %patch1 -p1
+
+# /usr/sbin is not in standard path
+for file in Makefile.in elisp-manual-21-2.7/Makefile.in; do
+	sed "s/install\-info/\/usr\/sbin\/install\-info/" < $file > $file.new
+	mv $file.new $file
+done
 
 %build
 # Regeneration breaks things --misiek
