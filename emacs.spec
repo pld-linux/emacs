@@ -1,9 +1,8 @@
 #
 # Conditional build:
-%bcond_with	gtk
+%bcond_without	gtk
 #
-%define         snap 20050118
-%define		elisp_man_version	21-2.8
+%define	snap	20050118
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
 Summary(es):	GNU Emacs
@@ -16,22 +15,16 @@ Version:	21.3.50
 Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
-Source0:	%{name}-21.3.50.tar.gz
+Source0:	%{name}-%{version}.tar.gz
 # Source0-md5:	1abf07a6755caf336b9746d92f68a63e
-Source1:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
-# Source1-md5:	71500b6aaa3d80ea1df1b46c5055c43d
-Source2:	%{name}.desktop
-Source3:	%{name}-dot%{name}
-Source4:	%{name}-site-start.el
-Source5:	%{name}.png
-Source6:	%{name}-tuareg.el
-Source7:	%{name}-nemerle.el
+Source1:	%{name}.desktop
+Source2:	%{name}-dot%{name}
+Source3:	%{name}-site-start.el
+Source4:	%{name}.png
+Source5:	%{name}-tuareg.el
+Source6:	%{name}-nemerle.el
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	XFree86-devel
-BuildRequires:	Xaw3d-devel >= 1.5E-3
-# Rebuilding autotools commented out
-#BuildRequires:	autoconf
-#BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
@@ -40,6 +33,8 @@ BuildRequires:	libungif-devel
 BuildRequires:	ncurses-devel
 %if %{with gtk}
 BuildRequires:	gtk+2-devel
+%else
+BuildRequires:	Xaw3d-devel >= 1.5E-3
 %endif
 %ifarch %{ix86}
 BuildRequires:	setarch
@@ -296,30 +291,30 @@ Gnus is flexible message reader under Emacs.
 %description gnus -l pl
 Gnus jest czytnikiem grup dyskusyjnych pod Emacsa.
 
+%package gnus-el
+Summary:	Emacs Lisp source code for Gnus
+Summary(pl):	Kod ¼ród³owy Gnusa w Emacs Lispie
+Group:		Application/Editors/Emacs
+Requires:	%{name}-gnus = %{version}-%{release}
+
+%description gnus-el
+Emacs Lisp source code for Gnus.
+
+%description gnus-el -l pl
+Kod ¼ród³owy Gnusa w Emacs Lispie.
 
 %prep 
-%setup -q -a 1 
+%setup -q
 
 
 # /usr/sbin is not in standard path
-for file in Makefile.in elisp-manual-21-2.8/Makefile.in; do
+for file in Makefile.in lispref/Makefile.in; do
 	sed "s/install\-info/\/usr\/sbin\/install\-info/" < $file > $file.new
 	mv $file.new $file
 done
 
 %build
-# Regeneration breaks things --misiek
-#rm aclocal.m4
-#libtoolize --force --copy
-#aclocal
-#autoconf
-#touch aclocal.m4
 cp -f /usr/share/automake/config.* .
-
-cd elisp-manual-*
-%configure2_13
-%{__make}
-cd ..
 
 # Build binary with X support
 [ -d build-withx ] && rm -rf build-withx
@@ -388,7 +383,7 @@ cd ..
 mv lisp/term/README README.term
 
 sed s!@SITE_START_DIR@!%{_datadir}/emacs/site-lisp/site-start.d! \
-	< %{SOURCE4} > site-start.el
+	< %{SOURCE3} > site-start.el
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -400,16 +395,13 @@ install -d $RPM_BUILD_ROOT{%{_infodir},%{_datadir}/emacs/site-lisp/site-start.d}
 install build-nox/src/emacs	$RPM_BUILD_ROOT%{_bindir}/emacs-nox
 install site-start.el $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/
 
-install %{SOURCE2} $RPM_BUILD_ROOT%{_desktopdir}
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/skel/.emacs
-install %{SOURCE5} $RPM_BUILD_ROOT%{_pixmapsdir}
-install %{SOURCE6} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
-install %{SOURCE7} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/nemerle.el
+install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.emacs
+install %{SOURCE4} $RPM_BUILD_ROOT%{_pixmapsdir}
+install %{SOURCE5} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
+install %{SOURCE6} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/nemerle.el
 
 install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
-
-%{__make} -C elisp-manual-* install \
-	infodir=$RPM_BUILD_ROOT%{_infodir}
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
@@ -458,7 +450,6 @@ fi
 %files common
 %defattr(644,root,root,755)
 %config(noreplace) /etc/skel/.emacs
-#%doc BUGS README README.term etc/NEWS
 %attr(755,root,root) %{_bindir}/emacsclient
 %attr(755,root,root) %{_bindir}/ebrowse
 %{_mandir}/man1/emacs*
@@ -471,7 +462,6 @@ fi
 %attr(2755,root,mail) %{_libdir}/emacs/%{version}/*-linux/movemail
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/cvtmail
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/digest-doc
-#%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/emacsserver
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/fakemail
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/hexl
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/profile
@@ -480,7 +470,6 @@ fi
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/vcdiff
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/yow
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/update-game-score
-#%{_libdir}/emacs/%{version}/*/fns-*.el
 
 %dir %{_datadir}/emacs
 %dir %{_datadir}/emacs/%{version}
@@ -672,6 +661,9 @@ fi
 %files gnus
 %defattr(644,root,root,755)
 %dir %{_datadir}/emacs/%{version}/lisp/gnus
+%{_datadir}/emacs/%{version}/lisp/gnus/*.*
+%exclude %{_datadir}/emacs/%{version}/lisp/gnus/*.el
+
+%files gnus-el
+%defattr(644,root,root,755)
 %{_datadir}/emacs/%{version}/lisp/gnus/*.el
-%{_datadir}/emacs/%{version}/lisp/gnus/*
-%{_datadir}/emacs/%{version}/lisp/gnus/*.xpm
