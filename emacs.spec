@@ -3,6 +3,7 @@
 %bcond_with	gnus	# Include old Gnus newsreader and MUA version
 			# (obsoleted by emacsen-gnus-pkg-emacs)
 #
+%define         snap 20041228
 %define		elisp_man_version	21-2.8
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
@@ -13,7 +14,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.3.50
-Release:	0.1
+Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:        http://pawelb.pld-dc.org/%{name}/%{name}-21.3.50.tar.gz
@@ -330,12 +331,12 @@ mkdir build-withx && cd build-withx
 	--with-tiff \
 	--with-gif \
 	--with-png \
-	%{_target_platform}
+	%{_target_platform} 
 
 %ifarch %{ix86}
 setarch i386 \
 %endif
-%{__make}
+%{__make} bootstrap
 cd ..
 
 #Build binary without X support
@@ -363,12 +364,12 @@ mkdir build-nox && cd build-nox
 	--without-gif \
 	--without-png \
 	--with-x=no \
-	%{_target_platform}
+	%{_target_platform} 
 
 %ifarch %{ix86}
 setarch i386 \
 %endif
-%{__make}
+%{__make} bootstrap
 cd ..
 
 mv lisp/term/README README.term
