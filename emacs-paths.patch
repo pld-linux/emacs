@@ -1,0 +1,127 @@
+diff -Nru emacs-20.7/lisp/paths.el emacs-20.7.new/lisp/paths.el
+--- emacs-20.7/lisp/paths.el	Tue May 30 22:12:00 2000
++++ emacs-20.7.new/lisp/paths.el	Sun Feb  4 10:45:17 2001
+@@ -33,20 +33,13 @@
+ ;;; Code:
+ 
+ (defvar Info-default-directory-list
+-  (let* ((start (list "/usr/local/lib/info/"
+-		      ;; This comes second so that, if it is the same
+-		      ;; as configure-info-directory (which is usually true)
+-		      ;; and Emacs has been installed (also usually true)
+-		      ;; then the list will end with two copies of this;
+-		      ;; which means that the last dir file Info-insert-dir
+-		      ;; finds will be the one in this directory.
+-		      "/usr/local/info/"))
++  (let* ((start (list "/usr/share/info/"))
+ 	 ;; Typically on a GNU system, installed info files are found
+ 	 ;; in /usr/info, but the default prefix is /usr/local.
+ 	 ;; (Standalone info has a long list of alternative
+ 	 ;; directories to search; perhaps we should try to be more
+ 	 ;; consistent.)
+-	 (usrdir "/usr/info")
++	 (usrdir "/usr/share/info")
+ 	 (sysdir (and (file-directory-p usrdir)
+ 		      (not (string= configure-info-directory usrdir))
+ 		      (list usrdir)))
+@@ -74,10 +67,6 @@
+ 
+ (defvar news-inews-program
+   (cond ((file-exists-p "/usr/bin/inews") "/usr/bin/inews")
+-	((file-exists-p "/usr/local/inews") "/usr/local/inews")
+-	((file-exists-p "/usr/local/bin/inews") "/usr/local/bin/inews")
+-	((file-exists-p "/usr/contrib/lib/news/inews") "/usr/contrib/lib/news/inews")
+-	((file-exists-p "/usr/lib/news/inews") "/usr/lib/news/inews")
+ 	(t "inews"))
+   "Program to post news.")
+ 
+@@ -105,18 +94,11 @@
+ (defconst rmail-spool-directory
+   (cond ((string-match "^[^-]+-[^-]+-sco3.2v4" system-configuration)
+ 	 "/usr/spool/mail/")
+-	;; On The Bull DPX/2 /usr/spool/mail is used although 
+-	;; it is usg-unix-v.
+-	((string-match "^m68k-bull-sysv3" system-configuration)
+-	 "/usr/spool/mail/")
+ 	;; SVR4 and recent BSD are said to use this.
+ 	;; Rather than trying to know precisely which systems use it,
+ 	;; let's assume this dir is never used for anything else.
+ 	((file-exists-p "/var/mail")
+ 	 "/var/mail/")
+-	;; Many GNU/Linux systems use this name.
+-	((file-exists-p "/var/spool/mail")
+-	 "/var/spool/mail/")
+ 	((memq system-type '(dgux hpux usg-unix-v unisoft-unix rtu irix))
+ 	 "/usr/mail/")
+ 	(t "/usr/spool/mail/"))
+@@ -125,9 +107,7 @@
+ 
+ (defconst sendmail-program
+   (cond
+-    ((file-exists-p "/usr/sbin/sendmail") "/usr/sbin/sendmail")
+     ((file-exists-p "/usr/lib/sendmail") "/usr/lib/sendmail")
+-    ((file-exists-p "/usr/ucblib/sendmail") "/usr/ucblib/sendmail")
+     (t "fakemail"))			;In ../etc, to interface to /bin/mail.
+   "Program used to send messages.")
+ 
+@@ -139,17 +119,6 @@
+    ;; almost certainly in /bin or /usr/bin, so it's probably safe to assume
+    ;; that an rsh found elsewhere is the remote shell program.  The converse
+    ;; is not true: /usr/bin/rsh could be either one, so check that last.
+-   ((file-exists-p "/usr/ucb/remsh") "/usr/ucb/remsh")
+-   ((file-exists-p "/usr/bsd/remsh") "/usr/bsd/remsh")
+-   ((file-exists-p "/bin/remsh") "/bin/remsh")
+-   ((file-exists-p "/usr/bin/remsh") "/usr/bin/remsh")
+-   ((file-exists-p "/usr/local/bin/remsh") "/usr/local/bin/remsh")
+-   ((file-exists-p "/usr/ucb/rsh") "/usr/ucb/rsh")
+-   ((file-exists-p "/usr/bsd/rsh") "/usr/bsd/rsh")
+-   ((file-exists-p "/usr/local/bin/rsh") "/usr/local/bin/rsh")
+-   ((file-exists-p "/usr/bin/rcmd") "/usr/bin/rcmd")
+-   ((file-exists-p "/bin/rcmd") "/bin/rcmd")
+-   ((file-exists-p "/bin/rsh") "/bin/rsh")
+    ((file-exists-p "/usr/bin/rsh") "/usr/bin/rsh")
+    (t "rsh")))
+ 
+diff -Nru emacs-20.7/src/epaths.in emacs-20.7.new/src/epaths.in
+--- emacs-20.7/src/epaths.in	Sat Aug 16 20:29:06 1997
++++ emacs-20.7.new/src/epaths.in	Sun Feb  4 10:38:22 2001
+@@ -2,7 +2,7 @@
+ 
+ /* The default search path for Lisp function "load".
+    This sets load-path.  */
+-#define PATH_LOADSEARCH "/usr/local/lib/emacs/lisp"
++#define PATH_LOADSEARCH "/usr/share/emacs/lisp"
+ 
+ /* Like PATH_LOADSEARCH, but used only when Emacs is dumping.  This
+    path is usually identical to PATH_LOADSEARCH except that the entry
+@@ -15,25 +15,25 @@
+    variable exec-path and the first file name in it sets the Lisp
+    variable exec-directory.  exec-directory is used for finding
+    executables and other architecture-dependent files.  */
+-#define PATH_EXEC "/usr/local/lib/emacs/etc"
++#define PATH_EXEC "/usr/share/emacs/etc"
+ 
+ /* Where Emacs should look for its architecture-independent data
+    files, like the NEWS file.  The lisp variable data-directory
+    is set to this value.  */
+-#define PATH_DATA "/usr/local/lib/emacs/data"
++#define PATH_DATA "/usr/share/emacs/data"
+ 
+ /* Where Emacs should look for X bitmap files.
+    The lisp variable x-bitmap-file-path is set based on this value.  */
+-#define PATH_BITMAPS "/usr/include/X11/bitmaps"
++#define PATH_BITMAPS "/usr/X11R6/lib/X11/bitmaps"
+ 
+ /* Where Emacs should look for its docstring file.  The lisp variable
+    doc-directory is set to this value.  */
+-#define PATH_DOC "/usr/local/lib/emacs/data"
++#define PATH_DOC "/usr/share/emacs/data"
+ 
+ /* Where the configuration process believes the info tree lives.  The
+    lisp variable configure-info-directory gets its value from this
+    macro, and is then used to set the Info-default-directory-list.  */
+-#define PATH_INFO "/usr/local/info"
++#define PATH_INFO "/usr/share/info"
+ 
+ /* Where Emacs should look for the application default file. */
+ #define PATH_X_DEFAULTS "/usr/lib/X11/%L/%T/%N%C%S:/usr/lib/X11/%l/%T/%N%C%S:/usr/lib/X11/%T/%N%C%S:/usr/lib/X11/%L/%T/%N%S:/usr/lib/X11/%l/%T/%N%S:/usr/lib/X11/%T/%N%S"
