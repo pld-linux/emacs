@@ -13,7 +13,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.3
-Release:	6
+Release:	7
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
@@ -28,6 +28,7 @@ Source5:	%{name}-site-start.el
 Source6:	%{name}.png
 Patch0:		%{name}-amd64.patch
 Patch1:		%{name}-loadup.patch
+Patch2:		%{name}-CAN_2005_0100.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel >= 1.5E-3
@@ -287,6 +288,7 @@ S± to wspólne pliki GNU Emacs i XEmacs.
 %setup -q -b 1 -a 2
 %patch0 -p1
 %patch1 -p1
+%patch2	-p1
 
 # /usr/sbin is not in standard path
 for file in Makefile.in elisp-manual-21-2.8/Makefile.in; do
