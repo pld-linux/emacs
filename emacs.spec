@@ -435,6 +435,7 @@ fi
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/yow
 %{_libdir}/emacs/%{version}/*/fns-*.el
 
+%dir %{_datadir}/emacs
 %dir %{_datadir}/emacs/%{version}
 %dir %{_datadir}/emacs/%{version}/site-lisp
 %dir %{_datadir}/emacs/%{version}/lisp
