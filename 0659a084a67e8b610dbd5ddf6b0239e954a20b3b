@@ -1,0 +1,1 @@
+- added %%{_pixmapsdir} in %install section
