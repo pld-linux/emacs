@@ -100,11 +100,11 @@ veya emacs-X11 paketinde yer alýr.
 
 %package el
 Summary:	The sources for elisp programs included with Emacs
-Summary(de):	el Quelldateien - zum Betrieb von Emacs nicht erforderlich
-Summary(es):	Fuentes .el -- no son necesarios para ejecutar emacs
+Summary(de):	El Quelldateien - zum Betrieb von Emacs nicht erforderlich
+Summary(es):	Fuentes .el -- no son necesarios para ejecutar Emacs
 Summary(fr):	Fichiers sources .el - non nécessaires pour exécuter Emacs
 Summary(pl):	¬ród³a programów w elispie do³±czonych do Emacsa
-Summary(pt_BR):	Fontes .el -- não são necessários para rodar o emacs
+Summary(pt_BR):	Fontes .el -- não são necessários para rodar o Emacs
 Summary(tr):	Lisp kaynak dosyalarý -- Emacs çalýþtýrmak için gerekmez
 Group:		Applications/Editors/Emacs
 Requires:	emacs-common = %{version}
@@ -187,11 +187,11 @@ Kod ¼ród³owy w Emacs Lispie do wprowadzania znaków narodowych.
 
 %package nox
 Summary:	The Emacs text editor without support for the X Window System
-Summary(de):	emacs-nox -- keine X-Libraries erforderlich
-Summary(es):	Emacs-nox -- emacs sin necesidad de bibliotecas X
-Summary(fr):	emacs-nox -- les bibliothèques X ne sont pas nécessaires
+Summary(de):	emacs-nox - keine X-Libraries erforderlich
+Summary(es):	emacs-nox - Emacs sin necesidad de bibliotecas X
+Summary(fr):	emacs-nox - les bibliothèques X ne sont pas nécessaires
 Summary(pl):	emacs-nox - edytor tekstu Emacs bez wsparcia dla X Window System
-Summary(pt_BR):	Emacs-nox -- emacs sem precisar de bibliotecas X
+Summary(pt_BR):	emacs-nox - Emacs sem precisar de bibliotecas X
 Summary(tr):	X gerektirmeyen emacs paketi
 Group:		Applications/Editors/Emacs
 Requires:	emacs-common = %{version}
@@ -266,8 +266,8 @@ emacs). Zainstaluj emacs-nox je¿eli nie zamierzasz u¿ywasz Emacsa pod
 X Window System; zainstaluj emacs je¿eli u¿ywasz X.
 
 %package extras
-Summary:	files which conflict with XEmacs
-Summary(pl):	wspólne pliki XEmacsa i GNU Emacsa
+Summary:	Files which conflict with XEmacs
+Summary(pl):	Wspólne pliki XEmacsa i GNU Emacsa
 Group:		Applications/Editors/Emacs
 Provides:	emacscommon
 Obsoletes:	emacscommon
