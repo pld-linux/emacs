@@ -255,7 +255,7 @@ build-withx/src/emacs \
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_infodir},%{_libdir}/emacs/site-lisp} \
 	$RPM_BUILD_ROOT{%{_applnkdir}/Development/Editors,/etc/skel} \
-	$RPM_BUILD_ROOT/usr/X11R6/share/pixmaps
+	$RPM_BUILD_ROOT%{_pixmapsdir}
 
 %{__make} install -C build-withx \
 	prefix=$RPM_BUILD_ROOT%{_prefix} \
