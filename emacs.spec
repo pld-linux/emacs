@@ -9,15 +9,16 @@ Summary(pl):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
-Version:	21.2
-Release:	5
+Version:	21.3
+Release:	1
 License:	GPL
 Group:		Applications/Editors/Emacs
-Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
-# Source0-md5:	f4b58e5c2d923fc92495e0c2f167c5db
-Source1:	ftp://ftp.gnu.org/gnu/emacs/leim-%{version}.tar.gz
-# Source1-md5:	e6d614671b5d7d7670d18799c6668a46
-Source2:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
+# # ftp://ftp.gnu.org/gnu/emacs/ is official ftp
+Source0:	http://ftp.club.cc.cmu.edu/pub/gnu/emacs/%{name}-%{version}.tar.gz
+# Source0-md5:	a0bab457cbf5b4f8eb99d1d0a3ada420
+Source1:	http://ftp.club.cc.cmu.edu/pub/gnu/emacs/leim-%{version}.tar.gz
+# Source1-md5:	1c968c37e22be0f0d8f8cd57cebe5a5e
+Source2:	http://ftp.club.cc.cmu.edu/pub/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
 # Source2-md5:	71500b6aaa3d80ea1df1b46c5055c43d
 Source3:	%{name}.desktop
 Source4:	%{name}-dot%{name}
@@ -26,7 +27,7 @@ Source6:	%{name}.png
 Patch1:		%{name}-loadup.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	XFree86-devel
-BuildRequires:	Xaw3d-devel
+BuildRequires:	Xaw3d-devel >= 1.5E-3
 BuildRequires:	autoconf
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
