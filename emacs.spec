@@ -1,6 +1,6 @@
-# TODO:
-# - move gnus*.info to separate package (conflict with xemacs-gnus-info-pkg)
 %define		elisp_man_version	21-2.8
+%bcond_with     gnus # Include old Gnus newsreader and MUA version
+                     # (obsoleted by emacsen-gnus-pkg-emacs)
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
 Summary(es):	GNU Emacs
@@ -10,7 +10,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.3
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Editors/Emacs
 # # ftp://ftp.gnu.org/gnu/emacs/ is official ftp
@@ -28,8 +28,9 @@ Patch1:		%{name}-loadup.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	XFree86-devel
 BuildRequires:	Xaw3d-devel >= 1.5E-3
-BuildRequires:	autoconf
-BuildRequires:	automake
+# Rebuilding autotools commented out
+#BuildRequires:	autoconf
+#BuildRequires:	automake
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
@@ -78,7 +79,7 @@ emacs-X11, dependiendo de que uses o no el X Window.
 
 %description -l pl
 Emacs-X11 zawiera edytor tekstu Emacs do u¿ytku z X Window System (ma
-wsparcie dla myszy in innych elementów interfejsu graficznego).
+wsparcie dla myszy i innych elementów interfejsu graficznego).
 Emacs-X11 mo¿e dzia³aæ tak¿e bez X, ale wymaga wiêcej pamiêci ni¿
 wersja nie-X Emacsa (emacs-nox).
 
@@ -384,6 +385,12 @@ install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
 	infodir=$RPM_BUILD_ROOT%{_infodir}
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
+
+%if %{without gnus}
+rm -rf $RPM_BUILD_ROOT%{_infodir}/{emacs-mime,gnus,message,pgg,sieve}* \
+    $RPM_BUILD_ROOT%%{_datadir}/emacs/%{version}/lisp/gnus \
+    $RPM_BUILD_ROOT%%{_datadir}/emacs/%{version}/etc/gnus*
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
