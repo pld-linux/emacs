@@ -20,8 +20,6 @@ Source4:	%{name}-dot%{name}
 Source5:	%{name}-site-start.el
 Source6:	%{name}.png
 Patch1:		%{name}-loadup.patch
-# needed for bilding, not in pre/post in/un
-BuildRequires:	/usr/sbin/install-info
 BuildRequires:	ncurses-devel
 BuildRequires:	Xaw3d-devel
 BuildRequires:	XFree86-devel
