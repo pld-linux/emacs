@@ -1,9 +1,7 @@
-;; Aspell is a replacement for ispell
-(setq-default ispell-program-name "aspell") 
+;; Load all files from @SITE_START_DIR@
 
-;; Add python support
-(setq auto-mode-alist
-      (cons '("\\.py$" . python-mode) auto-mode-alist))
-(setq interpreter-mode-alist
-      (cons '("python" . python-mode)
-            interpreter-mode-alist))
+(dolist 
+    (the-file
+     (directory-files "@SITE_START_DIR@"
+                      t "^[^.].*\.elc?$"))
+  (load the-file nil t t))
