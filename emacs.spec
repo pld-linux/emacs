@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_with	gtk
 #
-%define         snap 20041228
+%define         snap 20050118
 %define		elisp_man_version	21-2.8
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
@@ -16,8 +16,8 @@ Version:	21.3.50
 Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
-Source0:	http://pawelb.pld-dc.org/%{name}/%{name}-21.3.50.tar.gz
-# Source0-md5:	dd8cd6d40b1e5a1c110734c26a1fa53b
+Source0:	%{name}-21.3.50.tar.gz
+# Source0-md5:	1abf07a6755caf336b9746d92f68a63e
 Source1:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
 # Source1-md5:	71500b6aaa3d80ea1df1b46c5055c43d
 Source2:	%{name}.desktop
