@@ -13,7 +13,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	21.3
-Release:	4
+Release:	4.1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
@@ -47,10 +47,6 @@ BuildRequires:	texinfo
 Requires:	ctags
 Requires:	%{name}-common = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%ifarch ppc
-%define		no_install_post_strip	1
-%endif
 
 %description
 Emacs-X11 includes the Emacs text editor program for use with the X
