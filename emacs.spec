@@ -23,6 +23,7 @@ Source3:	%{name}.desktop
 Source4:	%{name}-dot%{name}
 Source5:	%{name}-site-start.el
 Source6:	%{name}.png
+Patch0:		%{name}-amd64.patch
 Patch1:		%{name}-loadup.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	XFree86-devel
@@ -282,6 +283,7 @@ S± to wpólne pliki GNU Emacs i XEmacs.
 
 %prep
 %setup -q -b 1 -a 2
+%patch0 -p1
 %patch1 -p1
 
 # /usr/sbin is not in standard path
