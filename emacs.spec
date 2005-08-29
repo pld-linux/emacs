@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_with	gnus	# Include old Gnus newsreader and MUA version
 			# (obsoleted by emacsen-gnus-pkg-emacs)
+%bcond_with	motif	# build with motif
 #
 %define		elisp_man_version	21-2.8
 Summary:	The Emacs text editor for the X Window System
@@ -311,7 +312,7 @@ mkdir build-withx && cd build-withx
 	--sharedstatedir=%{_var} \
 	--with-gcc \
 	--with-pop \
-	--with-x-toolkit \
+	--with-x-toolkit%{?with_motif:=motif} \
 	--with-xpm \
 	--with-jpeg \
 	--with-tiff \
