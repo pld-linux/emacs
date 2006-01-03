@@ -312,25 +312,14 @@ done
 
 %build
 cp -f /usr/share/automake/config.* .
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
 
 # Build binary with X support
 [ -d build-withx ] && rm -rf build-withx
 mkdir build-withx && cd build-withx
-../configure \
-	--prefix=%{_prefix} \
-	--exec-prefix=%{_exec_prefix} \
-	--bindir=%{_bindir} \
-	--sbindir=%{_sbindir} \
-	--sysconfdir=%{_sysconfdir} \
-	--datadir=%{_datadir} \
-	--includedir=%{_includedir} \
-	--libdir=%{_libdir} \
-	--localstatedir=%{_localstatedir} \
-	--mandir=%{_mandir} \
-	--infodir=%{_infodir} \
-	--libexecdir=%{_libdir} \
-	--sharedstatedir=%{_var} \
-	--with-gcc \
+../%configure \
 	--with-pop \
 	--with-xpm \
 	--with-jpeg \
@@ -350,21 +339,7 @@ cd ..
 #Build binary without X support
 [ -d build-nox ] && rm -rf build-nox
 mkdir build-nox && cd build-nox
-../configure \
-	--prefix=%{_prefix} \
-	--exec-prefix=%{_exec_prefix} \
-	--bindir=%{_bindir} \
-	--sbindir=%{_sbindir} \
-	--sysconfdir=%{_sysconfdir} \
-	--datadir=%{_datadir} \
-	--includedir=%{_includedir} \
-	--libdir=%{_libdir} \
-	--localstatedir=%{_localstatedir} \
-	--mandir=%{_mandir} \
-	--infodir=%{_infodir} \
-	--libexecdir=%{_libdir} \
-	--sharedstatedir=%{_var} \
-	--with-gcc \
+../%configure \
 	--with-pop \
 	--without-xpm \
 	--without-jpeg \
