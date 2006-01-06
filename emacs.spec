@@ -1,6 +1,9 @@
 #
 # Conditional build:
-%bcond_without	gtk
+%bcond_without	athena	# don't build athena version
+%bcond_without	gtk	# don't build GTK2 version
+%bcond_without	motif	# don't build motif version
+%bcond_without	nox	# don't build nox version
 #
 %define	snap	20051223
 Summary:	The Emacs text editor for the X Window System
@@ -12,7 +15,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	22.0.50
-Release:	0.%{snap}.1
+Release:	0.%{snap}.2
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	%{name}-%{version}.tar.gz
@@ -31,11 +34,10 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libtool
 BuildRequires:	libungif-devel
 BuildRequires:	ncurses-devel
-%if %{with gtk}
-BuildRequires:	gtk+2-devel
-%else
-BuildRequires:	Xaw3d-devel >= 1.5E-3
-%endif
+%{?with_athena:BuildRequires:	Xaw3d-devel >= 1.5E-3}
+%{?with_gtk:BuildRequires:	gtk+2-devel}
+%{?with_motif:BuildRequires:	openmotif-devel}
+BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
 Requires:	ctags
 Requires:	%{name}-common = %{version}-%{release}
@@ -234,6 +236,42 @@ console por exemplo) o que está neste pacote utiliza menos memória.
 Bu paket içinde yer alan emacs programý, X11 desteði içermez ve
 çalýþmak için daha az belleðe gereksinim duyar.
 
+%package athena
+Summary:	The Emacs text editor for X Window System (Athena toolkit version)
+Summary(pl):	Emacs - edytor tekstu Emacs dla X Window System (wersja Athena)
+Group:		Applications/Editors/Emacs
+Requires:	%{name}-common = %{version}-%{release}
+
+%description athena
+The Emacs text editor for X Window System (Athena toolkit version).
+
+%description athena -l pl
+Emacs - edytor tekstu Emacs dla X Window System (wersja Athena).
+
+%package gtk
+Summary:	The Emacs text editor for X Window System (GTK2 toolkit version)
+Summary(pl):	Emacs - edytor tekstu Emacs dla X Window System (wersja GTK2)
+Group:		Applications/Editors/Emacs
+Requires:	%{name}-common = %{version}-%{release}
+
+%description gtk
+The Emacs text editor for X Window System (GTK2 toolkit version).
+
+%description gtk -l pl
+Emacs - edytor tekstu Emacs dla X Window System (wersja GTK2).
+
+%package motif
+Summary:	The Emacs text editor for X Window System (Motif toolkit version)
+Summary(pl):	Emacs - edytor tekstu Emacs dla X Window System (wersja Motif)
+Group:		Applications/Editors/Emacs
+Requires:	%{name}-common = %{version}-%{release}
+
+%description motif
+The Emacs text editor for X Window System (Motif toolkit version).
+
+%description motif -l pl
+Emacs - edytor tekstu Emacs dla X Window System (wersja Motif).
+
 %package common
 Summary:	The libraries needed to run the GNU Emacs text editor
 Summary(pl):	Biblioteki potrzebne do uruchomienia edytora tekstu GNU Emacs
@@ -301,14 +339,28 @@ Emacs Lisp source code for Gnus.
 Kod ¼ród³owy Gnusa w Emacs Lispie.
 
 %prep 
+#
+%if %{with gtk}
+%define default_emacs gtk
+%else
+%if %{with motif}
+%define default_emacs motif
+%else
+%if %{with athena}
+%define default_emacs athena
+%else
+%if %{with nox}
+%define default_emacs nox
+%else
+echo "ERROR: building Emacs with passed conditionals is impossible."
+exit 1
+%endif
+%endif
+%endif
+%endif
+echo -e "\nEmacs %{default_emacs} version will be emacs binary as default.\n"
+#
 %setup -q
-
-
-# /usr/sbin is not in standard path
-for file in Makefile.in lispref/Makefile.in; do
-	sed "s/install\-info/\/usr\/sbin\/install\-info/" < $file > $file.new
-	mv $file.new $file
-done
 
 %build
 cp -f /usr/share/automake/config.* .
@@ -316,9 +368,10 @@ cp -f /usr/share/automake/config.* .
 %{__autoconf}
 %{__autoheader}
 
-# Build binary with X support
-[ -d build-withx ] && rm -rf build-withx
-mkdir build-withx && cd build-withx
+%if %{with athena}
+echo "Building emacs athena binary ..."
+rm -rf build-athena
+mkdir build-athena && cd build-athena
 ../%configure \
 	--with-pop \
 	--with-xpm \
@@ -326,17 +379,59 @@ mkdir build-withx && cd build-withx
 	--with-tiff \
 	--with-gif \
 	--with-png \
-%if %{without gtk}
-        --with-x-toolkit \
-%else
-	--with-gtk \
-%endif
-	%{_target_platform}
+	--with-x-toolkit=athena 
 
 %{__make} bootstrap
+%define	bootstrap athena
 cd ..
+%endif
 
-#Build binary without X support
+%if %{with gtk}
+echo "Building emacs GTK2 binary ..."
+rm -rf build-gtk
+mkdir build-gtk && cd build-gtk
+../%configure \
+	--with-pop \
+	--with-xpm \
+	--with-jpeg \
+	--with-tiff \
+	--with-gif \
+	--with-png \
+	--with-x-toolkit=gtk 
+
+%if %{?bootstrap}
+%{__make}
+%else
+%{__make} bootstrap
+%define	bootstrap gtk
+%endif
+cd ..
+%endif
+
+%if %{with motif}
+echo "Building emacs motif binary ..."
+rm -rf build-motif
+mkdir build-motif && cd build-motif
+../%configure \
+	--with-pop \
+	--with-xpm \
+	--with-jpeg \
+	--with-tiff \
+	--with-gif \
+	--with-png \
+	--with-x-toolkit=motif
+
+%if %{?bootstrap}
+%{__make}
+%else
+%{__make} bootstrap
+%define	bootstrap motif 
+%endif
+cd ..
+%endif
+
+%if %{with nox}
+echo "Building emacs binary without X support ..."
 [ -d build-nox ] && rm -rf build-nox
 mkdir build-nox && cd build-nox
 ../%configure \
@@ -346,15 +441,20 @@ mkdir build-nox && cd build-nox
 	--without-tiff \
 	--without-gif \
 	--without-png \
-	--with-x=no \
-	%{_target_platform}
+	--with-x=no
 
+%if %{?bootstrap}
+%{__make}
+%else
 %{__make} bootstrap
+%define	bootstrap nox 
+%endif
 cd ..
+%endif
 
 mv lisp/term/README README.term
 
-sed s!@SITE_START_DIR@!%{_datadir}/emacs/site-lisp/site-start.d! \
+%{__sed} s!@SITE_START_DIR@!%{_datadir}/emacs/site-lisp/site-start.d! \
 	< %{SOURCE3} > site-start.el
 
 %install
@@ -363,17 +463,36 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_infodir},%{_datadir}/emacs/site-lisp/site-start.d} \
 	$RPM_BUILD_ROOT{%{_desktopdir},/etc/skel,%{_pixmapsdir}} \
 
-%{makeinstall} -C build-withx
-install build-nox/src/emacs	$RPM_BUILD_ROOT%{_bindir}/emacs-nox
-install site-start.el $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/
+%if %{with athena}%{with gtk}%{with motif}%{with nox}
+%{makeinstall} -C build-%{bootstrap}
+%else
+echo 'ERROR: neither athena nor gtk nor motif nor nox emacs was built.' 1>&2
+exit 1
+%endif
 
+for e in athena gtk motif nox ; do
+	[ -d build-$e ] && install build-${e}/src/emacs $RPM_BUILD_ROOT%{_bindir}/emacs-$e
+done
+rm -f $RPM_BUILD_ROOT%{_bindir}/emacs
+# make "default emacs" from gtk, athena, motif and non-X version
+for e in gtk athena motif nox ; do
+	if [ -f $RPM_BUILD_ROOT%{_bindir}/emacs-$e ] ; then
+		(cd $RPM_BUILD_ROOT%{_bindir}
+		 cp -pf emacs-$e emacs
+		 cp -pf emacs-$e emacs-%{version}
+		)
+		break;
+	fi
+done
+
+install site-start.el $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/
 install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.emacs
 install %{SOURCE4} $RPM_BUILD_ROOT%{_pixmapsdir}
 install %{SOURCE5} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
 install %{SOURCE6} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/nemerle.el
 
-install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
+[ -d build-nox ] && install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
@@ -628,9 +747,29 @@ fi
 %{_datadir}/emacs/%{version}/leim/quail/*.el.gz
 %{_datadir}/emacs/%{version}/leim/ja-dic/*.el.gz
 
+%if %{with nox} && %{?default_emacs} != "nox"
 %files nox
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs-nox
+%endif
+
+%if %{with athena} && %{?default_emacs} != "athena"
+%files athena
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/emacs-athena
+%endif
+
+%if %{with gtk} && %{?default_emacs} != "gtk"
+%files gtk
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/emacs-gtk
+%endif
+
+%if %{with motif} && %{?default_emacs} != "motif"
+%files motif
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/emacs-motif
+%endif
 
 %files gnus
 %defattr(644,root,root,755)
