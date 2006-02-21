@@ -368,6 +368,8 @@ cp -f /usr/share/automake/config.* .
 %{__autoconf}
 %{__autoheader}
 
+%define bootstrap 0
+
 %if %{with athena}
 echo "Building emacs athena binary ..."
 rm -rf build-athena
