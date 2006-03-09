@@ -27,6 +27,8 @@ Source4:	%{name}.png
 Source5:	%{name}-tuareg.el
 Source6:	%{name}-nemerle.el
 URL:		http://www.gnu.org/software/emacs/
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	XFree86-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
