@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Emacs Athena
+Name[ko]=이맥스
+Comment=Emacs text editor - Athena version
+Comment[pl]=Edytor tekstu Emacs - wersja Athena
+TryExec=emacs-athena
+Exec=emacs-athena
+Icon=emacs.png
+Terminal=false
+Type=Application
+Encoding=UTF-8
+Categories=TextEditor;
+# vi: encoding=utf-8

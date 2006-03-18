@@ -20,12 +20,15 @@ License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	%{name}-%{version}.tar.gz
 # Source0-md5:	eabc6711e7dc55c487c87333f76f5d98
-Source1:	%{name}.desktop
-Source2:	%{name}-dot%{name}
-Source3:	%{name}-site-start.el
-Source4:	%{name}.png
-Source5:	%{name}-tuareg.el
-Source6:	%{name}-nemerle.el
+Source1:	%{name}-dot%{name}
+Source2:	%{name}-site-start.el
+Source3:	%{name}.png
+Source4:	%{name}-tuareg.el
+Source5:	%{name}-nemerle.el
+Source6:	%{name}-athena.desktop
+Source7:	%{name}-gtk.desktop
+Source8:	%{name}-motif.desktop
+Source9:	%{name}-nox.desktop
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -459,7 +462,7 @@ cd ..
 mv lisp/term/README README.term
 
 %{__sed} s!@SITE_START_DIR@!%{_datadir}/emacs/site-lisp/site-start.d! \
-	< %{SOURCE3} > site-start.el
+	< %{SOURCE2} > site-start.el
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -490,11 +493,14 @@ for e in gtk athena motif nox ; do
 done
 
 install site-start.el $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/
-install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/skel/.emacs
-install %{SOURCE4} $RPM_BUILD_ROOT%{_pixmapsdir}
-install %{SOURCE5} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
-install %{SOURCE6} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/nemerle.el
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/skel/.emacs
+install %{SOURCE3} $RPM_BUILD_ROOT%{_pixmapsdir}
+install %{SOURCE4} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
+install %{SOURCE5} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/nemerle.el
+install %{SOURCE6} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE7} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE8} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE9} $RPM_BUILD_ROOT%{_desktopdir}
 
 [ -d build-nox ] && install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
 
@@ -536,7 +542,7 @@ fi
 %attr(755,root,root) %{_bindir}/emacs
 %attr(755,root,root) %{_bindir}/emacs-%{version}
 %dir %{_datadir}/emacs/%{version}/lisp/toolbar
-%{_desktopdir}/emacs.desktop
+%{_desktopdir}/emacs-%{default_emacs}.desktop
 %{_pixmapsdir}/*
 
 %files common
@@ -755,24 +761,28 @@ fi
 %files nox
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs-nox
+%{_desktopdir}/emacs-nox.desktop
 %endif
 
 %if %{with athena} && %{?default_emacs} != "athena"
 %files athena
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs-athena
+%{_desktopdir}/emacs-athena.desktop
 %endif
 
 %if %{with gtk} && %{?default_emacs} != "gtk"
 %files gtk
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs-gtk
+%{_desktopdir}/emacs-gtk.desktop
 %endif
 
 %if %{with motif} && %{?default_emacs} != "motif"
 %files motif
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs-motif
+%{_desktopdir}/emacs-motif.desktop
 %endif
 
 %files gnus
