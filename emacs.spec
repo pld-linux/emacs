@@ -5,7 +5,7 @@
 %bcond_without	motif	# don't build motif version
 %bcond_without	nox	# don't build nox version
 #
-%define	snap	20051223
+%define	snap	20060327
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
 Summary(es):	GNU Emacs
@@ -15,11 +15,11 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	22.0.50
-Release:	0.%{snap}.2
+Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
-Source0:	%{name}-%{version}.tar.gz
-# Source0-md5:	eabc6711e7dc55c487c87333f76f5d98
+Source0:	http://twittner.host.sk/%{name}-%{version}-cvs-%{snap}.tar.gz
+# Source0-md5:	1261fc989028b299b7cdf8afd335227f
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
@@ -365,7 +365,7 @@ exit 1
 %endif
 echo -e "\nEmacs %{default_emacs} version will be emacs binary as default.\n"
 #
-%setup -q
+%setup -q -n %{name}-%{version}-cvs-%{snap}
 
 %build
 cp -f /usr/share/automake/config.* .
@@ -505,6 +505,8 @@ install %{SOURCE9} $RPM_BUILD_ROOT%{_desktopdir}
 [ -d build-nox ] && install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
+# ERC is in separate spec
+rm -fr $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/lisp/erc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -788,7 +790,6 @@ fi
 %files gnus
 %defattr(644,root,root,755)
 %dir %{_datadir}/emacs/%{version}/lisp/gnus
-%{_datadir}/emacs/%{version}/lisp/gnus/TODO
 %{_datadir}/emacs/%{version}/lisp/gnus/*.*
 %exclude %{_datadir}/emacs/%{version}/lisp/gnus/*.el.gz
 
