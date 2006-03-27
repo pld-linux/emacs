@@ -18,7 +18,7 @@ Version:	22.0.50
 Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
-Source0:	http://twittner.host.sk/%{name}-%{version}-cvs-%{snap}.tar.gz
+Source0:	%{name}-%{version}-cvs-%{snap}.tar.gz
 # Source0-md5:	1261fc989028b299b7cdf8afd335227f
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
