@@ -32,13 +32,13 @@ Patch0:		%{name}-amd64.patch
 Patch1:		%{name}-loadup.patch
 Patch2:		%{name}-CAN_2005_0100.patch
 URL:		http://www.gnu.org/software/emacs/
-BuildRequires:	XFree86-devel
-BuildRequires:	Xaw3d-devel >= 1.5E-3
+BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libXaw-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool
-BuildRequires:	libungif-devel
+BuildRequires:	giflib-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	sed >= 4.0
 %ifarch %{ix86}
