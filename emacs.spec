@@ -32,8 +32,6 @@ Patch0:		%{name}-amd64.patch
 Patch1:		%{name}-loadup.patch
 Patch2:		%{name}-CAN_2005_0100.patch
 URL:		http://www.gnu.org/software/emacs/
-BuildRequires:	xorg-lib-libX11-devel
-BuildRequires:	xorg-lib-libXaw-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
@@ -45,6 +43,8 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	setarch
 %endif
 BuildRequires:	texinfo
+BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libXaw-devel
 Requires:	ctags
 Requires:	%{name}-common = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
