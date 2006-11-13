@@ -377,7 +377,7 @@ install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{sver}/etc
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
-%if %{without gnus}
+%if !%{with gnus}
 rm -rf $RPM_BUILD_ROOT%{_infodir}/{emacs-mime,gnus,message,pgg,sieve}* \
 	$RPM_BUILD_ROOT%{_datadir}/emacs/%{sver}/lisp/gnus \
 	$RPM_BUILD_ROOT%{_datadir}/emacs/%{sver}/etc/gnus*
