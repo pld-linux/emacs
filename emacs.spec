@@ -4,8 +4,9 @@
 %bcond_without	gtk	# don't build GTK2 version
 %bcond_without	motif	# don't build motif version
 %bcond_without	nox	# don't build nox version
+%bcond_without	xft	# don't compile in Freetype support
 #
-%define	snap	20060327
+%define	snap	20061115
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
 Summary(es):	GNU Emacs
@@ -14,12 +15,12 @@ Summary(pl):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
-Version:	22.0.50
+Version:	23.0.0
 Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
-Source0:	%{name}-%{version}-cvs-%{snap}.tar.gz
-# Source0-md5:	1261fc989028b299b7cdf8afd335227f
+Source0:	%{name}-%{version}-cvs-%{snap}.tar.bz2
+# Source0-md5:	61e5bb7d94f93193668e2c2639059451
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
@@ -32,7 +33,7 @@ Source9:	%{name}-nox.desktop
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	XFree86-devel
+BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
@@ -42,6 +43,7 @@ BuildRequires:	ncurses-devel
 %{?with_athena:BuildRequires:	Xaw3d-devel >= 1.5E-3}
 %{?with_gtk:BuildRequires:	gtk+2-devel}
 %{?with_motif:BuildRequires:	openmotif-devel}
+%{?with_xft:BuildRequires:	freetype-devel}
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
 Requires:	ctags
@@ -60,57 +62,57 @@ both with and without X (it will work fine both ways). You'll also
 need to install the emacs-common package in order to run Emacs.
 
 %description -l de
-Emacs ist der erweiterbare, veränderbare, selbst-dokumentierende
-Echtzeit-Editor. Emacs enthält spezielle Modi zum Bearbeiten von Code,
-eine Script-Sprache (elisp) und Pakete für Mail, News und vieles mehr,
+Emacs ist der erweiterbare, verÃ¤nderbare, selbst-dokumentierende
+Echtzeit-Editor. Emacs enthÃ¤lt spezielle Modi zum Bearbeiten von Code,
+eine Script-Sprache (elisp) und Pakete fÃ¼r Mail, News und vieles mehr,
 alles im Editor.
 
-Dieses Paket enthält die zum Ausführen des emacs-Editors notwendig
+Dieses Paket enthÃ¤lt die zum AusfÃ¼hren des emacs-Editors notwendig
 sind. Das eigentliche Programm ist im Paket 'emacs-nox' bzw.
 'emacs-X11' enthalten, je nachdem, ob Sie X-Window verwenden oder
 nicht.
 
 %description -l es
-Emacs es un editor común, que se puede personalizar, y muestra los
-propios documentos en tiempo real. Emacs posee un modo de código
-especial para edición, un lenguaje script (elisp), y viene con varios
-paquetes para mail, news, y más cosas, todo en tu editor. Este paquete
+Emacs es un editor comÃºn, que se puede personalizar, y muestra los
+propios documentos en tiempo real. Emacs posee un modo de cÃ³digo
+especial para ediciÃ³n, un lenguaje script (elisp), y viene con varios
+paquetes para mail, news, y mÃ¡s cosas, todo en tu editor. Este paquete
 incluye las bibliotecas necesarias para ejecutar el editor emacs - el
 programa actual puede ser encontrado en los paquetes emacs-nox o
 emacs-X11, dependiendo de que uses o no el X Window.
 
 %description -l pl
-Emacs-X11 zawiera edytor tekstu Emacs do u¿ytku z X Window System (ma
-wsparcie dla myszy i innych elementów interfejsu graficznego).
-Emacs-X11 mo¿e dzia³aæ tak¿e bez X, ale wymaga wiêcej pamiêci ni¿
+Emacs-X11 zawiera edytor tekstu Emacs do uÂ¿ytku z X Window System (ma
+wsparcie dla myszy i innych elementÃ³w interfejsu graficznego).
+Emacs-X11 moÂ¿e dziaÂ³aÃ¦ takÂ¿e bez X, ale wymaga wiÃªcej pamiÃªci niÂ¿
 wersja nie-X Emacsa (emacs-nox).
 
 %description -l pt_BR
-Emacs é um editor comum, personalizável, e mostra os próprios
-documentos em tempo real. Emacs possui um modo de código especial para
-edição, uma linguagem script (elisp), e vem com vários pacotes para
+Emacs Ã© um editor comum, personalizÃ¡vel, e mostra os prÃ³prios
+documentos em tempo real. Emacs possui um modo de cÃ³digo especial para
+ediÃ§Ã£o, uma linguagem script (elisp), e vem com vÃ¡rios pacotes para
 mail, news, e mais, tudo no seu editor. Este pacote inclui as
-bibliotecas necessárias para rodar o editor emacs - o programa atual
-pode ser achado nos pacotes emacs-nox ou emacs-X11, dependendo se você
-usa ou não X Window.
+bibliotecas necessÃ¡rias para rodar o editor emacs - o programa atual
+pode ser achado nos pacotes emacs-nox ou emacs-X11, dependendo se vocÃª
+usa ou nÃ£o X Window.
 
 %description -l tr
-Emacs, son derece geliþmiþ bir metin düzenleyicisidir. Bir çok
-geliþtirme ortamýnda kullanýlmak üzere ayarlanabilir (C, Java, VHDL
-gibi). E-posta okuyabilmek, haber gruplarýna eriþmek gibi birçok
-deðiþik amaç için kullanýlabilecek ek yazýlýmlarla yetenekli bir
-çalýþma ortamý saðlar. Bu paket emacs çalýþtýrmak için gereken
-kütüphaneleri içerir. Asýl program kullandýðýnýz ortama göre emacs-nox
-veya emacs-X11 paketinde yer alýr.
+Emacs, son derece geliÃ¾miÃ¾ bir metin dÃ¼zenleyicisidir. Bir Ã§ok
+geliÃ¾tirme ortamÃ½nda kullanÃ½lmak Ã¼zere ayarlanabilir (C, Java, VHDL
+gibi). E-posta okuyabilmek, haber gruplarÃ½na eriÃ¾mek gibi birÃ§ok
+deÃ°iÃ¾ik amaÃ§ iÃ§in kullanÃ½labilecek ek yazÃ½lÃ½mlarla yetenekli bir
+Ã§alÃ½Ã¾ma ortamÃ½ saÃ°lar. Bu paket emacs Ã§alÃ½Ã¾tÃ½rmak iÃ§in gereken
+kÃ¼tÃ¼phaneleri iÃ§erir. AsÃ½l program kullandÃ½Ã°Ã½nÃ½z ortama gÃ¶re emacs-nox
+veya emacs-X11 paketinde yer alÃ½r.
 
 %package el
 Summary:	The sources for elisp programs included with Emacs
 Summary(de):	El Quelldateien - zum Betrieb von Emacs nicht erforderlich
 Summary(es):	Fuentes .el -- no son necesarios para ejecutar Emacs
-Summary(fr):	Fichiers sources .el - non nécessaires pour exécuter Emacs
-Summary(pl):	¬ród³a programów w elispie do³±czonych do Emacsa
-Summary(pt_BR):	Fontes .el -- não são necessários para rodar o Emacs
-Summary(tr):	Lisp kaynak dosyalarý -- Emacs çalýþtýrmak için gerekmez
+Summary(fr):	Fichiers sources .el - non nÃ©cessaires pour exÃ©cuter Emacs
+Summary(pl):	Â¬rÃ³dÂ³a programÃ³w w elispie doÂ³Â±czonych do Emacsa
+Summary(pt_BR):	Fontes .el -- nÃ£o sÃ£o necessÃ¡rios para rodar o Emacs
+Summary(tr):	Lisp kaynak dosyalarÃ½ -- Emacs Ã§alÃ½Ã¾tÃ½rmak iÃ§in gerekmez
 Group:		Applications/Editors/Emacs
 Requires:	%{name}-common = %{version}-%{release}
 
@@ -134,26 +136,26 @@ pas besoin de ce paquetage sauf si vous voulez modifier ces paquetages
 ou voir quelques exemples elisp.
 
 %description el -l pl
-Emacs-el zawiera ¼ród³a w emacs-elispie wielu programów do³±czonych do
-g³ównego pakietu edytora Emacs. Ten pakiet jest potrzebny tylko do
-modyfikowania elementów Emacsa lub obejrzenia przyk³adów w elispie.
+Emacs-el zawiera Â¼rÃ³dÂ³a w emacs-elispie wielu programÃ³w doÂ³Â±czonych do
+gÂ³Ã³wnego pakietu edytora Emacs. Ten pakiet jest potrzebny tylko do
+modyfikowania elementÃ³w Emacsa lub obejrzenia przykÂ³adÃ³w w elispie.
 
 %description el -l pt_BR
-Este pacote contém os fontes emacs-lisp para muitos dos programas
-elisp incluído com o programa principal do pacote emacs. Você não
-necessita deste pacote a menos que você queira modificar estes pacotes
+Este pacote contÃ©m os fontes emacs-lisp para muitos dos programas
+elisp incluÃ­do com o programa principal do pacote emacs. VocÃª nÃ£o
+necessita deste pacote a menos que vocÃª queira modificar estes pacotes
 ou ver alguns exemplos de programas elisp.
 
 %description el -l tr
-Bu paket, ana emacs paketinde yer alan çoðu programýn lisp kaynak
-kodlarýný içerir. Bu programlarý deðiþtirmeyi düþünmüyorsanýz gerek
-duymayacaksýnýz.
+Bu paket, ana emacs paketinde yer alan Ã§oÃ°u programÃ½n lisp kaynak
+kodlarÃ½nÃ½ iÃ§erir. Bu programlarÃ½ deÃ°iÃ¾tirmeyi dÃ¼Ã¾Ã¼nmÃ¼yorsanÃ½z gerek
+duymayacaksÃ½nÃ½z.
 
 %package leim
 Summary:	Emacs Lisp code for input methods for international characters
-Summary(es):	Código Lisp para internacionalización en Emacs
-Summary(pl):	Kod w Emacs Lispie do wprowadzania znaków narodowych
-Summary(pt_BR):	Código Lisp para para internacionalização no Emacs
+Summary(es):	CÃ³digo Lisp para internacionalizaciÃ³n en Emacs
+Summary(pl):	Kod w Emacs Lispie do wprowadzania znakÃ³w narodowych
+Summary(pt_BR):	CÃ³digo Lisp para para internacionalizaÃ§Ã£o no Emacs
 Group:		Applications/Editors/Emacs
 Requires:	%{name}-common = %{version}-%{release}
 
@@ -166,21 +168,21 @@ non-English character set. Input methods for many different language's
 character sets are included in this package.
 
 %description leim -l es
-Código Lisp para internacionalización en Emacs.
+CÃ³digo Lisp para internacionalizaciÃ³n en Emacs.
 
 %description leim -l pl
-Pakiet emacs-leim zawiera kod w Emacs Lispie do wprowadzania ró¿nych
-narodowych znaków. Kod zawarty w tym pakiecie opisuje sekwencje
-klawiszy, które u¿ytkownik musi nacisn±æ, by uzyskaæ dany znak spoza
-zestawu angielskiego. Pakiet zawiera sposoby wprowadzania znaków w
-wielu ró¿nych jêzykach.
+Pakiet emacs-leim zawiera kod w Emacs Lispie do wprowadzania rÃ³Â¿nych
+narodowych znakÃ³w. Kod zawarty w tym pakiecie opisuje sekwencje
+klawiszy, ktÃ³re uÂ¿ytkownik musi nacisnÂ±Ã¦, by uzyskaÃ¦ dany znak spoza
+zestawu angielskiego. Pakiet zawiera sposoby wprowadzania znakÃ³w w
+wielu rÃ³Â¿nych jÃªzykach.
 
 %description leim -l pt_BR
-Código Lisp para para internacionalização no Emacs.
+CÃ³digo Lisp para para internacionalizaÃ§Ã£o no Emacs.
 
 %package leim-el
 Summary:	Emacs Lisp source code for input methods for international characters
-Summary(pl):	Kod ¼ród³owy w Emacs Lispie do wprowadzania znaków narodowych
+Summary(pl):	Kod Â¼rÃ³dÂ³owy w Emacs Lispie do wprowadzania znakÃ³w narodowych
 Group:		Applications/Editors/Emacs
 Requires:	%{name}-leim = %{version}-%{release}
 
@@ -188,13 +190,13 @@ Requires:	%{name}-leim = %{version}-%{release}
 Emacs Lisp source code for input methods for international characters.
 
 %description leim-el -l pl
-Kod ¼ród³owy w Emacs Lispie do wprowadzania znaków narodowych.
+Kod Â¼rÃ³dÂ³owy w Emacs Lispie do wprowadzania znakÃ³w narodowych.
 
 %package nox
 Summary:	The Emacs text editor without support for the X Window System
 Summary(de):	emacs-nox - keine X-Libraries erforderlich
 Summary(es):	emacs-nox - Emacs sin necesidad de bibliotecas X
-Summary(fr):	emacs-nox - les bibliothèques X ne sont pas nécessaires
+Summary(fr):	emacs-nox - les bibliothÃ¨ques X ne sont pas nÃ©cessaires
 Summary(pl):	emacs-nox - edytor tekstu Emacs bez wsparcia dla X Window System
 Summary(pt_BR):	emacs-nox - Emacs sem precisar de bibliotecas X
 Summary(tr):	X gerektirmeyen emacs paketi
@@ -211,9 +213,9 @@ out of X, but emacs-nox will only work outside of X). You'll also need
 to install the emacs-common package in order to run Emacs.
 
 %description nox -l de
-Dieses Paket enthält eine Binärversion von emacs ohne X-Window-
-Unterstützung. Das emacs-Binärprogramm im emacs-Hauptpaket
-funktioniert zwar einwandfrei außerhalb von X-Window (z.B. auf der
+Dieses Paket enthÃ¤lt eine BinÃ¤rversion von emacs ohne X-Window-
+UnterstÃ¼tzung. Das emacs-BinÃ¤rprogramm im emacs-Hauptpaket
+funktioniert zwar einwandfrei auÃŸerhalb von X-Window (z.B. auf der
 Konsole), die Version in diesem Paket hat jedoch ein kleineres
 Speicherabbild.
 
@@ -227,19 +229,19 @@ paquete utiliza menos memoria.
 Ce paquetage contient un binaire emacs construit sans gestion X
 Window. Bien que le binaire emacs du paquetage emacs principal
 fonctionne bien sans X Window (sur un terminal, par exemple), celui-ci
-à une image mémoire plus petite.
+Ã  une image mÃ©moire plus petite.
 
 %description nox -l pl
 Emacs-nox to edytor tekstu Emacs bez wsparcia dla X Window System.
 
 %description nox -l pt_BR
-Este pacote contém um binário emacs sem suporte ao X Window. Embora o
-binário emacs no pacote principal funcione bem fora do X Window (na
-console por exemplo) o que está neste pacote utiliza menos memória.
+Este pacote contÃ©m um binÃ¡rio emacs sem suporte ao X Window. Embora o
+binÃ¡rio emacs no pacote principal funcione bem fora do X Window (na
+console por exemplo) o que estÃ¡ neste pacote utiliza menos memÃ³ria.
 
 %description nox -l tr
-Bu paket içinde yer alan emacs programý, X11 desteði içermez ve
-çalýþmak için daha az belleðe gereksinim duyar.
+Bu paket iÃ§inde yer alan emacs programÃ½, X11 desteÃ°i iÃ§ermez ve
+Ã§alÃ½Ã¾mak iÃ§in daha az belleÃ°e gereksinim duyar.
 
 %package athena
 Summary:	The Emacs text editor for X Window System (Athena toolkit version)
@@ -297,18 +299,18 @@ System; install emacs if you will be using X.
 
 %description common -l pl
 Emacs jest konfigurowalnym, samo-udokumentowanym edytorem tekstu o
-du¿ych mo¿liwo¶ciach. Zawiera u³atwienia do pisania kodu, jêzyk
-skryptowy (elisp), daje mo¿liwo¶æ czytania poczty, newsów i wiele
+duÂ¿ych moÂ¿liwoÂ¶ciach. Zawiera uÂ³atwienia do pisania kodu, jÃªzyk
+skryptowy (elisp), daje moÂ¿liwoÂ¶Ã¦ czytania poczty, newsÃ³w i wiele
 innych rzeczy bez opuszczania edytora.
 
-Ten pakiet zawiera biblioteki potrzebne do uruchomienia Emacsa. Oprócz
-tego pakietu potrzebny jest jeszcze w³a¶ciwy program (emacs-nox lub
-emacs). Zainstaluj emacs-nox je¿eli nie zamierzasz u¿ywasz Emacsa pod
-X Window System; zainstaluj emacs je¿eli u¿ywasz X.
+Ten pakiet zawiera biblioteki potrzebne do uruchomienia Emacsa. OprÃ³cz
+tego pakietu potrzebny jest jeszcze wÂ³aÂ¶ciwy program (emacs-nox lub
+emacs). Zainstaluj emacs-nox jeÂ¿eli nie zamierzasz uÂ¿ywasz Emacsa pod
+X Window System; zainstaluj emacs jeÂ¿eli uÂ¿ywasz X.
 
 %package extras
 Summary:	Files which conflict with XEmacs
-Summary(pl):	Wspólne pliki XEmacsa i GNU Emacsa
+Summary(pl):	WspÃ³lne pliki XEmacsa i GNU Emacsa
 Group:		Applications/Editors/Emacs
 Provides:	emacscommon
 Obsoletes:	emacscommon
@@ -317,7 +319,7 @@ Obsoletes:	emacscommon
 These files are common between GNU Emacs and XEmacs.
 
 %description extras -l pl
-S± to wspólne pliki GNU Emacs i XEmacs.
+SÂ± to wspÃ³lne pliki GNU Emacs i XEmacs.
 
 %package gnus
 Summary:	Gnus is flexible message reader under Emacs
@@ -333,7 +335,7 @@ Gnus jest czytnikiem grup dyskusyjnych pod Emacsa.
 
 %package gnus-el
 Summary:	Emacs Lisp source code for Gnus
-Summary(pl):	Kod ¼ród³owy Gnusa w Emacs Lispie
+Summary(pl):	Kod Â¼rÃ³dÂ³owy Gnusa w Emacs Lispie
 Group:		Application/Editors/Emacs
 Requires:	%{name}-gnus = %{version}-%{release}
 
@@ -341,7 +343,7 @@ Requires:	%{name}-gnus = %{version}-%{release}
 Emacs Lisp source code for Gnus.
 
 %description gnus-el -l pl
-Kod ¼ród³owy Gnusa w Emacs Lispie.
+Kod Â¼rÃ³dÂ³owy Gnusa w Emacs Lispie.
 
 %prep 
 #
@@ -365,7 +367,7 @@ exit 1
 %endif
 echo -e "\nEmacs %{default_emacs} version will be emacs binary as default.\n"
 #
-%setup -q -n %{name}-%{version}-cvs-%{snap}
+%setup -q -n %{name}
 
 %build
 cp -f /usr/share/automake/config.* .
@@ -386,6 +388,10 @@ mkdir build-athena && cd build-athena
 	--with-tiff \
 	--with-gif \
 	--with-png \
+%if %{with xft}
+	--with-freetype \
+	--enable-font-backend \
+%endif
 	--with-x-toolkit=athena 
 
 %{__make} bootstrap
@@ -404,6 +410,10 @@ mkdir build-gtk && cd build-gtk
 	--with-tiff \
 	--with-gif \
 	--with-png \
+%if %{with xft}
+	--with-freetype \
+	--enable-font-backend \
+%endif
 	--with-x-toolkit=gtk 
 
 %if %{?bootstrap}
@@ -426,6 +436,10 @@ mkdir build-motif && cd build-motif
 	--with-tiff \
 	--with-gif \
 	--with-png \
+%if %{with xft}
+	--with-freetype \
+	--enable-font-backend \
+%endif
 	--with-x-toolkit=motif
 
 %if %{?bootstrap}
@@ -543,7 +557,6 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs
 %attr(755,root,root) %{_bindir}/emacs-%{version}
-%dir %{_datadir}/emacs/%{version}/lisp/toolbar
 %{_desktopdir}/emacs-%{default_emacs}.desktop
 %{_pixmapsdir}/*
 
@@ -560,66 +573,75 @@ fi
 %dir %{_libdir}/emacs/%{version}/*
 
 %attr(2755,root,mail) %{_libdir}/emacs/%{version}/*-linux/movemail
-%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/cvtmail
-%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/digest-doc
-%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/fakemail
-%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/hexl
-%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/profile
-%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/rcs2log
-%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/sorted-doc
-%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/vcdiff
-%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/yow
-%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/update-game-score
+%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/[^m]*
 
 %dir %{_datadir}/emacs
 %dir %{_datadir}/emacs/%{version}
 %dir %{_datadir}/emacs/%{version}/site-lisp
 %dir %{_datadir}/emacs/%{version}/lisp
 %dir %{_datadir}/emacs/%{version}/leim
-%dir %{_datadir}/emacs/%{version}/lisp/calendar
 %dir %{_datadir}/emacs/%{version}/lisp/calc
+%dir %{_datadir}/emacs/%{version}/lisp/calendar
 %dir %{_datadir}/emacs/%{version}/lisp/emacs-lisp
 %dir %{_datadir}/emacs/%{version}/lisp/emulation
+%dir %{_datadir}/emacs/%{version}/lisp/eshell
 %dir %{_datadir}/emacs/%{version}/lisp/international
 %dir %{_datadir}/emacs/%{version}/lisp/language
 %dir %{_datadir}/emacs/%{version}/lisp/mail
+%dir %{_datadir}/emacs/%{version}/lisp/mh-e
+%dir %{_datadir}/emacs/%{version}/lisp/net
+%dir %{_datadir}/emacs/%{version}/lisp/obsolete
 %dir %{_datadir}/emacs/%{version}/lisp/play
 %dir %{_datadir}/emacs/%{version}/lisp/progmodes
 %dir %{_datadir}/emacs/%{version}/lisp/term
 %dir %{_datadir}/emacs/%{version}/lisp/textmodes
-%dir %{_datadir}/emacs/%{version}/lisp/eshell
-%dir %{_datadir}/emacs/%{version}/lisp/net
-%dir %{_datadir}/emacs/%{version}/lisp/obsolete
-%dir %{_datadir}/emacs/%{version}/lisp/mh-e
+%dir %{_datadir}/emacs/%{version}/lisp/url
 
 %{_datadir}/emacs/site-lisp
 %{_datadir}/emacs/%{version}/etc
 %{_datadir}/emacs/%{version}/lisp/*.elc
 %{_datadir}/emacs/%{version}/lisp/README
+%{_datadir}/emacs/%{version}/lisp/calc/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/calc/*.elc
+%{_datadir}/emacs/%{version}/lisp/calc/README*
+%{_datadir}/emacs/%{version}/lisp/calendar/*.elc
 %{_datadir}/emacs/%{version}/lisp/cus-load.el
 %{_datadir}/emacs/%{version}/lisp/cus-start.el.gz
 %{_datadir}/emacs/%{version}/lisp/cus-theme.el.gz
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.elc
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-specs.el
+%{_datadir}/emacs/%{version}/lisp/emulation/*.elc
+%{_datadir}/emacs/%{version}/lisp/eshell/*.elc
+%{_datadir}/emacs/%{version}/lisp/eshell/esh-groups.el
 %{_datadir}/emacs/%{version}/lisp/finder-inf.el
 %{_datadir}/emacs/%{version}/lisp/forms-pass.el
 %{_datadir}/emacs/%{version}/lisp/generic-x.el.gz
+%{_datadir}/emacs/%{version}/lisp/international/*.elc
+%{_datadir}/emacs/%{version}/lisp/international/latexenc.el.gz
+%{_datadir}/emacs/%{version}/lisp/international/mule-conf.el
+%{_datadir}/emacs/%{version}/lisp/language/*.elc
+%{_datadir}/emacs/%{version}/lisp/ldefs-boot.el
 %{_datadir}/emacs/%{version}/lisp/load*.el
 %{_datadir}/emacs/%{version}/lisp/load*.el.gz
-%{_datadir}/emacs/%{version}/lisp/ldefs-boot.el
 %{_datadir}/emacs/%{version}/lisp/longlines.el.gz
-%{_datadir}/emacs/%{version}/lisp/patcomp.el
-%{_datadir}/emacs/%{version}/lisp/paths.el
-%{_datadir}/emacs/%{version}/lisp/subdirs.el
-%{_datadir}/emacs/%{version}/lisp/version.el
-%{_datadir}/emacs/%{version}/lisp/language/*.elc
 %{_datadir}/emacs/%{version}/lisp/mail/*.elc
 %{_datadir}/emacs/%{version}/lisp/mail/blessmail.el
+%{_datadir}/emacs/%{version}/lisp/mh-e/*.el
+%{_datadir}/emacs/%{version}/lisp/mh-e/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/mh-e/*.elc
+%{_datadir}/emacs/%{version}/lisp/net/*.elc
+%{_datadir}/emacs/%{version}/lisp/obsolete/*.elc
+%{_datadir}/emacs/%{version}/lisp/patcomp.el
+%{_datadir}/emacs/%{version}/lisp/paths.el
 %{_datadir}/emacs/%{version}/lisp/play/*.elc
 %{_datadir}/emacs/%{version}/lisp/play/bruce.el
+%{_datadir}/emacs/%{version}/lisp/progmodes/*.elc
+%{_datadir}/emacs/%{version}/lisp/subdirs.el
 %{_datadir}/emacs/%{version}/lisp/term/*.elc
-%{_datadir}/emacs/%{version}/lisp/term/cygwin.el
 %{_datadir}/emacs/%{version}/lisp/term/AT386.el
 %{_datadir}/emacs/%{version}/lisp/term/apollo.el
 %{_datadir}/emacs/%{version}/lisp/term/bobcat.el
+%{_datadir}/emacs/%{version}/lisp/term/cygwin.el
 %{_datadir}/emacs/%{version}/lisp/term/internal.el
 %{_datadir}/emacs/%{version}/lisp/term/iris-ansi.el
 %{_datadir}/emacs/%{version}/lisp/term/linux.el
@@ -633,30 +655,12 @@ fi
 %{_datadir}/emacs/%{version}/lisp/term/vt4*
 %{_datadir}/emacs/%{version}/lisp/term/wyse50.el
 %{_datadir}/emacs/%{version}/lisp/term/xterm.el.gz
-%{_datadir}/emacs/%{version}/lisp/emulation/*.elc
-%{_datadir}/emacs/%{version}/lisp/international/*.elc
-%{_datadir}/emacs/%{version}/lisp/international/latin-*.el
-%{_datadir}/emacs/%{version}/lisp/international/mule-conf.el
-%{_datadir}/emacs/%{version}/lisp/international/latexenc.el.gz
-%{_datadir}/emacs/%{version}/lisp/calendar/*.elc
-%{_datadir}/emacs/%{version}/lisp/calc/*.el.gz
-%{_datadir}/emacs/%{version}/lisp/calc/README*
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.elc
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-specs.el
 %{_datadir}/emacs/%{version}/lisp/textmodes/*.elc
-%{_datadir}/emacs/%{version}/lisp/progmodes/*.elc
-%{_datadir}/emacs/%{version}/lisp/eshell/*.elc
-%{_datadir}/emacs/%{version}/lisp/eshell/esh-groups.el
-%{_datadir}/emacs/%{version}/lisp/net/*.elc
-%{_datadir}/emacs/%{version}/lisp/obsolete/*.elc
-%{_datadir}/emacs/%{version}/lisp/url/*.elc
 %{_datadir}/emacs/%{version}/lisp/url/*.el.gz
-%{_datadir}/emacs/%{version}/lisp/calc/*.elc
-%{_datadir}/emacs/%{version}/lisp/toolbar
-%{_datadir}/emacs/%{version}/lisp/mh-e/*.el
-%{_datadir}/emacs/%{version}/lisp/mh-e/*.el.gz
-%{_datadir}/emacs/%{version}/lisp/mh-e/*.elc
+%{_datadir}/emacs/%{version}/lisp/url/*.elc
+%{_datadir}/emacs/%{version}/lisp/version.el
 
+%dir /var/games/emacs
 /var/games/emacs/tetris-scores
 /var/games/emacs/snake-scores
 
@@ -721,6 +725,7 @@ fi
 %{_datadir}/emacs/%{version}/lisp/term/vt100.el.gz
 %{_datadir}/emacs/%{version}/lisp/term/sun-mouse.el.gz
 %{_datadir}/emacs/%{version}/lisp/emulation/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/international/*.el
 %{_datadir}/emacs/%{version}/lisp/international/[a-k]*.el.gz
 %{_datadir}/emacs/%{version}/lisp/international/[o-z]*.el.gz
 %{_datadir}/emacs/%{version}/lisp/international/latin*-disp.el.gz
@@ -744,7 +749,6 @@ fi
 %{_datadir}/emacs/%{version}/lisp/net/*.el.gz
 %{_datadir}/emacs/%{version}/lisp/obsolete/*.el
 %{_datadir}/emacs/%{version}/lisp/obsolete/*.el.gz
-%{_datadir}/emacs/%{version}/lisp/toolbar
 
 %files leim
 %defattr(644,root,root,755)
