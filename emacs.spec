@@ -16,7 +16,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	23.0.0
-Release:	0.%{snap}.1
+Release:	0.%{snap}.2
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	%{name}-%{version}-cvs-%{snap}.tar.bz2
