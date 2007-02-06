@@ -20,7 +20,7 @@ Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	%{name}-%{version}-cvs-%{snap}.tar.bz2
-# Source0-md5:	61e5bb7d94f93193668e2c2639059451
+# Source0-md5:	d41d8cd98f00b204e9800998ecf8427e
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
