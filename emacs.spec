@@ -4,9 +4,9 @@
 %bcond_without	gtk	# don't build GTK2 version
 %bcond_without	motif	# don't build motif version
 %bcond_without	nox	# don't build nox version
-%bcond_without	xft	# don't compile in Freetype support
+%bcond_without	xft	# don't compile in Xft & freetype support
 #
-%define	snap	20061115
+%define	snap	20070201
 Summary:	The Emacs text editor for the X Window System
 Summary(de):	GNU Emacs
 Summary(es):	GNU Emacs
@@ -16,7 +16,7 @@ Summary(pt_BR):	GNU Emacs
 Summary(tr):	GNU Emacs
 Name:		emacs
 Version:	23.0.0
-Release:	0.%{snap}.2
+Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	%{name}-%{version}-cvs-%{snap}.tar.bz2
@@ -30,6 +30,8 @@ Source6:	%{name}-athena.desktop
 Source7:	%{name}-gtk.desktop
 Source8:	%{name}-motif.desktop
 Source9:	%{name}-nox.desktop
+Patch0:		%{name}-ncurses-tinfo.patch
+Patch1:		%{name}-enable-font-backend.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -43,7 +45,7 @@ BuildRequires:	ncurses-devel
 %{?with_athena:BuildRequires:	Xaw3d-devel >= 1.5E-3}
 %{?with_gtk:BuildRequires:	gtk+2-devel}
 %{?with_motif:BuildRequires:	openmotif-devel}
-%{?with_xft:BuildRequires:	freetype-devel}
+%{?with_xft:BuildRequires:	xorg-lib-libXft-devel}
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
 Requires:	ctags
@@ -368,6 +370,8 @@ exit 1
 echo -e "\nEmacs %{default_emacs} version will be emacs binary as default.\n"
 #
 %setup -q -n %{name}
+%patch0 -p1
+%patch1 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
@@ -389,8 +393,11 @@ mkdir build-athena && cd build-athena
 	--with-gif \
 	--with-png \
 %if %{with xft}
-	--with-freetype \
+	--with-xft \
 	--enable-font-backend \
+%else
+	--without-xft \
+	--without-freetype \
 %endif
 	--with-x-toolkit=athena 
 
@@ -411,8 +418,11 @@ mkdir build-gtk && cd build-gtk
 	--with-gif \
 	--with-png \
 %if %{with xft}
-	--with-freetype \
+	--with-xft \
 	--enable-font-backend \
+%else
+	--without-xft \
+	--without-freetype \
 %endif
 	--with-x-toolkit=gtk 
 
@@ -437,8 +447,11 @@ mkdir build-motif && cd build-motif
 	--with-gif \
 	--with-png \
 %if %{with xft}
-	--with-freetype \
+	--with-xft \
 	--enable-font-backend \
+%else
+	--without-xft \
+	--without-freetype \
 %endif
 	--with-x-toolkit=motif
 
