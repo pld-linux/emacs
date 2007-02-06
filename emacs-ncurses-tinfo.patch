@@ -1,0 +1,45 @@
+--- emacs/configure.in.~1.351.2.41.~	2007-01-30 23:22:40.000000000 +0100
++++ emacs/configure.in	2007-02-04 18:21:21.000000000 +0100
+@@ -2615,7 +2615,7 @@
+ # That is because we have not set up to link ncurses in lib-src.
+ # It's better to believe a function is not available
+ # than to expect to find it in ncurses.
+-AC_CHECK_LIB(ncurses, tparm)
++AC_CHECK_LIB(tinfo, tparm)
+ 
+ # Do we need the Hesiod library to provide the support routines?
+ if test "$with_hesiod" = yes ; then
+--- emacs/src/dispnew.c.~1.318.2.33.~	2007-01-26 07:15:07.000000000 +0100
++++ emacs/src/dispnew.c	2007-02-04 18:23:44.000000000 +0100
+@@ -102,7 +102,7 @@
+ #endif
+ #endif /* not __GNU_LIBRARY__ */
+ 
+-#if defined(HAVE_TERM_H) && defined (GNU_LINUX) && defined (HAVE_LIBNCURSES)
++#if defined(HAVE_TERM_H) && defined (GNU_LINUX) && defined (HAVE_LIBTINFO)
+ #include <term.h>		/* for tgetent */
+ #endif
+ 
+@@ -6775,7 +6775,7 @@
+ #else
+       Vwindow_system_version = make_number (10);
+ #endif
+-#if defined (GNU_LINUX) && defined (HAVE_LIBNCURSES)
++#if defined (GNU_LINUX) && defined (HAVE_LIBTINFO)
+       /* In some versions of ncurses,
+ 	 tputs crashes if we have not called tgetent.
+ 	 So call tgetent.  */
+--- emacs/src/s/gnu-linux.h.~1.88.2.10.~	2007-01-26 07:15:24.000000000 +0100
++++ emacs/src/s/gnu-linux.h	2007-02-04 18:24:44.000000000 +0100
+@@ -279,9 +279,9 @@
+ /* Paul Abrahams <abrahams@equinox.shaysnet.com> says this is needed.  */
+ #define LIB_MOTIF -lXm -lXpm
+ 
+-#ifdef HAVE_LIBNCURSES
++#ifdef HAVE_LIBTINFO
+ #define TERMINFO
+-#define LIBS_TERMCAP -lncurses
++#define LIBS_TERMCAP -ltinfo
+ #endif
+ 
+ #define HAVE_SYSVIPC
