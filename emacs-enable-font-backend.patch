@@ -1,12 +1,12 @@
---- emacs/src/emacs.c.~1.328.4.41.~	2007-01-26 07:15:03.000000000 +0100
-+++ emacs/src/emacs.c	2007-02-05 20:35:25.000000000 +0100
+--- emacs/src/emacs.c.~1.328.4.41.~	2007-02-06 07:41:10.000000000 +0100
++++ emacs/src/emacs.c	2007-02-07 11:37:50.000000000 +0100
 @@ -1408,10 +1408,10 @@
      = argmatch (argv, argc, "-nl", "--no-loadup", 6, NULL, &skip_args);
  
  #ifdef USE_FONT_BACKEND
 -  enable_font_backend = 0;
 -  if (argmatch (argv, argc, "-enable-font-backend", "--enable-font-backend",
-+  enable_font_backend = 1;
++  enable_font_backend = !noninteractive;
 +  if (argmatch (argv, argc, "-disable-font-backend", "--disable-font-backend",
  		4, NULL, &skip_args))
 -    enable_font_backend = 1;
@@ -14,7 +14,18 @@
  #endif	/* USE_FONT_BACKEND */
  
  #ifdef HAVE_X_WINDOWS
-@@ -1816,7 +1816,7 @@
+@@ -1676,6 +1676,10 @@
+       init_vms_input ();/* init_display calls get_frame_size, that needs this.  */
+ #endif /* VMS */
+       init_display ();	/* Determine terminal type.  init_sys_modes uses results.  */
++#ifdef USE_FONT_BACKEND
++      if (NILP (Vwindow_system))
++        enable_font_backend = 0;
++#endif
+     }
+ #ifndef MAC_OS8
+   /* Called before init_window_once for Mac OS Classic.  */
+@@ -1816,7 +1820,7 @@
    { "-unibyte", "--unibyte", 81, 0 },
    { "-no-multibyte", "--no-multibyte", 80, 0 },
    { "-nl", "--no-loadup", 70, 0 },
