@@ -6,12 +6,12 @@
 #
 %define		elisp_man_version	21-2.8
 Summary:	The Emacs text editor for the X Window System
-Summary(de.UTF-8):   GNU Emacs
-Summary(es.UTF-8):   GNU Emacs
-Summary(fr.UTF-8):   GNU Emacs
-Summary(pl.UTF-8):   GNU Emacs - edytor tekstu dla systemu X Window
-Summary(pt_BR.UTF-8):   GNU Emacs
-Summary(tr.UTF-8):   GNU Emacs
+Summary(de.UTF-8):	GNU Emacs
+Summary(es.UTF-8):	GNU Emacs
+Summary(fr.UTF-8):	GNU Emacs
+Summary(pl.UTF-8):	GNU Emacs - edytor tekstu dla systemu X Window
+Summary(pt_BR.UTF-8):	GNU Emacs
+Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 %define	sver	21.4
 Version:	21.4a
@@ -106,12 +106,12 @@ veya emacs-X11 paketinde yer alır.
 
 %package el
 Summary:	The sources for elisp programs included with Emacs
-Summary(de.UTF-8):   El Quelldateien - zum Betrieb von Emacs nicht erforderlich
-Summary(es.UTF-8):   Fuentes .el -- no son necesarios para ejecutar Emacs
-Summary(fr.UTF-8):   Fichiers sources .el - non nécessaires pour exécuter Emacs
-Summary(pl.UTF-8):   Źródła programów w elispie dołączonych do Emacsa
-Summary(pt_BR.UTF-8):   Fontes .el -- não são necessários para rodar o Emacs
-Summary(tr.UTF-8):   Lisp kaynak dosyaları -- Emacs çalıştırmak için gerekmez
+Summary(de.UTF-8):	El Quelldateien - zum Betrieb von Emacs nicht erforderlich
+Summary(es.UTF-8):	Fuentes .el -- no son necesarios para ejecutar Emacs
+Summary(fr.UTF-8):	Fichiers sources .el - non nécessaires pour exécuter Emacs
+Summary(pl.UTF-8):	Źródła programów w elispie dołączonych do Emacsa
+Summary(pt_BR.UTF-8):	Fontes .el -- não são necessários para rodar o Emacs
+Summary(tr.UTF-8):	Lisp kaynak dosyaları -- Emacs çalıştırmak için gerekmez
 Group:		Applications/Editors/Emacs
 Requires:	%{name}-common = %{version}-%{release}
 
@@ -152,9 +152,9 @@ duymayacaksınız.
 
 %package leim
 Summary:	Emacs Lisp code for input methods for international characters
-Summary(es.UTF-8):   Código Lisp para internacionalización en Emacs
-Summary(pl.UTF-8):   Kod w Emacs Lispie do wprowadzania znaków narodowych
-Summary(pt_BR.UTF-8):   Código Lisp para para internacionalização no Emacs
+Summary(es.UTF-8):	Código Lisp para internacionalización en Emacs
+Summary(pl.UTF-8):	Kod w Emacs Lispie do wprowadzania znaków narodowych
+Summary(pt_BR.UTF-8):	Código Lisp para para internacionalização no Emacs
 Group:		Applications/Editors/Emacs
 Requires:	%{name}-common = %{version}-%{release}
 
@@ -181,7 +181,7 @@ Código Lisp para para internacionalização no Emacs.
 
 %package leim-el
 Summary:	Emacs Lisp source code for input methods for international characters
-Summary(pl.UTF-8):   Kod źródłowy w Emacs Lispie do wprowadzania znaków narodowych
+Summary(pl.UTF-8):	Kod źródłowy w Emacs Lispie do wprowadzania znaków narodowych
 Group:		Applications/Editors/Emacs
 Requires:	%{name}-leim = %{version}-%{release}
 
@@ -193,12 +193,12 @@ Kod źródłowy w Emacs Lispie do wprowadzania znaków narodowych.
 
 %package nox
 Summary:	The Emacs text editor without support for the X Window System
-Summary(de.UTF-8):   emacs-nox - keine X-Libraries erforderlich
-Summary(es.UTF-8):   emacs-nox - Emacs sin necesidad de bibliotecas X
-Summary(fr.UTF-8):   emacs-nox - les bibliothèques X ne sont pas nécessaires
-Summary(pl.UTF-8):   emacs-nox - edytor tekstu Emacs bez wsparcia dla X Window System
-Summary(pt_BR.UTF-8):   emacs-nox - Emacs sem precisar de bibliotecas X
-Summary(tr.UTF-8):   X gerektirmeyen emacs paketi
+Summary(de.UTF-8):	emacs-nox - keine X-Libraries erforderlich
+Summary(es.UTF-8):	emacs-nox - Emacs sin necesidad de bibliotecas X
+Summary(fr.UTF-8):	emacs-nox - les bibliothèques X ne sont pas nécessaires
+Summary(pl.UTF-8):	emacs-nox - edytor tekstu Emacs bez wsparcia dla X Window System
+Summary(pt_BR.UTF-8):	emacs-nox - Emacs sem precisar de bibliotecas X
+Summary(tr.UTF-8):	X gerektirmeyen emacs paketi
 Group:		Applications/Editors/Emacs
 Requires:	%{name}-common = %{version}-%{release}
 
@@ -244,7 +244,7 @@ Bu paket içinde yer alan emacs programı, X11 desteği içermez ve
 
 %package common
 Summary:	The libraries needed to run the GNU Emacs text editor
-Summary(pl.UTF-8):   Biblioteki potrzebne do uruchomienia edytora tekstu GNU Emacs
+Summary(pl.UTF-8):	Biblioteki potrzebne do uruchomienia edytora tekstu GNU Emacs
 Group:		Applications/Editors/Emacs
 Requires:	emacscommon
 
@@ -273,7 +273,7 @@ X Window System; zainstaluj emacs jeżeli używasz X.
 
 %package extras
 Summary:	Files which conflict with XEmacs
-Summary(pl.UTF-8):   Wspólne pliki XEmacsa i GNU Emacsa
+Summary(pl.UTF-8):	Wspólne pliki XEmacsa i GNU Emacsa
 Group:		Applications/Editors/Emacs
 Provides:	emacscommon
 Obsoletes:	emacscommon
