@@ -6,7 +6,7 @@
 %bcond_without	nox	# don't build nox version
 %bcond_without	xft	# don't compile in Xft & freetype support
 #
-%define	snap	20070301
+%define	snap	20070501
 Summary:	The Emacs text editor for the X Window System
 Summary(de.UTF-8):   GNU Emacs
 Summary(es.UTF-8):   GNU Emacs
@@ -20,7 +20,7 @@ Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	%{name}-%{version}-cvs-%{snap}.tar.bz2
-# Source0-md5:	4057eaa5f386d6a065b3dbd8dd70c10b
+# Source0-md5:	95adc655e3fc2211ff7436db864b122c
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
@@ -31,7 +31,6 @@ Source7:	%{name}-gtk.desktop
 Source8:	%{name}-motif.desktop
 Source9:	%{name}-nox.desktop
 Patch0:		%{name}-ncurses-tinfo.patch
-Patch1:		%{name}-enable-font-backend.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -371,7 +370,6 @@ echo -e "\nEmacs %{default_emacs} version will be emacs binary as default.\n"
 #
 %setup -q -n %{name}
 %patch0 -p1
-%patch1 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
