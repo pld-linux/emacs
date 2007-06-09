@@ -17,7 +17,7 @@ Version:	22.1
 Release:	0.1
 License:	GPL
 Group:		Applications/Editors/Emacs
-Source0:	ftp://ftp.gnu.org/pub/emacs/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.gz
 # Source0-md5:	6949df37caec2d7a2e0eee3f1b422726
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
