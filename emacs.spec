@@ -14,7 +14,7 @@ Summary(pt_BR.UTF-8):	GNU Emacs
 Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 Version:	22.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.gz
@@ -28,6 +28,7 @@ Source6:	%{name}-athena.desktop
 Source7:	%{name}-gtk.desktop
 Source8:	%{name}-motif.desktop
 Source9:	%{name}-nox.desktop
+Patch0:		%{name}-tinfo.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -367,6 +368,7 @@ exit 1
 %endif
 
 %setup -q
+%patch0 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
