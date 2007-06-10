@@ -544,7 +544,6 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs
 %attr(755,root,root) %{_bindir}/emacs-%{version}
-#%dir %{_datadir}/emacs/%{version}/lisp/toolbar
 %{_desktopdir}/emacs-%{default_emacs}.desktop
 %{_pixmapsdir}/*
 
@@ -569,7 +568,6 @@ fi
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/rcs2log
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/sorted-doc
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/vcdiff
-#%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/yow
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/update-game-score
 
 %dir %{_datadir}/emacs
@@ -650,14 +648,15 @@ fi
 %{_datadir}/emacs/%{version}/lisp/eshell/esh-groups.el
 %{_datadir}/emacs/%{version}/lisp/net/*.elc
 %{_datadir}/emacs/%{version}/lisp/obsolete/*.elc
+%dir %{_datadir}/emacs/%{version}/lisp/url
 %{_datadir}/emacs/%{version}/lisp/url/*.elc
 %{_datadir}/emacs/%{version}/lisp/url/*.el.gz
 %{_datadir}/emacs/%{version}/lisp/calc/*.elc
-#%{_datadir}/emacs/%{version}/lisp/toolbar
 %{_datadir}/emacs/%{version}/lisp/mh-e/*.el
 %{_datadir}/emacs/%{version}/lisp/mh-e/*.el.gz
 %{_datadir}/emacs/%{version}/lisp/mh-e/*.elc
 
+%dir /var/games/emacs
 /var/games/emacs/tetris-scores
 /var/games/emacs/snake-scores
 
@@ -745,7 +744,6 @@ fi
 %{_datadir}/emacs/%{version}/lisp/net/*.el.gz
 %{_datadir}/emacs/%{version}/lisp/obsolete/*.el
 %{_datadir}/emacs/%{version}/lisp/obsolete/*.el.gz
-#%{_datadir}/emacs/%{version}/lisp/toolbar
 
 %files leim
 %defattr(644,root,root,755)
