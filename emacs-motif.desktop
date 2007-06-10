@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Emacs Motif
+Comment=Emacs text editor - Motif version
+Comment[pl]=Edytor tekstu Emacs - wersja Motif
+TryExec=emacs-motif
+Exec=emacs-motif
+Icon=emacs.png
+Terminal=false
+Type=Application
+Encoding=UTF-8
+Categories=Motif;TextEditor;
+# vi: encoding=utf-8
