@@ -10,3 +10,17 @@ diff -urN emacs-22.1.org/configure.in emacs-22.1/configure.in
  
  # Do we need the Hesiod library to provide the support routines?
  if test "$with_hesiod" = yes ; then
+--- emacs-22.1/src/s/gnu-linux.h.old	2007-06-10 20:13:53.376467108 +0200
++++ emacs-22.1/src/s/gnu-linux.h	2007-06-10 20:17:32.624547726 +0200
+@@ -279,9 +279,9 @@
+ /* Paul Abrahams <abrahams@equinox.shaysnet.com> says this is needed.  */
+ #define LIB_MOTIF -lXm -lXpm
+ 
+-#ifdef HAVE_LIBNCURSES
++#ifdef HAVE_LIBTINFO
+ #define TERMINFO
+-#define LIBS_TERMCAP -lncurses
++#define LIBS_TERMCAP -ltinfo
+ #endif
+ 
+ #define HAVE_SYSVIPC
