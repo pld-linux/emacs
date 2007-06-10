@@ -389,7 +389,7 @@ mkdir build-athena && cd build-athena
 	--with-png \
 	--with-x-toolkit=athena
 
-%{__make} bootstrap
+%{__make} -j1 bootstrap
 %define	bootstrap athena
 cd ..
 %endif
@@ -410,7 +410,7 @@ mkdir build-gtk && cd build-gtk
 %if %{?bootstrap}
 %{__make}
 %else
-%{__make} bootstrap
+%{__make} -j1 bootstrap
 %define	bootstrap gtk
 %endif
 cd ..
@@ -432,7 +432,7 @@ mkdir build-motif && cd build-motif
 %if %{?bootstrap}
 %{__make}
 %else
-%{__make} bootstrap
+%{__make} -j1 bootstrap
 %define	bootstrap motif
 %endif
 cd ..
@@ -454,7 +454,7 @@ mkdir build-nox && cd build-nox
 %if %{?bootstrap}
 %{__make}
 %else
-%{__make} bootstrap
+%{__make} -j1 bootstrap
 %define	bootstrap nox
 %endif
 cd ..
