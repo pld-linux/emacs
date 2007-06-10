@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Emacs GTK2
+Name[ko]=이맥스
+Comment=Emacs text editor - GTK2 version
+Comment[pl]=Edytor tekstu Emacs - wersja GTK2
+TryExec=emacs-gtk
+Exec=emacs-gtk
+Icon=emacs.png
+Terminal=false
+Type=Application
+Encoding=UTF-8
+Categories=GTK;TextEditor;
+# vi: encoding=utf-8
