@@ -1,10 +1,10 @@
 #
 # Conditional build:
-%bcond_with	gnus	# Include old Gnus newsreader and MUA version
-			# (obsoleted by emacsen-gnus-pkg-emacs)
-%bcond_with	motif	# build with motif
+%bcond_without	athena	# don't build athena version
+%bcond_without	gtk	# don't build GTK2 version
+%bcond_without	motif	# don't build motif version
+%bcond_without	nox	# don't build nox version
 #
-%define		elisp_man_version	21-2.8
 Summary:	The Emacs text editor for the X Window System
 Summary(de.UTF-8):	GNU Emacs
 Summary(es.UTF-8):	GNU Emacs
@@ -13,40 +13,41 @@ Summary(pl.UTF-8):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR.UTF-8):	GNU Emacs
 Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
-%define	sver	21.4
-Version:	21.4a
+Version:	22.1
 Release:	1
 License:	GPL
 Group:		Applications/Editors/Emacs
-Source0:	ftp://ftp.gnu.org/gnu/emacs/%{name}-%{version}.tar.gz
-# Source0-md5:	8f9d97cbd126121bd5d97e5e31168a87
-Source1:	ftp://ftp.gnu.org/gnu/emacs/leim-%{sver}.tar.gz
-# Source1-md5:	32938cb5a7505d995a1e835639d19707
-Source2:	ftp://ftp.gnu.org/gnu/emacs/elisp-manual-%{elisp_man_version}.tar.gz
-# Source2-md5:	71500b6aaa3d80ea1df1b46c5055c43d
-Source3:	%{name}.desktop
-Source4:	%{name}-dot%{name}
-Source5:	%{name}-site-start.el
-Source6:	%{name}.png
-Patch0:		%{name}-amd64.patch
-Patch1:		%{name}-loadup.patch
-Patch2:		%{name}-CAN_2005_0100.patch
+Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.gz
+# Source0-md5:	6949df37caec2d7a2e0eee3f1b422726
+Source1:	%{name}-dot%{name}
+Source2:	%{name}-site-start.el
+Source3:	%{name}.png
+Source4:	%{name}-tuareg.el
+Source5:	%{name}-nemerle.el
+Source6:	%{name}-athena.desktop
+Source7:	%{name}-gtk.desktop
+Source8:	%{name}-motif.desktop
+Source9:	%{name}-nox.desktop
 URL:		http://www.gnu.org/software/emacs/
+BuildRequires:	autoconf
+BuildRequires:	automake
+%{?with_gtk:BuildRequires:	gtk+2-devel}
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool
-BuildRequires:	giflib-devel
+BuildRequires:	libungif-devel
 BuildRequires:	ncurses-devel
+%{?with_motif:BuildRequires:	openmotif-devel}
 BuildRequires:	sed >= 4.0
-%ifarch %{ix86}
-BuildRequires:	setarch
-%endif
 BuildRequires:	texinfo
 BuildRequires:	xorg-lib-libX11-devel
-BuildRequires:	xorg-lib-libXaw-devel
-Requires:	ctags
+%{?with_athena:BuildRequires:	xorg-lib-libXaw-devel}
+BuildRequires:	xorg-lib-libXext-devel
+BuildRequires:	xorg-lib-libXmu-devel
+BuildRequires:	xorg-lib-libXpm-devel
 Requires:	%{name}-common = %{version}-%{release}
+Requires:	ctags
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -242,6 +243,42 @@ console por exemplo) o que está neste pacote utiliza menos memória.
 Bu paket içinde yer alan emacs programı, X11 desteği içermez ve
 çalışmak için daha az belleğe gereksinim duyar.
 
+%package athena
+Summary:	The Emacs text editor for X Window System (Athena toolkit version)
+Summary(pl.UTF-8):	Emacs - edytor tekstu Emacs dla X Window System (wersja Athena)
+Group:		Applications/Editors/Emacs
+Requires:	%{name}-common = %{version}-%{release}
+
+%description athena
+The Emacs text editor for X Window System (Athena toolkit version).
+
+%description athena -l pl.UTF-8
+Emacs - edytor tekstu Emacs dla X Window System (wersja Athena).
+
+%package gtk
+Summary:	The Emacs text editor for X Window System (GTK2 toolkit version)
+Summary(pl.UTF-8):	Emacs - edytor tekstu Emacs dla X Window System (wersja GTK2)
+Group:		Applications/Editors/Emacs
+Requires:	%{name}-common = %{version}-%{release}
+
+%description gtk
+The Emacs text editor for X Window System (GTK2 toolkit version).
+
+%description gtk -l pl.UTF-8
+Emacs - edytor tekstu Emacs dla X Window System (wersja GTK2).
+
+%package motif
+Summary:	The Emacs text editor for X Window System (Motif toolkit version)
+Summary(pl.UTF-8):	Emacs - edytor tekstu Emacs dla X Window System (wersja Motif)
+Group:		Applications/Editors/Emacs
+Requires:	%{name}-common = %{version}-%{release}
+
+%description motif
+The Emacs text editor for X Window System (Motif toolkit version).
+
+%description motif -l pl.UTF-8
+Emacs - edytor tekstu Emacs dla X Window System (wersja Motif).
+
 %package common
 Summary:	The libraries needed to run the GNU Emacs text editor
 Summary(pl.UTF-8):	Biblioteki potrzebne do uruchomienia edytora tekstu GNU Emacs
@@ -284,77 +321,149 @@ These files are common between GNU Emacs and XEmacs.
 %description extras -l pl.UTF-8
 Są to wspólne pliki GNU Emacs i XEmacs.
 
-%prep
-%setup -q -n %{name}-%{sver} -b 1 -a 2
-%patch0 -p1
-%patch1 -p1
-%patch2	-p1
+%package gnus
+Summary:	Gnus is flexible message reader under Emacs
+Summary(pl.UTF-8):	Gnus jest czytnikiem grup dyskusyjnych pod Emacsa
+Group:		Applications/Editors/Emacs
+Requires:	%{name}-common = %{version}-%{release}
 
-# /usr/sbin is not in standard path
-for file in Makefile.in elisp-manual-*/Makefile.in; do
-	sed -i -e "s/install\-info/\/usr\/sbin\/install\-info/" $file
-done
-touch configure configure.in
+%description gnus
+Gnus is flexible message reader under Emacs.
+
+%description gnus -l pl.UTF-8
+Gnus jest czytnikiem grup dyskusyjnych pod Emacsa.
+
+%package gnus-el
+Summary:	Emacs Lisp source code for Gnus
+Summary(pl.UTF-8):	Kod źródłowy Gnusa w Emacs Lispie
+Group:		Applications/Editors/Emacs
+Requires:	%{name}-gnus = %{version}-%{release}
+
+%description gnus-el
+Emacs Lisp source code for Gnus.
+
+%description gnus-el -l pl.UTF-8
+Kod źródłowy Gnusa w Emacs Lispie.
+
+%prep
+#
+%if %{with gtk}
+%define default_emacs gtk
+%else
+%if %{with motif}
+%define default_emacs motif
+%else
+%if %{with athena}
+%define default_emacs athena
+%else
+%if %{with nox}
+%define default_emacs nox
+%else
+echo "ERROR: building Emacs with passed conditionals is impossible."
+exit 1
+%endif
+%endif
+%endif
+%endif
+
+%setup -q
 
 %build
 cp -f /usr/share/automake/config.* .
-cd elisp-manual-*
-%configure2_13
-%{__make}
-cd ..
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
 
-# Build binary with X support
-[ -d build-withx ] && rm -rf build-withx
-mkdir build-withx && cd build-withx
-%define	configuredir	..
-%configure2_13 \
-	--libexecdir=%{_libdir} \
-	--sharedstatedir=%{_var} \
-	--with-gcc \
+%define bootstrap 0
+
+%if %{with athena}
+echo "Building emacs athena binary ..."
+rm -rf build-athena
+mkdir build-athena && cd build-athena
+../%configure \
 	--with-pop \
-	--with-x-toolkit%{?with_motif:=motif} \
 	--with-xpm \
 	--with-jpeg \
 	--with-tiff \
 	--with-gif \
 	--with-png \
-	%{_target_platform}
+	--with-x-toolkit=athena
 
-%ifarch %{ix86}
-setarch i386 \
-%endif
-%{__make} \
-	CC="%{__cc}"
+%{__make} -j1 bootstrap
+%define	bootstrap athena
 cd ..
+%endif
 
-#Build binary without X support
+%if %{with gtk}
+echo "Building emacs GTK2 binary ..."
+rm -rf build-gtk
+mkdir build-gtk && cd build-gtk
+../%configure \
+	--with-pop \
+	--with-xpm \
+	--with-jpeg \
+	--with-tiff \
+	--with-gif \
+	--with-png \
+	--with-x-toolkit=gtk
+
+%if %{?bootstrap}
+%{__make}
+%else
+%{__make} -j1 bootstrap
+%define	bootstrap gtk
+%endif
+cd ..
+%endif
+
+%if %{with motif}
+echo "Building emacs motif binary ..."
+rm -rf build-motif
+mkdir build-motif && cd build-motif
+../%configure \
+	--with-pop \
+	--with-xpm \
+	--with-jpeg \
+	--with-tiff \
+	--with-gif \
+	--with-png \
+	--with-x-toolkit=motif
+
+%if %{?bootstrap}
+%{__make}
+%else
+%{__make} -j1 bootstrap
+%define	bootstrap motif
+%endif
+cd ..
+%endif
+
+%if %{with nox}
+echo "Building emacs binary without X support ..."
 [ -d build-nox ] && rm -rf build-nox
 mkdir build-nox && cd build-nox
-%define	configuredir	..
-%configure2_13 \
-	--libexecdir=%{_libdir} \
-	--sharedstatedir=%{_var} \
-	--with-gcc \
+../%configure \
 	--with-pop \
 	--without-xpm \
 	--without-jpeg \
 	--without-tiff \
 	--without-gif \
 	--without-png \
-	--with-x=no \
-	%{_target_platform}
+	--with-x=no
 
-%ifarch %{ix86}
-setarch i386 \
+%if %{?bootstrap}
+%{__make}
+%else
+%{__make} -j1 bootstrap
+%define	bootstrap nox
 %endif
-%{__make} \
-	CC="%{__cc}"
 cd ..
+%endif
 
 mv lisp/term/README README.term
 
-sed s!@SITE_START_DIR@!%{_datadir}/emacs/site-lisp/site-start.d! \
-	< %{SOURCE5} > site-start.el
+%{__sed} s!@SITE_START_DIR@!%{_datadir}/emacs/site-lisp/site-start.d! \
+	< %{SOURCE2} > site-start.el
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -362,26 +471,43 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_infodir},%{_datadir}/emacs/site-lisp/site-start.d} \
 	$RPM_BUILD_ROOT{%{_desktopdir},/etc/skel,%{_pixmapsdir}} \
 
-%{makeinstall} -C build-withx
-install build-nox/src/emacs	$RPM_BUILD_ROOT%{_bindir}/emacs-nox
+%if %{with athena}%{with gtk}%{with motif}%{with nox}
+%{makeinstall} -C build-%{bootstrap}
+%else
+echo 'ERROR: neither athena nor gtk nor motif nor nox emacs was built.' 1>&2
+exit 1
+%endif
+
+for e in athena gtk motif nox ; do
+	[ -d build-$e ] && install build-${e}/src/emacs $RPM_BUILD_ROOT%{_bindir}/emacs-$e
+done
+rm -f $RPM_BUILD_ROOT%{_bindir}/emacs
+# make "default emacs" from gtk, athena, motif and non-X version
+for e in gtk athena motif nox ; do
+	if [ -f $RPM_BUILD_ROOT%{_bindir}/emacs-$e ] ; then
+		(cd $RPM_BUILD_ROOT%{_bindir}
+		 cp -pf emacs-$e emacs
+		 cp -pf emacs-$e emacs-%{version}
+		)
+		break;
+	fi
+done
+
 install site-start.el $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/skel/.emacs
+install %{SOURCE3} $RPM_BUILD_ROOT%{_pixmapsdir}
+install %{SOURCE4} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
+install %{SOURCE5} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/nemerle.el
+install %{SOURCE6} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE7} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE8} $RPM_BUILD_ROOT%{_desktopdir}
+install %{SOURCE9} $RPM_BUILD_ROOT%{_desktopdir}
 
-install %{SOURCE3} $RPM_BUILD_ROOT%{_desktopdir}
-install %{SOURCE4} $RPM_BUILD_ROOT/etc/skel/.emacs
-install %{SOURCE6} $RPM_BUILD_ROOT%{_pixmapsdir}
-
-install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{sver}/etc
-
-%{__make} -C elisp-manual-* install \
-	infodir=$RPM_BUILD_ROOT%{_infodir}
+[ -d build-nox ] && install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
-
-%if !%{with gnus}
-rm -rf $RPM_BUILD_ROOT%{_infodir}/{emacs-mime,gnus,message,pgg,sieve}* \
-	$RPM_BUILD_ROOT%{_datadir}/emacs/%{sver}/lisp/gnus \
-	$RPM_BUILD_ROOT%{_datadir}/emacs/%{sver}/etc/gnus*
-%endif
+# ERC is in separate spec
+rm -fr $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/lisp/erc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -417,113 +543,126 @@ fi
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs
-%{_datadir}/emacs/%{sver}/lisp/*.xpm
-%{?with_gnus: %{_datadir}/emacs/%{sver}/lisp/gnus/*.xpm}
-%dir %{_datadir}/emacs/%{sver}/lisp/toolbar
-%{_datadir}/emacs/%{sver}/lisp/toolbar/*.elc
-%{_datadir}/emacs/%{sver}/lisp/toolbar/*.xpm
-%{_desktopdir}/emacs.desktop
+%attr(755,root,root) %{_bindir}/emacs-%{version}
+%{_desktopdir}/emacs-%{default_emacs}.desktop
 %{_pixmapsdir}/*
 
 %files common
 %defattr(644,root,root,755)
 %config(noreplace) /etc/skel/.emacs
-%doc BUGS README README.term etc/NEWS
 %attr(755,root,root) %{_bindir}/emacsclient
 %attr(755,root,root) %{_bindir}/ebrowse
 %{_mandir}/man1/emacs*
 %{_infodir}/*
 
 %dir %{_libdir}/emacs
-%dir %{_libdir}/emacs/%{sver}
-%dir %{_libdir}/emacs/%{sver}/*
+%dir %{_libdir}/emacs/%{version}
+%dir %{_libdir}/emacs/%{version}/*
 
-%attr(2755,root,mail) %{_libdir}/emacs/%{sver}/*-linux/movemail
-%attr(755,root,mail) %{_libdir}/emacs/%{sver}/*-linux/cvtmail
-%attr(755,root,mail) %{_libdir}/emacs/%{sver}/*-linux/digest-doc
-%attr(755,root,mail) %{_libdir}/emacs/%{sver}/*-linux/emacsserver
-%attr(755,root,mail) %{_libdir}/emacs/%{sver}/*-linux/fakemail
-%attr(755,root,mail) %{_libdir}/emacs/%{sver}/*-linux/hexl
-%attr(755,root,mail) %{_libdir}/emacs/%{sver}/*-linux/profile
-%attr(755,root,mail) %{_libdir}/emacs/%{sver}/*-linux/rcs2log
-%attr(755,root,mail) %{_libdir}/emacs/%{sver}/*-linux/sorted-doc
-%attr(755,root,mail) %{_libdir}/emacs/%{sver}/*-linux/vcdiff
-%attr(755,root,mail) %{_libdir}/emacs/%{sver}/*-linux/yow
-%{_libdir}/emacs/%{sver}/*/fns-*.el
+%attr(2755,root,mail) %{_libdir}/emacs/%{version}/*-linux/movemail
+%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/cvtmail
+%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/digest-doc
+%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/fakemail
+%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/hexl
+%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/profile
+%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/rcs2log
+%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/sorted-doc
+%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/vcdiff
+%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/update-game-score
 
 %dir %{_datadir}/emacs
-%dir %{_datadir}/emacs/%{sver}
-%dir %{_datadir}/emacs/%{sver}/site-lisp
-%dir %{_datadir}/emacs/%{sver}/lisp
-%dir %{_datadir}/emacs/%{sver}/leim
-%dir %{_datadir}/emacs/%{sver}/lisp/calendar
-%dir %{_datadir}/emacs/%{sver}/lisp/emacs-lisp
-%dir %{_datadir}/emacs/%{sver}/lisp/emulation
-%{?with_gnus: %dir %{_datadir}/emacs/%{sver}/lisp/gnus}
-%dir %{_datadir}/emacs/%{sver}/lisp/international
-%dir %{_datadir}/emacs/%{sver}/lisp/language
-%dir %{_datadir}/emacs/%{sver}/lisp/mail
-%dir %{_datadir}/emacs/%{sver}/lisp/play
-%dir %{_datadir}/emacs/%{sver}/lisp/progmodes
-%dir %{_datadir}/emacs/%{sver}/lisp/term
-%dir %{_datadir}/emacs/%{sver}/lisp/textmodes
-%dir %{_datadir}/emacs/%{sver}/lisp/eshell
-%dir %{_datadir}/emacs/%{sver}/lisp/net
-%dir %{_datadir}/emacs/%{sver}/lisp/obsolete
+%dir %{_datadir}/emacs/%{version}
+%dir %{_datadir}/emacs/%{version}/site-lisp
+%dir %{_datadir}/emacs/%{version}/lisp
+%dir %{_datadir}/emacs/%{version}/leim
+%dir %{_datadir}/emacs/%{version}/lisp/calendar
+%dir %{_datadir}/emacs/%{version}/lisp/calc
+%dir %{_datadir}/emacs/%{version}/lisp/emacs-lisp
+%dir %{_datadir}/emacs/%{version}/lisp/emulation
+%dir %{_datadir}/emacs/%{version}/lisp/international
+%dir %{_datadir}/emacs/%{version}/lisp/language
+%dir %{_datadir}/emacs/%{version}/lisp/mail
+%dir %{_datadir}/emacs/%{version}/lisp/play
+%dir %{_datadir}/emacs/%{version}/lisp/progmodes
+%dir %{_datadir}/emacs/%{version}/lisp/term
+%dir %{_datadir}/emacs/%{version}/lisp/textmodes
+%dir %{_datadir}/emacs/%{version}/lisp/eshell
+%dir %{_datadir}/emacs/%{version}/lisp/net
+%dir %{_datadir}/emacs/%{version}/lisp/obsolete
+%dir %{_datadir}/emacs/%{version}/lisp/mh-e
 
 %{_datadir}/emacs/site-lisp
-%{_datadir}/emacs/%{sver}/etc
-%{_datadir}/emacs/%{sver}/lisp/*.elc
-%{_datadir}/emacs/%{sver}/lisp/README
-%{_datadir}/emacs/%{sver}/lisp/cus-load.el
-%{_datadir}/emacs/%{sver}/lisp/cus-start.el
-%{_datadir}/emacs/%{sver}/lisp/finder-inf.el
-%{_datadir}/emacs/%{sver}/lisp/forms-pass.el
-%{_datadir}/emacs/%{sver}/lisp/generic-x.el
-%{_datadir}/emacs/%{sver}/lisp/load*.el
-%{_datadir}/emacs/%{sver}/lisp/patcomp.el
-%{_datadir}/emacs/%{sver}/lisp/paths.el
-%{_datadir}/emacs/%{sver}/lisp/subdirs.el
-%{_datadir}/emacs/%{sver}/lisp/version.el
+%{_datadir}/emacs/%{version}/etc
+%{_datadir}/emacs/%{version}/lisp/*.elc
+%{_datadir}/emacs/%{version}/lisp/README
+%{_datadir}/emacs/%{version}/lisp/cus-load.el
+%{_datadir}/emacs/%{version}/lisp/cus-start.el.gz
+%{_datadir}/emacs/%{version}/lisp/cus-theme.el.gz
+%{_datadir}/emacs/%{version}/lisp/finder-inf.el
+%{_datadir}/emacs/%{version}/lisp/forms-pass.el
+%{_datadir}/emacs/%{version}/lisp/generic-x.el.gz
+%{_datadir}/emacs/%{version}/lisp/load*.el
+%{_datadir}/emacs/%{version}/lisp/load*.el.gz
+%{_datadir}/emacs/%{version}/lisp/ldefs-boot.el
+%{_datadir}/emacs/%{version}/lisp/longlines.el.gz
+%{_datadir}/emacs/%{version}/lisp/patcomp.el
+%{_datadir}/emacs/%{version}/lisp/paths.el
+%{_datadir}/emacs/%{version}/lisp/subdirs.el
+%{_datadir}/emacs/%{version}/lisp/version.el
+%{_datadir}/emacs/%{version}/lisp/language/*.elc
+%{_datadir}/emacs/%{version}/lisp/mail/*.elc
+%{_datadir}/emacs/%{version}/lisp/mail/blessmail.el
+%{_datadir}/emacs/%{version}/lisp/play/*.elc
+%{_datadir}/emacs/%{version}/lisp/play/bruce.el
+%{_datadir}/emacs/%{version}/lisp/term/*.elc
+%{_datadir}/emacs/%{version}/lisp/term/cygwin.el
+%{_datadir}/emacs/%{version}/lisp/term/AT386.el
+%{_datadir}/emacs/%{version}/lisp/term/apollo.el
+%{_datadir}/emacs/%{version}/lisp/term/bobcat.el
+%{_datadir}/emacs/%{version}/lisp/term/internal.el
+%{_datadir}/emacs/%{version}/lisp/term/iris-ansi.el
+%{_datadir}/emacs/%{version}/lisp/term/linux.el
+%{_datadir}/emacs/%{version}/lisp/term/lk201.el
+%{_datadir}/emacs/%{version}/lisp/term/news.el
+%{_datadir}/emacs/%{version}/lisp/term/rxvt.el.gz
+%{_datadir}/emacs/%{version}/lisp/term/vt102.el
+%{_datadir}/emacs/%{version}/lisp/term/vt125.el
+%{_datadir}/emacs/%{version}/lisp/term/vt2*
+%{_datadir}/emacs/%{version}/lisp/term/vt3*
+%{_datadir}/emacs/%{version}/lisp/term/vt4*
+%{_datadir}/emacs/%{version}/lisp/term/wyse50.el
+%{_datadir}/emacs/%{version}/lisp/term/xterm.el.gz
+%{_datadir}/emacs/%{version}/lisp/emulation/*.elc
+%{_datadir}/emacs/%{version}/lisp/international/*.elc
+%{_datadir}/emacs/%{version}/lisp/international/latin-*.el
+%{_datadir}/emacs/%{version}/lisp/international/mule-conf.el
+%{_datadir}/emacs/%{version}/lisp/international/latexenc.el.gz
+%{_datadir}/emacs/%{version}/lisp/calendar/*.elc
+%{_datadir}/emacs/%{version}/lisp/calc/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/calc/README*
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.elc
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-specs.el
+%{_datadir}/emacs/%{version}/lisp/textmodes/*.elc
+%{_datadir}/emacs/%{version}/lisp/progmodes/*.elc
+%{_datadir}/emacs/%{version}/lisp/eshell/*.elc
+%{_datadir}/emacs/%{version}/lisp/eshell/esh-groups.el
+%{_datadir}/emacs/%{version}/lisp/net/*.elc
+%{_datadir}/emacs/%{version}/lisp/obsolete/*.elc
+%dir %{_datadir}/emacs/%{version}/lisp/url
+%{_datadir}/emacs/%{version}/lisp/url/*.elc
+%{_datadir}/emacs/%{version}/lisp/url/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/calc/*.elc
+%{_datadir}/emacs/%{version}/lisp/mh-e/*.el
+%{_datadir}/emacs/%{version}/lisp/mh-e/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/mh-e/*.elc
 
-%{_datadir}/emacs/%{sver}/lisp/language/*.elc
-%{?with_gnus: %{_datadir}/emacs/%{sver}/lisp/gnus/*.elc}
-%{_datadir}/emacs/%{sver}/lisp/mail/*.elc
-%{_datadir}/emacs/%{sver}/lisp/mail/blessmail.el
-%{_datadir}/emacs/%{sver}/lisp/play/*.elc
-%{_datadir}/emacs/%{sver}/lisp/play/bruce.el
-%{_datadir}/emacs/%{sver}/lisp/term/*.elc
-%{_datadir}/emacs/%{sver}/lisp/term/AT386.el
-%{_datadir}/emacs/%{sver}/lisp/term/apollo.el
-%{_datadir}/emacs/%{sver}/lisp/term/bobcat.el
-%{_datadir}/emacs/%{sver}/lisp/term/internal.el
-%{_datadir}/emacs/%{sver}/lisp/term/iris-ansi.el
-%{_datadir}/emacs/%{sver}/lisp/term/keyswap.el
-%{_datadir}/emacs/%{sver}/lisp/term/linux.el
-%{_datadir}/emacs/%{sver}/lisp/term/lk201.el
-%{_datadir}/emacs/%{sver}/lisp/term/news.el
-%{_datadir}/emacs/%{sver}/lisp/term/vt102.el
-%{_datadir}/emacs/%{sver}/lisp/term/vt125.el
-%{_datadir}/emacs/%{sver}/lisp/term/vt2*
-%{_datadir}/emacs/%{sver}/lisp/term/vt3*
-%{_datadir}/emacs/%{sver}/lisp/term/vt4*
-%{_datadir}/emacs/%{sver}/lisp/term/wyse50.el
-%{_datadir}/emacs/%{sver}/lisp/term/xterm.el
-%{_datadir}/emacs/%{sver}/lisp/emulation/*.elc
-%{_datadir}/emacs/%{sver}/lisp/international/*.elc
-%{_datadir}/emacs/%{sver}/lisp/international/latin-*.el
-%{_datadir}/emacs/%{sver}/lisp/international/mule-conf.el
-%{_datadir}/emacs/%{sver}/lisp/calendar/*.elc
-%{_datadir}/emacs/%{sver}/lisp/emacs-lisp/*.elc
-%{_datadir}/emacs/%{sver}/lisp/emacs-lisp/cl-specs.el
-%{_datadir}/emacs/%{sver}/lisp/textmodes/*.elc
-%{_datadir}/emacs/%{sver}/lisp/progmodes/*.elc
-%{_datadir}/emacs/%{sver}/lisp/eshell/*.elc
-%{_datadir}/emacs/%{sver}/lisp/eshell/esh-groups.el
-%{_datadir}/emacs/%{sver}/lisp/net/*.elc
-%{_datadir}/emacs/%{sver}/lisp/obsolete/*.elc
+%dir /var/games/emacs
+/var/games/emacs/tetris-scores
+/var/games/emacs/snake-scores
 
-%{_datadir}/emacs/%{sver}/site-lisp/subdirs.el
+%{_datadir}/emacs/%{version}/site-lisp/subdirs.el
+%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
+%{_datadir}/emacs/%{version}/site-lisp/nemerle.el
 
 %files extras
 %defattr(644,root,root,755)
@@ -533,95 +672,126 @@ fi
 
 %files el
 %defattr(644,root,root,755)
-%{_datadir}/emacs/%{sver}/lisp/forms-d2.dat
-
-%{_datadir}/emacs/%{sver}/lisp/a*.el
-%{_datadir}/emacs/%{sver}/lisp/b*.el
-%{_datadir}/emacs/%{sver}/lisp/c[a-tv]*.el
-%{_datadir}/emacs/%{sver}/lisp/cus-[a-k]*.el
-%{_datadir}/emacs/%{sver}/lisp/custom.el
-%{_datadir}/emacs/%{sver}/lisp/generic.el
-%{_datadir}/emacs/%{sver}/lisp/g[f-z]*.el
-%{_datadir}/emacs/%{sver}/lisp/[de]*.el
-%{_datadir}/emacs/%{sver}/lisp/f[!io]*.el
-%{_datadir}/emacs/%{sver}/lisp/fi[!n]*.el
-%{_datadir}/emacs/%{sver}/lisp/find[!e]*.el
-%{_datadir}/emacs/%{sver}/lisp/finder.el
-%{_datadir}/emacs/%{sver}/lisp/fo[!r]*.el
-%{_datadir}/emacs/%{sver}/lisp/form[!s]*.el
-%{_datadir}/emacs/%{sver}/lisp/forms.el
-%{_datadir}/emacs/%{sver}/lisp/forms-d2.el
-%{_datadir}/emacs/%{sver}/lisp/[h-k]*.el
-%{_datadir}/emacs/%{sver}/lisp/l[a-n]*.el
-%{_datadir}/emacs/%{sver}/lisp/locate.el
-%{_datadir}/emacs/%{sver}/lisp/log-*.el
-%{_datadir}/emacs/%{sver}/lisp/l[p-z]*.el
-%{_datadir}/emacs/%{sver}/lisp/[m-o]*.el
-%{_datadir}/emacs/%{sver}/lisp/paren.el
-%{_datadir}/emacs/%{sver}/lisp/p[b-z]*.el
-%{_datadir}/emacs/%{sver}/lisp/[q-r]*.el
-%{_datadir}/emacs/%{sver}/lisp/s-*.el
-%{_datadir}/emacs/%{sver}/lisp/s[a-t]*.el
-%{_datadir}/emacs/%{sver}/lisp/subr.el
-%{_datadir}/emacs/%{sver}/lisp/[t-u]*.el
-%{_datadir}/emacs/%{sver}/lisp/[w-z]*.el
-%{_datadir}/emacs/%{sver}/lisp/v[a-d]*.el
-%{_datadir}/emacs/%{sver}/lisp/v[f-z]*.el
-
-%{_datadir}/emacs/%{sver}/lisp/language/*.el
-%{?with_gnus: %{_datadir}/emacs/%{sver}/lisp/gnus/*.el}
-%{_datadir}/emacs/%{sver}/lisp/mail/[c-r]*.el
-%{_datadir}/emacs/%{sver}/lisp/mail/[t-z]*.el
-%{_datadir}/emacs/%{sver}/lisp/mail/sendmail.el
-%{_datadir}/emacs/%{sver}/lisp/mail/smtpmail.el
-%{_datadir}/emacs/%{sver}/lisp/mail/supercite.el
-%{_datadir}/emacs/%{sver}/lisp/play/[!b]*.el
-%{_datadir}/emacs/%{sver}/lisp/play/b[!r]*.el
-%{_datadir}/emacs/%{sver}/lisp/term/bg-*.el
-%{_datadir}/emacs/%{sver}/lisp/term/*-win.el
-%{_datadir}/emacs/%{sver}/lisp/term/sun.el
-%{_datadir}/emacs/%{sver}/lisp/term/sup-mouse.el
-%{_datadir}/emacs/%{sver}/lisp/term/tty-colors.el
-%{_datadir}/emacs/%{sver}/lisp/term/tvi*.el
-%{_datadir}/emacs/%{sver}/lisp/term/vt100.el
-%{_datadir}/emacs/%{sver}/lisp/term/sun-mouse.el
-%{_datadir}/emacs/%{sver}/lisp/emulation/*.el
-%{_datadir}/emacs/%{sver}/lisp/international/[a-k]*.el
-%{_datadir}/emacs/%{sver}/lisp/international/[o-z]*.el
-%{_datadir}/emacs/%{sver}/lisp/international/latin*-disp.el
-%{_datadir}/emacs/%{sver}/lisp/international/mule-cmds.el
-%{_datadir}/emacs/%{sver}/lisp/international/mule-diag.el
-%{_datadir}/emacs/%{sver}/lisp/international/mule-util.el
-%{_datadir}/emacs/%{sver}/lisp/international/mule.el
-%{_datadir}/emacs/%{sver}/lisp/calendar/*.el
-%{_datadir}/emacs/%{sver}/lisp/emacs-lisp/[!c]*.el
-%{_datadir}/emacs/%{sver}/lisp/emacs-lisp/c[a-k]*.el
-%{_datadir}/emacs/%{sver}/lisp/emacs-lisp/c[m-z]*.el
-%{_datadir}/emacs/%{sver}/lisp/emacs-lisp/cl-[!s]*.el
-%{_datadir}/emacs/%{sver}/lisp/emacs-lisp/cl-seq.el
-%{_datadir}/emacs/%{sver}/lisp/emacs-lisp/cl.el
-%{_datadir}/emacs/%{sver}/lisp/textmodes/*.el
-%{_datadir}/emacs/%{sver}/lisp/progmodes/*.el
-%{_datadir}/emacs/%{sver}/lisp/eshell/e[a-r]*.el
-%{_datadir}/emacs/%{sver}/lisp/eshell/esh-[!g]*.el
-%{_datadir}/emacs/%{sver}/lisp/eshell/esh[a-z]*.el
-%{_datadir}/emacs/%{sver}/lisp/net/*.el
-%{_datadir}/emacs/%{sver}/lisp/obsolete/*.el
-%{_datadir}/emacs/%{sver}/lisp/toolbar/*.el
+%{_datadir}/emacs/%{version}/lisp/forms-d2.dat
+%{_datadir}/emacs/%{version}/lisp/a*.el.gz
+%{_datadir}/emacs/%{version}/lisp/b*.el.gz
+%{_datadir}/emacs/%{version}/lisp/c[a-tv]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/cus-[a-k]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/custom.el.gz
+%{_datadir}/emacs/%{version}/lisp/g[f-z]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/[de]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/f[!io]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/fi[!n]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/find[!e]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/finder.el.gz
+%{_datadir}/emacs/%{version}/lisp/fo[!r]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/form[!s]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/forms.el.gz
+%{_datadir}/emacs/%{version}/lisp/forms-d2.el
+%{_datadir}/emacs/%{version}/lisp/[h-k]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/l[a-n]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/locate.el.gz
+%{_datadir}/emacs/%{version}/lisp/log-*.el.gz
+%{_datadir}/emacs/%{version}/lisp/l[p-z]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/[m-o]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/paren.el.gz
+%{_datadir}/emacs/%{version}/lisp/p[b-z]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/[q-r]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/s-*.el.gz
+%{_datadir}/emacs/%{version}/lisp/s[a-t]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/subr.el.gz
+%{_datadir}/emacs/%{version}/lisp/[t-u]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/[w-z]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/v[a-d]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/v[f-z]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/language/*.el
+%{_datadir}/emacs/%{version}/lisp/language/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/mail/[c-r]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/mail/[t-z]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/mail/sendmail.el.gz
+%{_datadir}/emacs/%{version}/lisp/mail/smtpmail.el.gz
+%{_datadir}/emacs/%{version}/lisp/mail/supercite.el.gz
+%{_datadir}/emacs/%{version}/lisp/play/[!b]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/play/b[!r]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/term/*-win.el.gz
+%{_datadir}/emacs/%{version}/lisp/term/sun.el.gz
+%{_datadir}/emacs/%{version}/lisp/term/sup-mouse.el.gz
+%{_datadir}/emacs/%{version}/lisp/term/tty-colors.el.gz
+%{_datadir}/emacs/%{version}/lisp/term/tvi*.el.gz
+%{_datadir}/emacs/%{version}/lisp/term/vt100.el.gz
+%{_datadir}/emacs/%{version}/lisp/term/sun-mouse.el.gz
+%{_datadir}/emacs/%{version}/lisp/emulation/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/international/[a-k]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/international/[o-z]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/international/latin*-disp.el.gz
+%{_datadir}/emacs/%{version}/lisp/international/mule-cmds.el.gz
+%{_datadir}/emacs/%{version}/lisp/international/mule-diag.el.gz
+%{_datadir}/emacs/%{version}/lisp/international/mule-util.el.gz
+%{_datadir}/emacs/%{version}/lisp/international/mule.el.gz
+%{_datadir}/emacs/%{version}/lisp/calendar/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/[!c]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/c[a-k]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/c[m-z]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-[!s]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-seq.el.gz
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl.el.gz
+%{_datadir}/emacs/%{version}/lisp/textmodes/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/progmodes/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/eshell/e[a-r]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/eshell/esh-[!g]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/eshell/esh-*.el
+%{_datadir}/emacs/%{version}/lisp/eshell/esh[a-z]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/net/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/obsolete/*.el
+%{_datadir}/emacs/%{version}/lisp/obsolete/*.el.gz
 
 %files leim
 %defattr(644,root,root,755)
-%dir %{_datadir}/emacs/%{sver}/leim/ja-dic
-%dir %{_datadir}/emacs/%{sver}/leim/quail
-%{_datadir}/emacs/%{sver}/leim/leim-list.el
-%{_datadir}/emacs/%{sver}/leim/quail/*.elc
-%{_datadir}/emacs/%{sver}/leim/ja-dic/*.elc
+%dir %{_datadir}/emacs/%{version}/leim/ja-dic
+%dir %{_datadir}/emacs/%{version}/leim/quail
+%{_datadir}/emacs/%{version}/leim/leim-list.el
+%{_datadir}/emacs/%{version}/leim/quail/*.elc
+%{_datadir}/emacs/%{version}/leim/ja-dic/*.elc
 
 %files leim-el
 %defattr(644,root,root,755)
-%{_datadir}/emacs/%{sver}/leim/quail/*.el
-%{_datadir}/emacs/%{sver}/leim/ja-dic/*.el
+%{_datadir}/emacs/%{version}/leim/quail/*.el.gz
+%{_datadir}/emacs/%{version}/leim/ja-dic/*.el.gz
 
+%if %{with nox} && %{?default_emacs} != "nox"
 %files nox
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs-nox
+%{_desktopdir}/emacs-nox.desktop
+%endif
+
+%if %{with athena} && %{?default_emacs} != "athena"
+%files athena
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/emacs-athena
+%{_desktopdir}/emacs-athena.desktop
+%endif
+
+%if %{with gtk} && %{?default_emacs} != "gtk"
+%files gtk
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/emacs-gtk
+%{_desktopdir}/emacs-gtk.desktop
+%endif
+
+%if %{with motif} && %{?default_emacs} != "motif"
+%files motif
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/emacs-motif
+%{_desktopdir}/emacs-motif.desktop
+%endif
+
+%files gnus
+%defattr(644,root,root,755)
+%dir %{_datadir}/emacs/%{version}/lisp/gnus
+%{_datadir}/emacs/%{version}/lisp/gnus/*.*
+%exclude %{_datadir}/emacs/%{version}/lisp/gnus/*.el.gz
+
+%files gnus-el
+%defattr(644,root,root,755)
+%{_datadir}/emacs/%{version}/lisp/gnus/*.el.gz
