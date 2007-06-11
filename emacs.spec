@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	athena	# don't build athena version
-%bcond_without	gtk	# don't build GTK2 version
+%bcond_without	gtk	# don't build GTK+2 version
 %bcond_without	motif	# don't build motif version
 %bcond_without	nox	# don't build nox version
 #
@@ -257,16 +257,16 @@ The Emacs text editor for X Window System (Athena toolkit version).
 Emacs - edytor tekstu Emacs dla X Window System (wersja Athena).
 
 %package gtk
-Summary:	The Emacs text editor for X Window System (GTK2 toolkit version)
-Summary(pl.UTF-8):	Emacs - edytor tekstu Emacs dla X Window System (wersja GTK2)
+Summary:	The Emacs text editor for X Window System (GTK+2 toolkit version)
+Summary(pl.UTF-8):	Emacs - edytor tekstu Emacs dla X Window System (wersja GTK+2)
 Group:		Applications/Editors/Emacs
 Requires:	%{name}-common = %{version}-%{release}
 
 %description gtk
-The Emacs text editor for X Window System (GTK2 toolkit version).
+The Emacs text editor for X Window System (GTK+2 toolkit version).
 
 %description gtk -l pl.UTF-8
-Emacs - edytor tekstu Emacs dla X Window System (wersja GTK2).
+Emacs - edytor tekstu Emacs dla X Window System (wersja GTK+2).
 
 %package motif
 Summary:	The Emacs text editor for X Window System (Motif toolkit version)
@@ -397,7 +397,7 @@ cd ..
 %endif
 
 %if %{with gtk}
-echo "Building emacs GTK2 binary ..."
+echo "Building emacs GTK+2 binary ..."
 rm -rf build-gtk
 mkdir build-gtk && cd build-gtk
 ../%configure \
@@ -495,7 +495,7 @@ for e in gtk athena motif nox ; do
 	fi
 done
 
-install site-start.el $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/
+install site-start.el $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/skel/.emacs
 install %{SOURCE3} $RPM_BUILD_ROOT%{_pixmapsdir}
 install %{SOURCE4} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
