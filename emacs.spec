@@ -6,7 +6,7 @@
 %bcond_without	nox	# don't build nox version
 %bcond_without	xft	# don't compile in Xft & freetype support
 #
-%define	snap	20070501
+%define	snap	20070901
 Summary:	The Emacs text editor for the X Window System
 Summary(de.UTF-8):   GNU Emacs
 Summary(es.UTF-8):   GNU Emacs
@@ -20,7 +20,7 @@ Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	%{name}-%{version}-cvs-%{snap}.tar.bz2
-# Source0-md5:	95adc655e3fc2211ff7436db864b122c
+# Source0-md5:	9f442bd857b96869fc49ee3ab973319a
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
