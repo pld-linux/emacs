@@ -29,6 +29,7 @@ Source7:	%{name}-gtk.desktop
 Source8:	%{name}-motif.desktop
 Source9:	%{name}-nox.desktop
 Patch0:		%{name}-tinfo.patch
+Patch1:		%{name}-lib64.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -369,6 +370,9 @@ exit 1
 
 %setup -q
 %patch0 -p1
+%if "%{_lib}" == "lib64"
+%patch1 -p1
+%endif
 
 %build
 cp -f /usr/share/automake/config.* .
