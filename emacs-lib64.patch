@@ -1,0 +1,23 @@
+--- emacs-22.1/src/s/gnu-linux.h.orig	2008-01-03 13:12:45.000000000 +0000
++++ emacs-22.1/src/s/gnu-linux.h	2008-01-03 13:13:20.000000000 +0000
+@@ -190,9 +190,9 @@
+ 
+ #ifndef __ELF__
+ /* GNU/Linux usually has crt0.o in a non-standard place */
+-#define START_FILES pre-crt0.o /usr/lib/crt0.o
++#define START_FILES pre-crt0.o /usr/lib64/crt0.o
+ #else
+-#define START_FILES pre-crt0.o /usr/lib/crt1.o /usr/lib/crti.o
++#define START_FILES pre-crt0.o /usr/lib64/crt1.o /usr/lib64/crti.o
+ #endif
+ 
+ #ifdef __ELF__
+@@ -244,7 +244,7 @@
+ #else
+ #undef LIB_GCC
+ #define LIB_GCC
+-#define LIB_STANDARD -lgcc -lc -lgcc /usr/lib/crtn.o
++#define LIB_STANDARD -lgcc -lc -lgcc /usr/lib64/crtn.o
+ #endif
+ 
+ /* Don't use -g in test compiles in configure.
