@@ -13,12 +13,12 @@ Summary(pl.UTF-8):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR.UTF-8):	GNU Emacs
 Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
-Version:	22.1
-Release:	4
-License:	GPL
+Version:	22.2
+Release:	0.1
+License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.gz
-# Source0-md5:	6949df37caec2d7a2e0eee3f1b422726
+# Source0-md5:	d6ee586b8752351334ebf072904c4d51
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
@@ -30,6 +30,7 @@ Source8:	%{name}-motif.desktop
 Source9:	%{name}-nox.desktop
 Patch0:		%{name}-tinfo.patch
 Patch1:		%{name}-lib64.patch
+Patch2:		%{name}-quote.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -373,6 +374,7 @@ exit 1
 %if "%{_lib}" == "lib64"
 %patch1 -p1
 %endif
+%patch2 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
