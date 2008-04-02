@@ -6,7 +6,7 @@
 %bcond_without	nox	# don't build nox version
 %bcond_without	xft	# don't compile in Xft & freetype support
 #
-%define	snap	20070901
+%define	snap	20080401
 Summary:	The Emacs text editor for the X Window System
 Summary(de.UTF-8):   GNU Emacs
 Summary(es.UTF-8):   GNU Emacs
@@ -15,15 +15,14 @@ Summary(pl.UTF-8):   GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR.UTF-8):   GNU Emacs
 Summary(tr.UTF-8):   GNU Emacs
 Name:		emacs
-Version:	23.0.0
+Version:	23.0.60
 Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	%{name}-%{version}-cvs-%{snap}.tar.bz2
-# Source0-md5:	9f442bd857b96869fc49ee3ab973319a
+# Source0-md5:	559602c9ced41eb6f5ffe0635181a363
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
-Source3:	%{name}.png
 Source4:	%{name}-tuareg.el
 Source5:	%{name}-nemerle.el
 Source6:	%{name}-athena.desktop
@@ -493,7 +492,7 @@ mv lisp/term/README README.term
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT{%{_infodir},%{_datadir}/emacs/site-lisp/site-start.d} \
-	$RPM_BUILD_ROOT{%{_desktopdir},/etc/skel,%{_pixmapsdir}} \
+	$RPM_BUILD_ROOT{%{_desktopdir},/etc/skel} \
 
 %if %{with athena}%{with gtk}%{with motif}%{with nox}
 %{makeinstall} -C build-%{bootstrap}
@@ -519,7 +518,6 @@ done
 
 install site-start.el $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/skel/.emacs
-install %{SOURCE3} $RPM_BUILD_ROOT%{_pixmapsdir}
 install %{SOURCE4} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
 install %{SOURCE5} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/nemerle.el
 install %{SOURCE6} $RPM_BUILD_ROOT%{_desktopdir}
@@ -569,7 +567,7 @@ fi
 %attr(755,root,root) %{_bindir}/emacs
 %attr(755,root,root) %{_bindir}/emacs-%{version}
 %{_desktopdir}/emacs-%{default_emacs}.desktop
-%{_pixmapsdir}/*
+%{_iconsdir}/*/*/*/*
 
 %files common
 %defattr(644,root,root,755)
@@ -601,7 +599,9 @@ fi
 %dir %{_datadir}/emacs/%{version}/lisp/mail
 %dir %{_datadir}/emacs/%{version}/lisp/mh-e
 %dir %{_datadir}/emacs/%{version}/lisp/net
+%dir %{_datadir}/emacs/%{version}/lisp/nxml
 %dir %{_datadir}/emacs/%{version}/lisp/obsolete
+%dir %{_datadir}/emacs/%{version}/lisp/org
 %dir %{_datadir}/emacs/%{version}/lisp/play
 %dir %{_datadir}/emacs/%{version}/lisp/progmodes
 %dir %{_datadir}/emacs/%{version}/lisp/term
@@ -641,7 +641,9 @@ fi
 %{_datadir}/emacs/%{version}/lisp/mh-e/*.el.gz
 %{_datadir}/emacs/%{version}/lisp/mh-e/*.elc
 %{_datadir}/emacs/%{version}/lisp/net/*.elc
+%{_datadir}/emacs/%{version}/lisp/nxml/*.elc
 %{_datadir}/emacs/%{version}/lisp/obsolete/*.elc
+%{_datadir}/emacs/%{version}/lisp/org/*.elc
 %{_datadir}/emacs/%{version}/lisp/patcomp.el
 %{_datadir}/emacs/%{version}/lisp/paths.el
 %{_datadir}/emacs/%{version}/lisp/play/*.elc
@@ -721,11 +723,14 @@ fi
 %{_datadir}/emacs/%{version}/lisp/v[f-z]*.el.gz
 %{_datadir}/emacs/%{version}/lisp/language/*.el
 %{_datadir}/emacs/%{version}/lisp/language/*.el.gz
-%{_datadir}/emacs/%{version}/lisp/mail/[c-r]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/mail/[b-r]*.el.gz
 %{_datadir}/emacs/%{version}/lisp/mail/[t-z]*.el.gz
 %{_datadir}/emacs/%{version}/lisp/mail/sendmail.el.gz
 %{_datadir}/emacs/%{version}/lisp/mail/smtpmail.el.gz
 %{_datadir}/emacs/%{version}/lisp/mail/supercite.el.gz
+%{_datadir}/emacs/%{version}/lisp/nxml/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/org/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/password-cache.el.gz
 %{_datadir}/emacs/%{version}/lisp/play/[!b]*.el.gz
 %{_datadir}/emacs/%{version}/lisp/play/b[!r]*.el.gz
 %{_datadir}/emacs/%{version}/lisp/term/*-win.el.gz
@@ -734,7 +739,7 @@ fi
 %{_datadir}/emacs/%{version}/lisp/term/tty-colors.el.gz
 %{_datadir}/emacs/%{version}/lisp/term/tvi*.el.gz
 %{_datadir}/emacs/%{version}/lisp/term/vt100.el.gz
-%{_datadir}/emacs/%{version}/lisp/term/sun-mouse.el.gz
+%{_datadir}/emacs/%{version}/lisp/term/w32console.el.gz
 %{_datadir}/emacs/%{version}/lisp/emulation/*.el.gz
 %{_datadir}/emacs/%{version}/lisp/international/*.el
 %{_datadir}/emacs/%{version}/lisp/international/[a-k]*.el.gz
