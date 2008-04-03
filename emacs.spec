@@ -528,13 +528,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-%update_icon_cache hicolor
 %update_desktop_database_post
+%update_icon_cache hicolor
 
 %postun
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-%update_icon_cache hicolor
 %update_desktop_database_postun
+%update_icon_cache hicolor
 
 %triggerin nox -- emacs-X11
 if [ -L %{_bindir}/emacs ]; then
