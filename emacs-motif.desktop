@@ -2,11 +2,13 @@
 Name=Emacs Motif
 Comment=Emacs text editor - Motif version
 Comment[pl]=Edytor tekstu Emacs - wersja Motif
+MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
 TryExec=emacs-motif
-Exec=emacs-motif
-Icon=emacs.png
-Terminal=false
+Exec=emacs-motif %F
+Icon=emacs
 Type=Application
+Terminal=false
 Encoding=UTF-8
 Categories=Motif;TextEditor;
+StartupWMClass=Emacs
 # vi: encoding=utf-8
