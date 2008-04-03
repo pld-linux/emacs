@@ -23,12 +23,12 @@ Source0:	%{name}-%{version}-cvs-%{snap}.tar.bz2
 # Source0-md5:	559602c9ced41eb6f5ffe0635181a363
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
-Source4:	%{name}-tuareg.el
-Source5:	%{name}-nemerle.el
-Source6:	%{name}-athena.desktop
-Source7:	%{name}-gtk.desktop
-Source8:	%{name}-motif.desktop
-Source9:	%{name}-nox.desktop
+Source3:	%{name}-tuareg.el
+Source4:	%{name}-nemerle.el
+Source5:	%{name}-athena.desktop
+Source6:	%{name}-gtk.desktop
+Source7:	%{name}-motif.desktop
+Source8:	%{name}-nox.desktop
 Patch0:		%{name}-ncurses-tinfo.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
@@ -46,6 +46,7 @@ BuildRequires:	ncurses-devel
 %{?with_xft:BuildRequires:	xorg-lib-libXft-devel}
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
+Requires(post,postun):	desktop-file-utils
 Requires:	ctags
 Requires:	%{name}-common = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -505,45 +506,41 @@ for e in athena gtk motif nox ; do
 	[ -d build-$e ] && install build-${e}/src/emacs $RPM_BUILD_ROOT%{_bindir}/emacs-$e
 done
 rm -f $RPM_BUILD_ROOT%{_bindir}/emacs
-# make "default emacs" from gtk, athena, motif and non-X version
-for e in gtk athena motif nox ; do
-	if [ -f $RPM_BUILD_ROOT%{_bindir}/emacs-$e ] ; then
-		(cd $RPM_BUILD_ROOT%{_bindir}
-		 cp -pf emacs-$e emacs
-		 cp -pf emacs-$e emacs-%{version}
-		)
-		break;
-	fi
-done
+ln -s emacs-%{default_emacs} $RPM_BUILD_ROOT%{_bindir}/emacs
 
 install site-start.el $RPM_BUILD_ROOT%{_datadir}/emacs/site-lisp/
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/skel/.emacs
-install %{SOURCE4} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
-install %{SOURCE5} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/nemerle.el
+install %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/tuareg.el
+install %{SOURCE4} $RPM_BUILD_ROOT/%{_datadir}/emacs/%{version}/site-lisp/nemerle.el
+install %{SOURCE5} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE6} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE7} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE8} $RPM_BUILD_ROOT%{_desktopdir}
-install %{SOURCE9} $RPM_BUILD_ROOT%{_desktopdir}
 
 [ -d build-nox ] && install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/etc
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 # ERC is in separate spec
-rm -fr $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/lisp/erc
+rm -rf $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/lisp/erc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+%update_icon_cache hicolor
+%update_desktop_database_post
 
 %postun
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+%update_icon_cache hicolor
+%update_desktop_database_postun
 
 %triggerin nox -- emacs-X11
 if [ -L %{_bindir}/emacs ]; then
 	rm -f %{_bindir}/emacs
 fi
+%
 
 %triggerpostun nox -- emacs-X11
 [ $2 = 0 ] || exit 0
@@ -555,17 +552,37 @@ fi
 if [ ! -x %{_bindir}/emacs -a ! -L %{_bindir}/emacs ]; then
 	ln -sf emacs-nox %{_bindir}/emacs
 fi
+%update_desktop_database_post
 
 %postun nox
 [ $1 = 0 ] || exit 0
 if [ -L %{_bindir}/emacs ]; then
 	rm -f %{_bindir}/emacs
 fi
+%update_desktop_database_postun
+
+%post gtk
+%update_desktop_database_post
+
+%postun gtk
+%update_desktop_database_postun
+
+%post motif
+%update_desktop_database_post
+
+%postun motif
+%update_desktop_database_postun
+
+%post athena
+%update_desktop_database_post
+
+%postun athena
+%update_desktop_database_postun
 
 %files
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/emacs-%{default_emacs}
 %attr(755,root,root) %{_bindir}/emacs
-%attr(755,root,root) %{_bindir}/emacs-%{version}
 %{_desktopdir}/emacs-%{default_emacs}.desktop
 %{_iconsdir}/*/*/*/*
 
