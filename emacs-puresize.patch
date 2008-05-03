@@ -1,0 +1,11 @@
+--- emacs/src/puresize.h.~1.105.~	2008-05-02 16:24:17.000000000 +0200
++++ emacs/src/puresize.h	2008-05-03 00:08:37.000000000 +0200
+@@ -43,7 +43,7 @@
+ #endif
+ 
+ #ifndef BASE_PURESIZE
+-#define BASE_PURESIZE (1200000 + SYSTEM_PURESIZE_EXTRA + SITELOAD_PURESIZE_EXTRA)
++#define BASE_PURESIZE (1300000 + SYSTEM_PURESIZE_EXTRA + SITELOAD_PURESIZE_EXTRA)
+ #endif
+ 
+ /* Increase BASE_PURESIZE by a ratio depending on the machine's word size.  */
