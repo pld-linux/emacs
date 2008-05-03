@@ -6,7 +6,7 @@
 %bcond_without	nox	# don't build nox version
 %bcond_without	xft	# don't compile in Xft & freetype support
 #
-%define	snap	20080401
+%define	snap	20080501
 Summary:	The Emacs text editor for the X Window System
 Summary(de.UTF-8):   GNU Emacs
 Summary(es.UTF-8):   GNU Emacs
@@ -20,7 +20,7 @@ Release:	0.%{snap}.1
 License:	GPL
 Group:		Applications/Editors/Emacs
 Source0:	%{name}-%{version}-cvs-%{snap}.tar.bz2
-# Source0-md5:	559602c9ced41eb6f5ffe0635181a363
+# Source0-md5:	466d6520c36941cf0c1fe0360701d42d
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}-tuareg.el
@@ -30,6 +30,7 @@ Source6:	%{name}-gtk.desktop
 Source7:	%{name}-motif.desktop
 Source8:	%{name}-nox.desktop
 Patch0:		%{name}-ncurses-tinfo.patch
+Patch1:		%{name}-puresize.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -370,6 +371,7 @@ echo -e "\nEmacs %{default_emacs} version will be emacs binary as default.\n"
 #
 %setup -q -n %{name}
 %patch0 -p1
+%patch1 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
@@ -631,13 +633,15 @@ fi
 %{_datadir}/emacs/%{version}/lisp/README
 %{_datadir}/emacs/%{version}/lisp/calc/*.el.gz
 %{_datadir}/emacs/%{version}/lisp/calc/*.elc
+%{_datadir}/emacs/%{version}/lisp/calc/*.el
 %{_datadir}/emacs/%{version}/lisp/calc/README*
 %{_datadir}/emacs/%{version}/lisp/calendar/*.elc
+%{_datadir}/emacs/%{version}/lisp/calendar/*.el
 %{_datadir}/emacs/%{version}/lisp/cus-load.el
 %{_datadir}/emacs/%{version}/lisp/cus-start.el.gz
 %{_datadir}/emacs/%{version}/lisp/cus-theme.el.gz
 %{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.elc
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-specs.el
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.el
 %{_datadir}/emacs/%{version}/lisp/emulation/*.elc
 %{_datadir}/emacs/%{version}/lisp/eshell/*.elc
 %{_datadir}/emacs/%{version}/lisp/eshell/esh-groups.el
@@ -706,7 +710,6 @@ fi
 
 %files el
 %defattr(644,root,root,755)
-%{_datadir}/emacs/%{version}/lisp/forms-d2.dat
 %{_datadir}/emacs/%{version}/lisp/a*.el.gz
 %{_datadir}/emacs/%{version}/lisp/b*.el.gz
 %{_datadir}/emacs/%{version}/lisp/c[a-tv]*.el.gz
