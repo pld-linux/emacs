@@ -1,13 +1,13 @@
 [Desktop Entry]
 Name=Emacs console
-Name[ko]=이맥스
 Comment=Emacs text editor - console version
 Comment[pl]=Edytor tekstu Emacs - wersja konsolowa
+MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
 TryExec=emacs-nox
-Exec=emacs-nox
-Icon=emacs.png
-Terminal=true
+Exec=emacs-nox %F
+Icon=emacs
 Type=Application
+Terminal=true
 Encoding=UTF-8
 Categories=ConsoleOnly;TextEditor;
 # vi: encoding=utf-8
