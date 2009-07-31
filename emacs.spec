@@ -13,12 +13,12 @@ Summary(pl.UTF-8):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR.UTF-8):	GNU Emacs
 Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
-Version:	22.3
-Release:	3
+Version:	23.1
+Release:	0.1
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.gz
-# Source0-md5:	aa8ba34f548cd78b35914ae5a7bb87eb
+# Source0-md5:	a620d4452769d04ad8864d662f34f8dd
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
@@ -33,6 +33,7 @@ Patch1:		%{name}-lib64.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	freetype-devel
 %{?with_gtk:BuildRequires:	gtk+2-devel}
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
@@ -46,6 +47,7 @@ BuildRequires:	texinfo
 BuildRequires:	xorg-lib-libX11-devel
 %{?with_athena:BuildRequires:	xorg-lib-libXaw-devel}
 BuildRequires:	xorg-lib-libXext-devel
+BuildRequires:	xorg-lib-libXft-devel
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
 Requires:	%{name}-common = %{version}-%{release}
@@ -625,7 +627,6 @@ fi
 %{_datadir}/emacs/%{version}/lisp/term/AT386.el
 %{_datadir}/emacs/%{version}/lisp/term/apollo.el
 %{_datadir}/emacs/%{version}/lisp/term/bobcat.el
-%{_datadir}/emacs/%{version}/lisp/term/internal.el
 %{_datadir}/emacs/%{version}/lisp/term/iris-ansi.el
 %{_datadir}/emacs/%{version}/lisp/term/linux.el
 %{_datadir}/emacs/%{version}/lisp/term/lk201.el
@@ -640,7 +641,6 @@ fi
 %{_datadir}/emacs/%{version}/lisp/term/xterm.el.gz
 %{_datadir}/emacs/%{version}/lisp/emulation/*.elc
 %{_datadir}/emacs/%{version}/lisp/international/*.elc
-%{_datadir}/emacs/%{version}/lisp/international/latin-*.el
 %{_datadir}/emacs/%{version}/lisp/international/mule-conf.el
 %{_datadir}/emacs/%{version}/lisp/international/latexenc.el.gz
 %{_datadir}/emacs/%{version}/lisp/calendar/*.elc
@@ -678,7 +678,6 @@ fi
 
 %files el
 %defattr(644,root,root,755)
-%{_datadir}/emacs/%{version}/lisp/forms-d2.dat
 %{_datadir}/emacs/%{version}/lisp/a*.el.gz
 %{_datadir}/emacs/%{version}/lisp/b*.el.gz
 %{_datadir}/emacs/%{version}/lisp/c[a-tv]*.el.gz
@@ -725,7 +724,6 @@ fi
 %{_datadir}/emacs/%{version}/lisp/term/tty-colors.el.gz
 %{_datadir}/emacs/%{version}/lisp/term/tvi*.el.gz
 %{_datadir}/emacs/%{version}/lisp/term/vt100.el.gz
-%{_datadir}/emacs/%{version}/lisp/term/sun-mouse.el.gz
 %{_datadir}/emacs/%{version}/lisp/emulation/*.el.gz
 %{_datadir}/emacs/%{version}/lisp/international/[a-k]*.el.gz
 %{_datadir}/emacs/%{version}/lisp/international/[o-z]*.el.gz
