@@ -30,6 +30,7 @@ Source8:	%{name}-motif.desktop
 Source9:	%{name}-nox.desktop
 Patch0:		%{name}-tinfo.patch
 Patch1:		%{name}-lib64.patch
+Patch2:		%{name}-libpng.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -375,6 +376,7 @@ exit 1
 %if "%{_lib}" == "lib64"
 %patch1 -p1
 %endif
+%patch2 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
