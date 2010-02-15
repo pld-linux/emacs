@@ -585,84 +585,59 @@ fi
 %dir %{_datadir}/emacs/%{version}/site-lisp
 %dir %{_datadir}/emacs/%{version}/lisp
 %dir %{_datadir}/emacs/%{version}/leim
-%dir %{_datadir}/emacs/%{version}/lisp/calendar
 %dir %{_datadir}/emacs/%{version}/lisp/calc
+%dir %{_datadir}/emacs/%{version}/lisp/calendar
 %dir %{_datadir}/emacs/%{version}/lisp/emacs-lisp
 %dir %{_datadir}/emacs/%{version}/lisp/emulation
+%dir %{_datadir}/emacs/%{version}/lisp/eshell
 %dir %{_datadir}/emacs/%{version}/lisp/international
 %dir %{_datadir}/emacs/%{version}/lisp/language
 %dir %{_datadir}/emacs/%{version}/lisp/mail
+%dir %{_datadir}/emacs/%{version}/lisp/mh-e
+%dir %{_datadir}/emacs/%{version}/lisp/net
+%dir %{_datadir}/emacs/%{version}/lisp/obsolete
 %dir %{_datadir}/emacs/%{version}/lisp/play
 %dir %{_datadir}/emacs/%{version}/lisp/progmodes
 %dir %{_datadir}/emacs/%{version}/lisp/term
 %dir %{_datadir}/emacs/%{version}/lisp/textmodes
-%dir %{_datadir}/emacs/%{version}/lisp/eshell
-%dir %{_datadir}/emacs/%{version}/lisp/net
-%dir %{_datadir}/emacs/%{version}/lisp/obsolete
-%dir %{_datadir}/emacs/%{version}/lisp/mh-e
+%dir %{_datadir}/emacs/%{version}/lisp/url
 
 %{_datadir}/emacs/site-lisp
 %{_datadir}/emacs/%{version}/etc
+%{_datadir}/emacs/%{version}/lisp/*.el
 %{_datadir}/emacs/%{version}/lisp/*.elc
 %{_datadir}/emacs/%{version}/lisp/README
-%{_datadir}/emacs/%{version}/lisp/cus-load.el
-%{_datadir}/emacs/%{version}/lisp/cus-start.el.gz
-%{_datadir}/emacs/%{version}/lisp/cus-theme.el.gz
-%{_datadir}/emacs/%{version}/lisp/finder-inf.el
-%{_datadir}/emacs/%{version}/lisp/forms-pass.el
-%{_datadir}/emacs/%{version}/lisp/generic-x.el.gz
-%{_datadir}/emacs/%{version}/lisp/load*.el
-%{_datadir}/emacs/%{version}/lisp/load*.el.gz
-%{_datadir}/emacs/%{version}/lisp/ldefs-boot.el
-%{_datadir}/emacs/%{version}/lisp/longlines.el.gz
-%{_datadir}/emacs/%{version}/lisp/patcomp.el
-%{_datadir}/emacs/%{version}/lisp/paths.el
-%{_datadir}/emacs/%{version}/lisp/subdirs.el
-%{_datadir}/emacs/%{version}/lisp/version.el
-%{_datadir}/emacs/%{version}/lisp/language/*.elc
-%{_datadir}/emacs/%{version}/lisp/mail/*.elc
-%{_datadir}/emacs/%{version}/lisp/mail/blessmail.el
-%{_datadir}/emacs/%{version}/lisp/play/*.elc
-%{_datadir}/emacs/%{version}/lisp/play/bruce.el
-%{_datadir}/emacs/%{version}/lisp/term/*.elc
-%{_datadir}/emacs/%{version}/lisp/term/cygwin.el
-%{_datadir}/emacs/%{version}/lisp/term/AT386.el
-%{_datadir}/emacs/%{version}/lisp/term/apollo.el
-%{_datadir}/emacs/%{version}/lisp/term/bobcat.el
-%{_datadir}/emacs/%{version}/lisp/term/iris-ansi.el
-%{_datadir}/emacs/%{version}/lisp/term/linux.el
-%{_datadir}/emacs/%{version}/lisp/term/lk201.el
-%{_datadir}/emacs/%{version}/lisp/term/news.el
-%{_datadir}/emacs/%{version}/lisp/term/rxvt.el.gz
-%{_datadir}/emacs/%{version}/lisp/term/vt102.el
-%{_datadir}/emacs/%{version}/lisp/term/vt125.el
-%{_datadir}/emacs/%{version}/lisp/term/vt2*
-%{_datadir}/emacs/%{version}/lisp/term/vt3*
-%{_datadir}/emacs/%{version}/lisp/term/vt4*
-%{_datadir}/emacs/%{version}/lisp/term/wyse50.el
-%{_datadir}/emacs/%{version}/lisp/term/xterm.el.gz
-%{_datadir}/emacs/%{version}/lisp/emulation/*.elc
-%{_datadir}/emacs/%{version}/lisp/international/*.elc
-%{_datadir}/emacs/%{version}/lisp/international/mule-conf.el
-%{_datadir}/emacs/%{version}/lisp/international/latexenc.el.gz
-%{_datadir}/emacs/%{version}/lisp/calendar/*.elc
-%{_datadir}/emacs/%{version}/lisp/calc/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/calc/*.el
+%{_datadir}/emacs/%{version}/lisp/calc/*.elc
 %{_datadir}/emacs/%{version}/lisp/calc/README*
+%{_datadir}/emacs/%{version}/lisp/calendar/*.el
+%{_datadir}/emacs/%{version}/lisp/calendar/*.elc
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.el
 %{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.elc
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-specs.el
-%{_datadir}/emacs/%{version}/lisp/textmodes/*.elc
-%{_datadir}/emacs/%{version}/lisp/progmodes/*.elc
+%{_datadir}/emacs/%{version}/lisp/emulation/*.elc
 %{_datadir}/emacs/%{version}/lisp/eshell/*.elc
 %{_datadir}/emacs/%{version}/lisp/eshell/esh-groups.el
-%{_datadir}/emacs/%{version}/lisp/net/*.elc
-%{_datadir}/emacs/%{version}/lisp/obsolete/*.elc
-%dir %{_datadir}/emacs/%{version}/lisp/url
-%{_datadir}/emacs/%{version}/lisp/url/*.elc
-%{_datadir}/emacs/%{version}/lisp/url/*.el.gz
-%{_datadir}/emacs/%{version}/lisp/calc/*.elc
+%{_datadir}/emacs/%{version}/lisp/international/*.el
+%{_datadir}/emacs/%{version}/lisp/international/*.elc
+%{_datadir}/emacs/%{version}/lisp/international/README
+%{_datadir}/emacs/%{version}/lisp/language/*.el
+%{_datadir}/emacs/%{version}/lisp/language/*.elc
+%{_datadir}/emacs/%{version}/lisp/mail/blessmail.el
+%{_datadir}/emacs/%{version}/lisp/mail/*.elc
 %{_datadir}/emacs/%{version}/lisp/mh-e/*.el
-%{_datadir}/emacs/%{version}/lisp/mh-e/*.el.gz
 %{_datadir}/emacs/%{version}/lisp/mh-e/*.elc
+%{_datadir}/emacs/%{version}/lisp/net/*.elc
+%{_datadir}/emacs/%{version}/lisp/nxml/*.elc
+%{_datadir}/emacs/%{version}/lisp/nxml/TODO
+%{_datadir}/emacs/%{version}/lisp/obsolete/*.elc
+%{_datadir}/emacs/%{version}/lisp/org/*.elc
+%{_datadir}/emacs/%{version}/lisp/play/bruce.el
+%{_datadir}/emacs/%{version}/lisp/play/*.elc
+%{_datadir}/emacs/%{version}/lisp/progmodes/*.elc
+%{_datadir}/emacs/%{version}/lisp/term/*.el
+%{_datadir}/emacs/%{version}/lisp/term/*.elc
+%{_datadir}/emacs/%{version}/lisp/textmodes/*.elc
+%{_datadir}/emacs/%{version}/lisp/url/*.elc
 
 %dir /var/games/emacs
 /var/games/emacs/tetris-scores
@@ -680,76 +655,26 @@ fi
 
 %files el
 %defattr(644,root,root,755)
-%{_datadir}/emacs/%{version}/lisp/a*.el.gz
-%{_datadir}/emacs/%{version}/lisp/b*.el.gz
-%{_datadir}/emacs/%{version}/lisp/c[a-tv]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/cus-[a-k]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/custom.el.gz
-%{_datadir}/emacs/%{version}/lisp/g[f-z]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/[de]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/f[!io]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/fi[!n]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/find[!e]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/finder.el.gz
-%{_datadir}/emacs/%{version}/lisp/fo[!r]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/form[!s]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/forms.el.gz
-%{_datadir}/emacs/%{version}/lisp/forms-d2.el
-%{_datadir}/emacs/%{version}/lisp/[h-k]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/l[a-n]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/locate.el.gz
-%{_datadir}/emacs/%{version}/lisp/log-*.el.gz
-%{_datadir}/emacs/%{version}/lisp/l[p-z]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/[m-o]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/paren.el.gz
-%{_datadir}/emacs/%{version}/lisp/p[b-z]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/[q-r]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/s-*.el.gz
-%{_datadir}/emacs/%{version}/lisp/s[a-t]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/subr.el.gz
-%{_datadir}/emacs/%{version}/lisp/[t-u]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/[w-z]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/v[a-d]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/v[f-z]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/language/*.el
-%{_datadir}/emacs/%{version}/lisp/language/*.el.gz
-%{_datadir}/emacs/%{version}/lisp/mail/[c-r]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/mail/[t-z]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/mail/sendmail.el.gz
-%{_datadir}/emacs/%{version}/lisp/mail/smtpmail.el.gz
-%{_datadir}/emacs/%{version}/lisp/mail/supercite.el.gz
-%{_datadir}/emacs/%{version}/lisp/play/[!b]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/play/b[!r]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/term/*-win.el.gz
-%{_datadir}/emacs/%{version}/lisp/term/sun.el.gz
-%{_datadir}/emacs/%{version}/lisp/term/sup-mouse.el.gz
-%{_datadir}/emacs/%{version}/lisp/term/tty-colors.el.gz
-%{_datadir}/emacs/%{version}/lisp/term/tvi*.el.gz
-%{_datadir}/emacs/%{version}/lisp/term/vt100.el.gz
-%{_datadir}/emacs/%{version}/lisp/emulation/*.el.gz
-%{_datadir}/emacs/%{version}/lisp/international/[a-k]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/international/[o-z]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/international/latin*-disp.el.gz
-%{_datadir}/emacs/%{version}/lisp/international/mule-cmds.el.gz
-%{_datadir}/emacs/%{version}/lisp/international/mule-diag.el.gz
-%{_datadir}/emacs/%{version}/lisp/international/mule-util.el.gz
-%{_datadir}/emacs/%{version}/lisp/international/mule.el.gz
+%{_datadir}/emacs/%{version}/lisp/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/calc/*.el.gz
 %{_datadir}/emacs/%{version}/lisp/calendar/*.el.gz
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/[!c]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/c[a-k]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/c[m-z]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-[!s]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl-seq.el.gz
-%{_datadir}/emacs/%{version}/lisp/emacs-lisp/cl.el.gz
-%{_datadir}/emacs/%{version}/lisp/textmodes/*.el.gz
-%{_datadir}/emacs/%{version}/lisp/progmodes/*.el.gz
-%{_datadir}/emacs/%{version}/lisp/eshell/e[a-r]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/eshell/esh-[!g]*.el.gz
-%{_datadir}/emacs/%{version}/lisp/eshell/esh-*.el
-%{_datadir}/emacs/%{version}/lisp/eshell/esh[a-z]*.el.gz
+%{_datadir}/emacs/%{version}/lisp/emacs-lisp/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/emulation/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/eshell/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/international/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/language/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/mail/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/mh-e/*.el.gz
 %{_datadir}/emacs/%{version}/lisp/net/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/nxml/*.el.gz
 %{_datadir}/emacs/%{version}/lisp/obsolete/*.el
 %{_datadir}/emacs/%{version}/lisp/obsolete/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/org/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/play/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/progmodes/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/term/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/textmodes/*.el.gz
+%{_datadir}/emacs/%{version}/lisp/url/*.el.gz
 
 %files leim
 %defattr(644,root,root,755)
