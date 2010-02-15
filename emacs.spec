@@ -556,12 +556,20 @@ fi
 %attr(755,root,root) %{_bindir}/emacs-%{version}
 %{_desktopdir}/emacs-%{default_emacs}.desktop
 %{_pixmapsdir}/*
+%{_iconsdir}/hicolor/16x16/apps/emacs*.png
+%{_iconsdir}/hicolor/24x24/apps/emacs*.png
+%{_iconsdir}/hicolor/32x32/apps/emacs*.png
+%{_iconsdir}/hicolor/48x48/apps/emacs*.png
+%{_iconsdir}/hicolor/128x128/apps/emacs*.png
+%{_iconsdir}/hicolor/scalable/apps/emacs*.svg
+%{_iconsdir}/hicolor/scalable/mimetypes/emacs*.svg
 
 %files common
 %defattr(644,root,root,755)
 %config(noreplace) /etc/skel/.emacs
 %attr(755,root,root) %{_bindir}/emacsclient
 %attr(755,root,root) %{_bindir}/ebrowse
+%{_mandir}/man1/ebrowse*
 %{_mandir}/man1/emacs*
 %{_infodir}/*
 
@@ -650,8 +658,11 @@ fi
 %files extras
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/b2m
-%attr(755,root,root) %{_bindir}/rcs-checkin
 %attr(755,root,root) %{_bindir}/grep-changelog
+%attr(755,root,root) %{_bindir}/rcs-checkin
+%{_mandir}/man1/b2m*
+%{_mandir}/man1/grep-changelog*
+%{_mandir}/man1/rcs-checkin*
 
 %files el
 %defattr(644,root,root,755)
