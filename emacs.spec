@@ -40,7 +40,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libtool
-BuildRequires:	libungif-devel
+BuildRequires:	giflib-devel
 BuildRequires:	ncurses-devel
 %{?with_motif:BuildRequires:	openmotif-devel}
 BuildRequires:	sed >= 4.0
