@@ -14,7 +14,7 @@ Summary(pt_BR.UTF-8):	GNU Emacs
 Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 Version:	23.1
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.gz
@@ -603,7 +603,9 @@ fi
 %dir %{_datadir}/emacs/%{version}/lisp/mail
 %dir %{_datadir}/emacs/%{version}/lisp/mh-e
 %dir %{_datadir}/emacs/%{version}/lisp/net
+%dir %{_datadir}/emacs/%{version}/lisp/nxml
 %dir %{_datadir}/emacs/%{version}/lisp/obsolete
+%dir %{_datadir}/emacs/%{version}/lisp/org
 %dir %{_datadir}/emacs/%{version}/lisp/play
 %dir %{_datadir}/emacs/%{version}/lisp/progmodes
 %dir %{_datadir}/emacs/%{version}/lisp/term
