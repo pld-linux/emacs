@@ -34,8 +34,10 @@ Patch2:		%{name}-libpng.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	ncurses-devel
 BuildRequires:	freetype-devel
 %{?with_gtk:BuildRequires:	gtk+2-devel}
+BuildRequires:	libdnet-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
@@ -43,6 +45,8 @@ BuildRequires:	libtool
 BuildRequires:	giflib-devel
 BuildRequires:	ncurses-devel
 %{?with_motif:BuildRequires:	openmotif-devel}
+BuildRequires:	pkgconfig
+BuildRequires:	rpm-pythonprov
 BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
 BuildRequires:	xorg-lib-libX11-devel
