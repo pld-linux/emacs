@@ -1,3 +1,7 @@
+# TODO:
+# - package cedit lisp files files
+# - package new (non gtk) desktop file?
+# - package ctags/etags in subpackage?
 #
 # Conditional build:
 %bcond_without	athena	# don't build athena version
@@ -13,12 +17,12 @@ Summary(pl.UTF-8):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR.UTF-8):	GNU Emacs
 Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
-Version:	23.1
-Release:	2
+Version:	23.2
+Release:	0.1
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.gz
-# Source0-md5:	a620d4452769d04ad8864d662f34f8dd
+# Source0-md5:	b6691852dae0bc142b3c12749f6b7ade
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
@@ -30,7 +34,6 @@ Source8:	%{name}-motif.desktop
 Source9:	%{name}-nox.desktop
 Patch0:		%{name}-tinfo.patch
 Patch1:		%{name}-lib64.patch
-Patch2:		%{name}-libpng.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -380,7 +383,6 @@ exit 1
 %if "%{_lib}" == "lib64"
 %patch1 -p1
 %endif
-%patch2 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
@@ -582,7 +584,6 @@ fi
 %dir %{_libdir}/emacs/%{version}/*
 
 %attr(2755,root,mail) %{_libdir}/emacs/%{version}/*-linux/movemail
-%attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/cvtmail
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/digest-doc
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/fakemail
 %attr(755,root,mail) %{_libdir}/emacs/%{version}/*-linux/hexl
