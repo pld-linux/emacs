@@ -577,7 +577,7 @@ fi
 %attr(755,root,root) %{_bindir}/ebrowse
 %{_mandir}/man1/ebrowse*
 %{_mandir}/man1/emacs*
-%{_infodir}/*
+%{_infodir}/*.info*
 
 %dir %{_libdir}/emacs
 %dir %{_libdir}/emacs/%{version}
