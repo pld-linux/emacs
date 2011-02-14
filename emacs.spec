@@ -8,7 +8,7 @@
 %bcond_without	gtk	# don't build GTK+2 version
 %bcond_without	motif	# don't build motif version
 %bcond_without	nox	# don't build nox version
-#
+
 Summary:	The Emacs text editor for the X Window System
 Summary(de.UTF-8):	GNU Emacs
 Summary(es.UTF-8):	GNU Emacs
@@ -488,7 +488,7 @@ install -d $RPM_BUILD_ROOT{%{_infodir},%{_datadir}/emacs/site-lisp/site-start.d}
 	$RPM_BUILD_ROOT{%{_desktopdir},/etc/skel,%{_pixmapsdir}} \
 
 %if %{with athena}%{with gtk}%{with motif}%{with nox}
-%{makeinstall} -C build-%{bootstrap}
+%makeinstall -C build-%{bootstrap}
 %else
 echo 'ERROR: neither athena nor gtk nor motif nor nox emacs was built.' 1>&2
 exit 1
@@ -528,10 +528,10 @@ rm -fr $RPM_BUILD_ROOT%{_datadir}/emacs/%{version}/lisp/erc
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p	/sbin/postshell
+%post	common -p	/sbin/postshell
 -/usr/sbin/fix-info-dir -c %{_infodir}
 
-%postun	-p	/sbin/postshell
+%postun	common -p	/sbin/postshell
 -/usr/sbin/fix-info-dir -c %{_infodir}
 
 %triggerin nox -- emacs-X11
