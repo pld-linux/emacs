@@ -19,7 +19,7 @@ Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 %define	ver	23.3
 Version:	%{ver}a
-Release:	0.1
+Release:	1
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.gz
@@ -603,6 +603,10 @@ fi
 %dir %{_datadir}/emacs/%{ver}/leim
 %dir %{_datadir}/emacs/%{ver}/lisp/calc
 %dir %{_datadir}/emacs/%{ver}/lisp/calendar
+%dir %{_datadir}/emacs/%{ver}/lisp/cedet
+%dir %{_datadir}/emacs/%{ver}/lisp/cedet/ede
+%dir %{_datadir}/emacs/%{ver}/lisp/cedet/semantic
+%dir %{_datadir}/emacs/%{ver}/lisp/cedet/srecode
 %dir %{_datadir}/emacs/%{ver}/lisp/emacs-lisp
 %dir %{_datadir}/emacs/%{ver}/lisp/emulation
 %dir %{_datadir}/emacs/%{ver}/lisp/eshell
@@ -640,6 +644,14 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/international/README
 %{_datadir}/emacs/%{ver}/lisp/language/*.el
 %{_datadir}/emacs/%{ver}/lisp/language/*.elc
+#%{_datadir}/emacs/%{ver}/lisp/cedet/*.el
+%{_datadir}/emacs/%{ver}/lisp/cedet/*.elc
+%{_datadir}/emacs/%{ver}/lisp/cedet/ede/*.el
+%{_datadir}/emacs/%{ver}/lisp/cedet/ede/*.elc
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/*.el
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/*.elc
+%{_datadir}/emacs/%{ver}/lisp/cedet/srecode/*.el
+%{_datadir}/emacs/%{ver}/lisp/cedet/srecode/*.elc
 %{_datadir}/emacs/%{ver}/lisp/mail/blessmail.el
 %{_datadir}/emacs/%{ver}/lisp/mail/*.elc
 %{_datadir}/emacs/%{ver}/lisp/mh-e/*.el
