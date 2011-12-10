@@ -18,12 +18,12 @@ Summary(pt_BR.UTF-8):	GNU Emacs
 Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 %define	ver	23.3
-Version:	%{ver}a
+Version:	%{ver}b
 Release:	1
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.gz
-# Source0-md5:	20aef9ea5b5bf8050d39f8b1e96a1c04
+# Source0-md5:	f2bfd8eab7e3b34a0f7f09acc0667e71
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
