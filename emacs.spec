@@ -4,11 +4,12 @@
 # - package ctags/etags in subpackage?
 #
 # Conditional build:
-%bcond_without	athena	# don't build athena version
-%bcond_without	gtk	# don't build GTK+2 version
-%bcond_without	motif	# don't build motif version
-%bcond_without	nox	# don't build nox version
-
+%bcond_without	athena		# don't build athena version
+%bcond_without	gtk		# don't build GTK+2 version
+%bcond_without	motif		# don't build motif version
+%bcond_without	nox		# don't build nox version
+%bcond_with	bootstrap	# build bootsrtap version
+#
 Summary:	The Emacs text editor for the X Window System
 Summary(de.UTF-8):	GNU Emacs
 Summary(es.UTF-8):	GNU Emacs
@@ -405,7 +406,8 @@ mkdir build-athena && cd build-athena
 	--with-tiff \
 	--with-gif \
 	--with-png \
-	--with-x-toolkit=athena
+	--with-x-toolkit=athena \
+	%{?with_bootstrap:--without-gpm}
 
 %{__make} -j1 bootstrap
 %define	bootstrap athena
@@ -423,7 +425,8 @@ mkdir build-gtk && cd build-gtk
 	--with-tiff \
 	--with-gif \
 	--with-png \
-	--with-x-toolkit=gtk
+	--with-x-toolkit=gtk \
+	%{?with_bootstrap:--without-gpm}
 
 %if %{?bootstrap}
 %{__make}
@@ -445,7 +448,8 @@ mkdir build-motif && cd build-motif
 	--with-tiff \
 	--with-gif \
 	--with-png \
-	--with-x-toolkit=motif
+	--with-x-toolkit=motif \
+	%{?with_bootstrap:--without-gpm}
 
 %if %{?bootstrap}
 %{__make}
@@ -467,7 +471,8 @@ mkdir build-nox && cd build-nox
 	--without-tiff \
 	--without-gif \
 	--without-png \
-	--with-x=no
+	--with-x=no \
+	%{?with_bootstrap:--without-gpm}
 
 %if %{?bootstrap}
 %{__make}
