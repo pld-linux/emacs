@@ -4,10 +4,11 @@
 # - package ctags/etags in subpackage?
 #
 # Conditional build:
-%bcond_without	athena	# don't build athena version
-%bcond_without	gtk	# don't build GTK+2 version
-%bcond_without	motif	# don't build motif version
-%bcond_without	nox	# don't build nox version
+%bcond_without	athena		# don't build athena version
+%bcond_without	gtk		# don't build GTK+2 version
+%bcond_without	motif		# don't build motif version
+%bcond_without	nox		# don't build nox version
+%bcond_with	bootstrap	# build bootsrtap version
 
 Summary:	The Emacs text editor for the X Window System
 Summary(de.UTF-8):	GNU Emacs
@@ -392,7 +393,11 @@ cp -f /usr/share/automake/config.* .
 %{__autoconf}
 %{__autoheader}
 
+%if %{with bootstrap}
+%define bootstrap 1
+%else
 %define bootstrap 0
+%endif
 
 %if %{with athena}
 echo "Building emacs athena binary ..."
