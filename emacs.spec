@@ -393,11 +393,7 @@ cp -f /usr/share/automake/config.* .
 %{__autoconf}
 %{__autoheader}
 
-%if %{with bootstrap}
-%define bootstrap 1
-%else
 %define bootstrap 0
-%endif
 
 %if %{with athena}
 echo "Building emacs athena binary ..."
@@ -410,7 +406,8 @@ mkdir build-athena && cd build-athena
 	--with-tiff \
 	--with-gif \
 	--with-png \
-	--with-x-toolkit=athena
+	--with-x-toolkit=athena \
+	%{?with_bootstrap:--without-gpm}
 
 %{__make} -j1 bootstrap
 %define	bootstrap athena
@@ -428,7 +425,8 @@ mkdir build-gtk && cd build-gtk
 	--with-tiff \
 	--with-gif \
 	--with-png \
-	--with-x-toolkit=gtk
+	--with-x-toolkit=gtk \
+	%{?with_bootstrap:--without-gpm}
 
 %if %{?bootstrap}
 %{__make}
@@ -450,7 +448,8 @@ mkdir build-motif && cd build-motif
 	--with-tiff \
 	--with-gif \
 	--with-png \
-	--with-x-toolkit=motif
+	--with-x-toolkit=motif \
+	%{?with_bootstrap:--without-gpm}
 
 %if %{?bootstrap}
 %{__make}
@@ -472,7 +471,8 @@ mkdir build-nox && cd build-nox
 	--without-tiff \
 	--without-gif \
 	--without-png \
-	--with-x=no
+	--with-x=no \
+	%{?with_bootstrap:--without-gpm}
 
 %if %{?bootstrap}
 %{__make}
