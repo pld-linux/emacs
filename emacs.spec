@@ -20,7 +20,7 @@ Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 %define	ver	23.4
 Version:	%{ver}
-Release:	0.2
+Release:	1
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.bz2
