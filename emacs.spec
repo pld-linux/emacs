@@ -34,7 +34,8 @@ Source6:	%{name}-athena.desktop
 Source7:	%{name}-gtk.desktop
 Source8:	%{name}-motif.desktop
 Source9:	%{name}-nox.desktop
-Patch1:		%{name}-fontconfig.patch
+Patch0:		%{name}-fontconfig.patch
+Patch1:		%{name}-xgselect_init.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -381,6 +382,7 @@ exit 1
 %endif
 
 %setup -q -n %{name}-%{ver}
+%patch0 -p1
 %patch1 -p1
 
 %build
