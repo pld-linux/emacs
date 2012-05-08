@@ -1,14 +1,3 @@
---- emacs-23.3/configure.in~	2011-08-31 22:24:46.365226136 +0200
-+++ emacs-23.3/configure.in	2011-08-31 22:31:54.258255730 +0200
-@@ -2047,8 +2047,6 @@
-       dnl As we use Xft, we anyway use freetype.
-       dnl There's no need for additional CFLAGS and LIBS.
-       HAVE_FREETYPE=yes
--      FONTCONFIG_CFLAGS=
--      FONTCONFIG_LIBS=
-     fi
- 
-     HAVE_LIBOTF=no
 --- emacs-23.3/configure.in~	2011-08-31 22:32:43.687197466 +0200
 +++ emacs-23.3/configure.in	2011-08-31 22:38:04.288619611 +0200
 @@ -1998,6 +1998,7 @@

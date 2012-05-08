@@ -18,13 +18,13 @@ Summary(pl.UTF-8):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR.UTF-8):	GNU Emacs
 Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
-%define	ver	23.3
-Version:	%{ver}b
-Release:	6
+%define	ver	23.4
+Version:	%{ver}
+Release:	0.1
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
-Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.gz
-# Source0-md5:	f2bfd8eab7e3b34a0f7f09acc0667e71
+Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.bz2
+# Source0-md5:	070c68ad8e3c31fb3cb2414feaf5e6f0
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
@@ -34,7 +34,6 @@ Source6:	%{name}-athena.desktop
 Source7:	%{name}-gtk.desktop
 Source8:	%{name}-motif.desktop
 Source9:	%{name}-nox.desktop
-Patch0:		%{name}-lib64.patch
 Patch1:		%{name}-fontconfig.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
@@ -382,9 +381,6 @@ exit 1
 %endif
 
 %setup -q -n %{name}-%{ver}
-%if "%{_lib}" == "lib64"
-%patch0 -p1
-%endif
 %patch1 -p1
 
 %build
@@ -400,6 +396,7 @@ echo "Building emacs athena binary ..."
 rm -rf build-athena
 mkdir build-athena && cd build-athena
 ../%configure \
+	--with-crt-dir=%{_libdir} \
 	--with-pop \
 	--with-xpm \
 	--with-jpeg \
@@ -419,6 +416,7 @@ echo "Building emacs GTK+2 binary ..."
 rm -rf build-gtk
 mkdir build-gtk && cd build-gtk
 ../%configure \
+	--with-crt-dir=%{_libdir} \
 	--with-pop \
 	--with-xpm \
 	--with-jpeg \
@@ -442,6 +440,7 @@ echo "Building emacs motif binary ..."
 rm -rf build-motif
 mkdir build-motif && cd build-motif
 ../%configure \
+	--with-crt-dir=%{_libdir} \
 	--with-pop \
 	--with-xpm \
 	--with-jpeg \
@@ -465,6 +464,7 @@ echo "Building emacs binary without X support ..."
 [ -d build-nox ] && rm -rf build-nox
 mkdir build-nox && cd build-nox
 ../%configure \
+	--with-crt-dir=%{_libdir} \
 	--with-pop \
 	--without-xpm \
 	--without-jpeg \
