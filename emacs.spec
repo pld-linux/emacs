@@ -20,7 +20,7 @@ Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 %define	ver	24.1
 Version:	%{ver}
-Release:	2
+Release:	3
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.bz2
@@ -62,7 +62,6 @@ BuildRequires:	xorg-lib-libXpm-devel
 Requires:	%{name}-common = %{version}-%{release}
 Requires:	ctags
 Requires:	gnus-pkg-emacs
-Obsoletes:	emacs-extras
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -298,6 +297,7 @@ Emacs - edytor tekstu Emacs dla X Window System (wersja Motif).
 Summary:	The libraries needed to run the GNU Emacs text editor
 Summary(pl.UTF-8):	Biblioteki potrzebne do uruchomienia edytora tekstu GNU Emacs
 Group:		Applications/Editors/Emacs
+Obsoletes:	emacs-extras
 
 %description common
 Emacs is a powerful, customizable, self-documenting, modeless text
