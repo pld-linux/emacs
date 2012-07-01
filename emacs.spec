@@ -18,13 +18,13 @@ Summary(pl.UTF-8):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR.UTF-8):	GNU Emacs
 Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
-%define	ver	23.4
+%define	ver	24.1
 Version:	%{ver}
-Release:	2
+Release:	1
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.bz2
-# Source0-md5:	070c68ad8e3c31fb3cb2414feaf5e6f0
+# Source0-md5:	8ba0932c498bc8fb10d7ddba52227e5b
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
@@ -35,7 +35,6 @@ Source7:	%{name}-gtk.desktop
 Source8:	%{name}-motif.desktop
 Source9:	%{name}-nox.desktop
 Patch0:		%{name}-fontconfig.patch
-Patch1:		%{name}-xgselect_init.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -62,7 +61,7 @@ BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
 Requires:	%{name}-common = %{version}-%{release}
 Requires:	ctags
-Suggests:	gnus-pkg-emacs
+Requires:	gnus-pkg-emacs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -384,7 +383,6 @@ exit 1
 
 %setup -q -n %{name}-%{ver}
 %patch0 -p1
-%patch1 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
@@ -593,15 +591,12 @@ fi
 %dir %{_libdir}/emacs/%{ver}
 %dir %{_libdir}/emacs/%{ver}/*
 
-%attr(2755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/movemail
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/digest-doc
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/fakemail
 %attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/hexl
+%attr(2755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/movemail
 %attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/profile
 %attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/rcs2log
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/sorted-doc
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/vcdiff
 %attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/update-game-score
+%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/vcdiff
 
 %dir %{_datadir}/emacs
 %dir %{_datadir}/emacs/%{ver}
@@ -613,6 +608,11 @@ fi
 %dir %{_datadir}/emacs/%{ver}/lisp/cedet
 %dir %{_datadir}/emacs/%{ver}/lisp/cedet/ede
 %dir %{_datadir}/emacs/%{ver}/lisp/cedet/semantic
+%dir %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/analyze
+%dir %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/bovine
+%dir %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/decorate
+%dir %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/symref
+%dir %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/wisent
 %dir %{_datadir}/emacs/%{ver}/lisp/cedet/srecode
 %dir %{_datadir}/emacs/%{ver}/lisp/emacs-lisp
 %dir %{_datadir}/emacs/%{ver}/lisp/emulation
@@ -630,6 +630,7 @@ fi
 %dir %{_datadir}/emacs/%{ver}/lisp/term
 %dir %{_datadir}/emacs/%{ver}/lisp/textmodes
 %dir %{_datadir}/emacs/%{ver}/lisp/url
+%dir %{_datadir}/emacs/%{ver}/lisp/vc
 
 %{_datadir}/emacs/site-lisp
 %{_datadir}/emacs/%{ver}/etc
@@ -657,15 +658,20 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/cedet/ede/*.elc
 %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/*.el
 %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/*.elc
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/analyze/*.elc
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/bovine/*.elc
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/decorate/*.elc
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/symref/*.elc
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/wisent/*.elc
 %{_datadir}/emacs/%{ver}/lisp/cedet/srecode/*.el
 %{_datadir}/emacs/%{ver}/lisp/cedet/srecode/*.elc
 %{_datadir}/emacs/%{ver}/lisp/mail/blessmail.el
 %{_datadir}/emacs/%{ver}/lisp/mail/*.elc
 %{_datadir}/emacs/%{ver}/lisp/mh-e/*.el
 %{_datadir}/emacs/%{ver}/lisp/mh-e/*.elc
+%{_datadir}/emacs/%{ver}/lisp/net/*.el
 %{_datadir}/emacs/%{ver}/lisp/net/*.elc
 %{_datadir}/emacs/%{ver}/lisp/nxml/*.elc
-%{_datadir}/emacs/%{ver}/lisp/nxml/TODO
 %{_datadir}/emacs/%{ver}/lisp/obsolete/*.elc
 %{_datadir}/emacs/%{ver}/lisp/org/*.elc
 %{_datadir}/emacs/%{ver}/lisp/play/bruce.el
@@ -675,6 +681,7 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/term/*.elc
 %{_datadir}/emacs/%{ver}/lisp/textmodes/*.elc
 %{_datadir}/emacs/%{ver}/lisp/url/*.elc
+%{_datadir}/emacs/%{ver}/lisp/vc/*.elc
 
 %dir /var/games/emacs
 /var/games/emacs/tetris-scores
@@ -686,10 +693,8 @@ fi
 
 %files extras
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/b2m
 %attr(755,root,root) %{_bindir}/grep-changelog
 %attr(755,root,root) %{_bindir}/rcs-checkin
-%{_mandir}/man1/b2m*
 %{_mandir}/man1/grep-changelog*
 %{_mandir}/man1/rcs-checkin*
 
@@ -698,6 +703,15 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/calc/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/calendar/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/cedet/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/cedet/ede/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/analyze/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/bovine/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/decorate/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/symref/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/wisent/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/cedet/srecode/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/emacs-lisp/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/emulation/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/eshell/*.el.gz
@@ -715,6 +729,7 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/term/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/textmodes/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/url/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/vc/*.el.gz
 
 %files leim
 %defattr(644,root,root,755)
@@ -761,6 +776,7 @@ fi
 %defattr(644,root,root,755)
 %dir %{_datadir}/emacs/%{ver}/lisp/gnus
 %{_datadir}/emacs/%{ver}/lisp/gnus/*.*
+%{_datadir}/emacs/%{ver}/lisp/gnus/.dir-locals.el
 %exclude %{_datadir}/emacs/%{ver}/lisp/gnus/*.el.gz
 
 %files gnus-el
