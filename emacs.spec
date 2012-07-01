@@ -20,7 +20,7 @@ Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 %define	ver	24.1
 Version:	%{ver}
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.bz2
@@ -62,6 +62,7 @@ BuildRequires:	xorg-lib-libXpm-devel
 Requires:	%{name}-common = %{version}-%{release}
 Requires:	ctags
 Requires:	gnus-pkg-emacs
+Obsoletes:	emacs-extras
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -297,7 +298,6 @@ Emacs - edytor tekstu Emacs dla X Window System (wersja Motif).
 Summary:	The libraries needed to run the GNU Emacs text editor
 Summary(pl.UTF-8):	Biblioteki potrzebne do uruchomienia edytora tekstu GNU Emacs
 Group:		Applications/Editors/Emacs
-Requires:	emacscommon
 
 %description common
 Emacs is a powerful, customizable, self-documenting, modeless text
@@ -321,19 +321,6 @@ Ten pakiet zawiera biblioteki potrzebne do uruchomienia Emacsa. Oprócz
 tego pakietu potrzebny jest jeszcze właściwy program (emacs-nox lub
 emacs). Zainstaluj emacs-nox jeżeli nie zamierzasz używasz Emacsa pod
 X Window System; zainstaluj emacs jeżeli używasz X.
-
-%package extras
-Summary:	Files which conflict with XEmacs
-Summary(pl.UTF-8):	Wspólne pliki XEmacsa i GNU Emacsa
-Group:		Applications/Editors/Emacs
-Provides:	emacscommon
-Obsoletes:	emacscommon
-
-%description extras
-These files are common between GNU Emacs and XEmacs.
-
-%description extras -l pl.UTF-8
-Są to wspólne pliki GNU Emacs i XEmacs.
 
 %package gnus
 Summary:	Gnus is flexible message reader under Emacs
@@ -581,10 +568,14 @@ fi
 %files common
 %defattr(644,root,root,755)
 %config(noreplace) /etc/skel/.emacs
-%attr(755,root,root) %{_bindir}/emacsclient
 %attr(755,root,root) %{_bindir}/ebrowse
+%attr(755,root,root) %{_bindir}/emacsclient
+%attr(755,root,root) %{_bindir}/grep-changelog
+%attr(755,root,root) %{_bindir}/rcs-checkin
 %{_mandir}/man1/ebrowse*
 %{_mandir}/man1/emacs*
+%{_mandir}/man1/grep-changelog*
+%{_mandir}/man1/rcs-checkin*
 %{_infodir}/*
 
 %dir %{_libdir}/emacs
@@ -690,13 +681,6 @@ fi
 %{_datadir}/emacs/%{ver}/site-lisp/subdirs.el
 %{_datadir}/emacs/%{ver}/site-lisp/tuareg.el
 %{_datadir}/emacs/%{ver}/site-lisp/nemerle.el
-
-%files extras
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/grep-changelog
-%attr(755,root,root) %{_bindir}/rcs-checkin
-%{_mandir}/man1/grep-changelog*
-%{_mandir}/man1/rcs-checkin*
 
 %files el
 %defattr(644,root,root,755)
