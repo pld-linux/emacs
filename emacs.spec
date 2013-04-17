@@ -574,7 +574,6 @@ fi
 %{_mandir}/man1/ebrowse*
 %{_mandir}/man1/emacs*
 %{_mandir}/man1/grep-changelog*
-%{_mandir}/man1/rcs-checkin*
 %{_infodir}/*
 
 %dir %{_libdir}/emacs
