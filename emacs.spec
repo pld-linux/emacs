@@ -20,7 +20,7 @@ Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 %define	ver	24.3
 Version:	%{ver}
-Release:	0.1
+Release:	1
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.xz
@@ -638,9 +638,7 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/international/*.el
 %{_datadir}/emacs/%{ver}/lisp/international/*.elc
 %{_datadir}/emacs/%{ver}/lisp/international/README
-#%{_datadir}/emacs/%{ver}/lisp/language/*.el
 %{_datadir}/emacs/%{ver}/lisp/language/*.elc
-#%{_datadir}/emacs/%{ver}/lisp/cedet/*.el
 %{_datadir}/emacs/%{ver}/lisp/cedet/*.elc
 %{_datadir}/emacs/%{ver}/lisp/cedet/ede/*.el
 %{_datadir}/emacs/%{ver}/lisp/cedet/ede/*.elc
@@ -661,11 +659,10 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/net/*.elc
 %{_datadir}/emacs/%{ver}/lisp/nxml/*.elc
 %{_datadir}/emacs/%{ver}/lisp/obsolete/*.elc
+%{_datadir}/emacs/%{ver}/lisp/org/*.el
 %{_datadir}/emacs/%{ver}/lisp/org/*.elc
-#%{_datadir}/emacs/%{ver}/lisp/play/bruce.el
 %{_datadir}/emacs/%{ver}/lisp/play/*.elc
 %{_datadir}/emacs/%{ver}/lisp/progmodes/*.elc
-#%{_datadir}/emacs/%{ver}/lisp/term/*.el
 %{_datadir}/emacs/%{ver}/lisp/term/*.elc
 %{_datadir}/emacs/%{ver}/lisp/textmodes/*.elc
 %{_datadir}/emacs/%{ver}/lisp/url/*.elc
