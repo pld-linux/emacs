@@ -18,13 +18,13 @@ Summary(pl.UTF-8):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR.UTF-8):	GNU Emacs
 Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
-%define	ver	24.1
+%define	ver	24.3
 Version:	%{ver}
-Release:	3
+Release:	0.1
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
-Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.bz2
-# Source0-md5:	8ba0932c498bc8fb10d7ddba52227e5b
+Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.xz
+# Source0-md5:	ea9ed000ca165280265aabb55b9afbd7
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
