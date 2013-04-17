@@ -571,7 +571,6 @@ fi
 %attr(755,root,root) %{_bindir}/ebrowse
 %attr(755,root,root) %{_bindir}/emacsclient
 %attr(755,root,root) %{_bindir}/grep-changelog
-%attr(755,root,root) %{_bindir}/rcs-checkin
 %{_mandir}/man1/ebrowse*
 %{_mandir}/man1/emacs*
 %{_mandir}/man1/grep-changelog*
@@ -587,7 +586,6 @@ fi
 %attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/profile
 %attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/rcs2log
 %attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/update-game-score
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/vcdiff
 
 %dir %{_datadir}/emacs
 %dir %{_datadir}/emacs/%{ver}
@@ -641,7 +639,7 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/international/*.el
 %{_datadir}/emacs/%{ver}/lisp/international/*.elc
 %{_datadir}/emacs/%{ver}/lisp/international/README
-%{_datadir}/emacs/%{ver}/lisp/language/*.el
+#%{_datadir}/emacs/%{ver}/lisp/language/*.el
 %{_datadir}/emacs/%{ver}/lisp/language/*.elc
 #%{_datadir}/emacs/%{ver}/lisp/cedet/*.el
 %{_datadir}/emacs/%{ver}/lisp/cedet/*.elc
@@ -665,10 +663,10 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/nxml/*.elc
 %{_datadir}/emacs/%{ver}/lisp/obsolete/*.elc
 %{_datadir}/emacs/%{ver}/lisp/org/*.elc
-%{_datadir}/emacs/%{ver}/lisp/play/bruce.el
+#%{_datadir}/emacs/%{ver}/lisp/play/bruce.el
 %{_datadir}/emacs/%{ver}/lisp/play/*.elc
 %{_datadir}/emacs/%{ver}/lisp/progmodes/*.elc
-%{_datadir}/emacs/%{ver}/lisp/term/*.el
+#%{_datadir}/emacs/%{ver}/lisp/term/*.el
 %{_datadir}/emacs/%{ver}/lisp/term/*.elc
 %{_datadir}/emacs/%{ver}/lisp/textmodes/*.elc
 %{_datadir}/emacs/%{ver}/lisp/url/*.elc
