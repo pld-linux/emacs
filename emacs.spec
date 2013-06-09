@@ -20,7 +20,7 @@ Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 %define	ver	24.3
 Version:	%{ver}
-Release:	2
+Release:	3
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.xz
@@ -517,6 +517,7 @@ install %{SOURCE9} $RPM_BUILD_ROOT%{_desktopdir}
 [ -d build-nox ] && install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{ver}/etc
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
+rm $RPM_BUILD_ROOT%{_infodir}/info.info*
 # ERC is in separate spec
 rm -fr $RPM_BUILD_ROOT%{_datadir}/emacs/%{ver}/lisp/erc
 
