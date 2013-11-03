@@ -48,7 +48,7 @@ BuildRequires:	libtiff-devel
 BuildRequires:	libtool
 BuildRequires:	giflib-devel
 BuildRequires:	ncurses-devel
-%{?with_motif:BuildRequires:	openmotif-devel}
+%{?with_motif:BuildRequires:	motif-devel}
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-pythonprov
 BuildRequires:	sed >= 4.0
