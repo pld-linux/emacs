@@ -583,11 +583,11 @@ fi
 %dir %{_libdir}/emacs/%{ver}
 %dir %{_libdir}/emacs/%{ver}/*
 
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/hexl
-%attr(2755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/movemail
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/profile
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/rcs2log
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux/update-game-score
+%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux*/hexl
+%attr(2755,root,mail) %{_libdir}/emacs/%{ver}/*-linux*/movemail
+%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux*/profile
+%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux*/rcs2log
+%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux*/update-game-score
 
 %dir %{_datadir}/emacs
 %dir %{_datadir}/emacs/%{ver}
