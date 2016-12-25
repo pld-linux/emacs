@@ -1,0 +1,8 @@
+--- emacs-25.1/build-aux/make-info-dir.orig	2016-06-29 11:49:16.000000000 +0200
++++ emacs-25.1/build-aux/make-info-dir	2016-12-25 17:58:48.556470701 +0100
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ 
+ ### make-info-dir - create info/dir, for systems without install-info
+ 

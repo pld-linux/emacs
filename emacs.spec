@@ -35,6 +35,7 @@ Source7:	%{name}-gtk.desktop
 Source8:	%{name}-motif.desktop
 Source9:	%{name}-nox.desktop
 Patch0:		imagemagick7.patch
+Patch1:		bashizm.patch
 URL:		http://www.gnu.org/software/emacs/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -370,6 +371,7 @@ exit 1
 
 %setup -q -n %{name}-%{ver}
 %patch0 -p1
+%patch1 -p1
 
 %build
 cp -f /usr/share/automake/config.* .
@@ -394,7 +396,7 @@ mkdir build-athena && cd build-athena
 	--with-x-toolkit=athena \
 	%{?with_bootstrap:--without-gpm}
 
-%{__make} -j1 bootstrap
+%{__make} -j1 V=1 bootstrap
 %define	bootstrap athena
 cd ..
 %endif
@@ -415,9 +417,9 @@ mkdir build-gtk && cd build-gtk
 	%{?with_bootstrap:--without-gpm}
 
 %if %{?bootstrap}
-%{__make}
+%{__make} V=1
 %else
-%{__make} -j1 bootstrap
+%{__make} -j1 V=1 bootstrap
 %define	bootstrap gtk
 %endif
 cd ..
@@ -439,9 +441,9 @@ mkdir build-motif && cd build-motif
 	%{?with_bootstrap:--without-gpm}
 
 %if %{?bootstrap}
-%{__make}
+%{__make} V=1
 %else
-%{__make} -j1 bootstrap
+%{__make} -j1 V=1 bootstrap
 %define	bootstrap motif
 %endif
 cd ..
@@ -463,9 +465,9 @@ mkdir build-nox && cd build-nox
 	%{?with_bootstrap:--without-gpm}
 
 %if %{?bootstrap}
-%{__make}
+%{__make} V=1
 %else
-%{__make} -j1 bootstrap
+%{__make} -j1 V=1 bootstrap
 %define	bootstrap nox
 %endif
 cd ..
