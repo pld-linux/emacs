@@ -20,7 +20,7 @@ Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 %define	ver	25.1
 Version:	%{ver}
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.xz
@@ -516,7 +516,7 @@ install %{SOURCE7} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE8} $RPM_BUILD_ROOT%{_desktopdir}
 install %{SOURCE9} $RPM_BUILD_ROOT%{_desktopdir}
 
-[ -d build-nox ] && install build-nox/etc/DOC-* $RPM_BUILD_ROOT%{_datadir}/emacs/%{ver}/etc
+[ -d build-nox ] && install build-nox/etc/DOC* $RPM_BUILD_ROOT%{_datadir}/emacs/%{ver}/etc
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 rm $RPM_BUILD_ROOT%{_infodir}/info.info*
@@ -573,10 +573,8 @@ fi
 %config(noreplace) /etc/skel/.emacs
 %attr(755,root,root) %{_bindir}/ebrowse
 %attr(755,root,root) %{_bindir}/emacsclient
-%attr(755,root,root) %{_bindir}/grep-changelog
 %{_mandir}/man1/ebrowse*
 %{_mandir}/man1/emacs*
-%{_mandir}/man1/grep-changelog*
 %{_infodir}/*
 
 %dir %{_libdir}/emacs
@@ -593,7 +591,6 @@ fi
 %dir %{_datadir}/emacs/%{ver}
 %dir %{_datadir}/emacs/%{ver}/site-lisp
 %dir %{_datadir}/emacs/%{ver}/lisp
-%dir %{_datadir}/emacs/%{ver}/leim
 %dir %{_datadir}/emacs/%{ver}/lisp/calc
 %dir %{_datadir}/emacs/%{ver}/lisp/calendar
 %dir %{_datadir}/emacs/%{ver}/lisp/cedet
@@ -630,7 +627,6 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/README
 %{_datadir}/emacs/%{ver}/lisp/calc/*.el
 %{_datadir}/emacs/%{ver}/lisp/calc/*.elc
-%{_datadir}/emacs/%{ver}/lisp/calc/README*
 %{_datadir}/emacs/%{ver}/lisp/calendar/*.el
 %{_datadir}/emacs/%{ver}/lisp/calendar/*.elc
 %{_datadir}/emacs/%{ver}/lisp/emacs-lisp/*.el
@@ -702,7 +698,6 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/mh-e/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/net/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/nxml/*.el.gz
-%{_datadir}/emacs/%{ver}/lisp/obsolete/*.el
 %{_datadir}/emacs/%{ver}/lisp/obsolete/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/org/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/play/*.el.gz
@@ -714,16 +709,16 @@ fi
 
 %files leim
 %defattr(644,root,root,755)
-%dir %{_datadir}/emacs/%{ver}/leim/ja-dic
-%dir %{_datadir}/emacs/%{ver}/leim/quail
-%{_datadir}/emacs/%{ver}/leim/leim-list.el
-%{_datadir}/emacs/%{ver}/leim/quail/*.elc
-%{_datadir}/emacs/%{ver}/leim/ja-dic/*.elc
+%dir %{_datadir}/emacs/%{ver}/lisp/leim/ja-dic
+%dir %{_datadir}/emacs/%{ver}/lisp/leim/quail
+%{_datadir}/emacs/%{ver}/lisp/leim/leim-list.el
+%{_datadir}/emacs/%{ver}/lisp/leim/quail/*.elc
+%{_datadir}/emacs/%{ver}/lisp/leim/ja-dic/*.elc
 
 %files leim-el
 %defattr(644,root,root,755)
-%{_datadir}/emacs/%{ver}/leim/quail/*.el.gz
-%{_datadir}/emacs/%{ver}/leim/ja-dic/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/leim/quail/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/leim/ja-dic/*.el.gz
 
 %if %{with nox} && %{?default_emacs} != "nox"
 %files nox
