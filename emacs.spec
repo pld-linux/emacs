@@ -20,7 +20,7 @@ Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 %define	ver	25.1
 Version:	%{ver}
-Release:	2
+Release:	3
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.xz
@@ -709,6 +709,7 @@ fi
 
 %files leim
 %defattr(644,root,root,755)
+%dir %{_datadir}/emacs/%{ver}/lisp/leim
 %dir %{_datadir}/emacs/%{ver}/lisp/leim/ja-dic
 %dir %{_datadir}/emacs/%{ver}/lisp/leim/quail
 %{_datadir}/emacs/%{ver}/lisp/leim/leim-list.el
