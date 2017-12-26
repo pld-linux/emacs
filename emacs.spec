@@ -20,7 +20,7 @@ Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
 %define	ver	25.1
 Version:	%{ver}
-Release:	8
+Release:	9
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.xz
@@ -386,7 +386,6 @@ echo "Building emacs athena binary ..."
 rm -rf build-athena
 mkdir build-athena && cd build-athena
 ../%configure \
-	--with-crt-dir=%{_libdir} \
 	--with-pop \
 	--with-xpm \
 	--with-jpeg \
@@ -406,7 +405,6 @@ echo "Building emacs GTK+2 binary ..."
 rm -rf build-gtk
 mkdir build-gtk && cd build-gtk
 ../%configure \
-	--with-crt-dir=%{_libdir} \
 	--with-pop \
 	--with-xpm \
 	--with-jpeg \
@@ -430,7 +428,6 @@ echo "Building emacs motif binary ..."
 rm -rf build-motif
 mkdir build-motif && cd build-motif
 ../%configure \
-	--with-crt-dir=%{_libdir} \
 	--with-pop \
 	--with-xpm \
 	--with-jpeg \
@@ -454,7 +451,6 @@ echo "Building emacs binary without X support ..."
 [ -d build-nox ] && rm -rf build-nox
 mkdir build-nox && cd build-nox
 ../%configure \
-	--with-crt-dir=%{_libdir} \
 	--with-pop \
 	--without-xpm \
 	--without-jpeg \
@@ -577,15 +573,15 @@ fi
 %{_mandir}/man1/emacs*
 %{_infodir}/*
 
-%dir %{_libdir}/emacs
-%dir %{_libdir}/emacs/%{ver}
-%dir %{_libdir}/emacs/%{ver}/*
+%dir %{_libexecdir}/emacs
+%dir %{_libexecdir}/emacs/%{ver}
+%dir %{_libexecdir}/emacs/%{ver}/*
 
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux*/hexl
-%attr(2755,root,mail) %{_libdir}/emacs/%{ver}/*-linux*/movemail
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux*/profile
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux*/rcs2log
-%attr(755,root,mail) %{_libdir}/emacs/%{ver}/*-linux*/update-game-score
+%attr(755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/hexl
+%attr(2755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/movemail
+%attr(755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/profile
+%attr(755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/rcs2log
+%attr(755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/update-game-score
 
 %dir %{_datadir}/emacs
 %dir %{_datadir}/emacs/%{ver}
