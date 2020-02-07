@@ -18,13 +18,13 @@ Summary(pl.UTF-8):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR.UTF-8):	GNU Emacs
 Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
-%define	ver	25.1
+%define	ver	26.3
 Version:	%{ver}
-Release:	10
+Release:	1
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.xz
-# Source0-md5:	4f3d42fb22823a659e16bfa89078a74c
+# Source0-md5:	0a2e4b965d31a7cb1930eae3b79df793
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
@@ -581,7 +581,6 @@ fi
 %attr(2755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/movemail
 %attr(755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/profile
 %attr(755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/rcs2log
-%attr(755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/update-game-score
 
 %dir %{_datadir}/emacs
 %dir %{_datadir}/emacs/%{ver}
@@ -601,6 +600,7 @@ fi
 %dir %{_datadir}/emacs/%{ver}/lisp/emacs-lisp
 %dir %{_datadir}/emacs/%{ver}/lisp/emulation
 %dir %{_datadir}/emacs/%{ver}/lisp/eshell
+%dir %{_datadir}/emacs/%{ver}/lisp/image
 %dir %{_datadir}/emacs/%{ver}/lisp/international
 %dir %{_datadir}/emacs/%{ver}/lisp/language
 %dir %{_datadir}/emacs/%{ver}/lisp/mail
@@ -632,7 +632,6 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/eshell/esh-groups.el
 %{_datadir}/emacs/%{ver}/lisp/international/*.el
 %{_datadir}/emacs/%{ver}/lisp/international/*.elc
-%{_datadir}/emacs/%{ver}/lisp/international/README
 %{_datadir}/emacs/%{ver}/lisp/language/*.elc
 %{_datadir}/emacs/%{ver}/lisp/cedet/*.elc
 %{_datadir}/emacs/%{ver}/lisp/cedet/ede/*.el
@@ -646,26 +645,26 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/wisent/*.elc
 %{_datadir}/emacs/%{ver}/lisp/cedet/srecode/*.el
 %{_datadir}/emacs/%{ver}/lisp/cedet/srecode/*.elc
+%{_datadir}/emacs/%{ver}/lisp/image/*.elc
 %{_datadir}/emacs/%{ver}/lisp/mail/blessmail.el
+%{_datadir}/emacs/%{ver}/lisp/mail/rmail-loaddefs.el
 %{_datadir}/emacs/%{ver}/lisp/mail/*.elc
 %{_datadir}/emacs/%{ver}/lisp/mh-e/*.el
 %{_datadir}/emacs/%{ver}/lisp/mh-e/*.elc
 %{_datadir}/emacs/%{ver}/lisp/net/*.el
 %{_datadir}/emacs/%{ver}/lisp/net/*.elc
 %{_datadir}/emacs/%{ver}/lisp/nxml/*.elc
+%{_datadir}/emacs/%{ver}/lisp/obsolete/messcompat.el
 %{_datadir}/emacs/%{ver}/lisp/obsolete/*.elc
 %{_datadir}/emacs/%{ver}/lisp/org/*.el
 %{_datadir}/emacs/%{ver}/lisp/org/*.elc
 %{_datadir}/emacs/%{ver}/lisp/play/*.elc
 %{_datadir}/emacs/%{ver}/lisp/progmodes/*.elc
 %{_datadir}/emacs/%{ver}/lisp/term/*.elc
+%{_datadir}/emacs/%{ver}/lisp/textmodes/reftex-loaddefs.el
 %{_datadir}/emacs/%{ver}/lisp/textmodes/*.elc
 %{_datadir}/emacs/%{ver}/lisp/url/*.elc
 %{_datadir}/emacs/%{ver}/lisp/vc/*.elc
-
-%dir /var/games/emacs
-/var/games/emacs/tetris-scores
-/var/games/emacs/snake-scores
 
 %{_datadir}/emacs/%{ver}/site-lisp/subdirs.el
 %{_datadir}/emacs/%{ver}/site-lisp/tuareg.el
@@ -688,6 +687,7 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/emacs-lisp/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/emulation/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/eshell/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/image/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/international/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/language/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/mail/*.el.gz
