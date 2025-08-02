@@ -379,13 +379,14 @@ cp -f /usr/share/automake/config.* .
 %{__autoconf}
 %{__autoheader}
 
-%define bootstrap 0
+%define bootstrap ""
+%define configuredir ..
 
 %if %{with athena}
 echo "Building emacs athena binary ..."
 rm -rf build-athena
 mkdir build-athena && cd build-athena
-../%configure \
+%configure \
 	--with-pop \
 	--with-xpm \
 	--with-jpeg \
@@ -404,7 +405,7 @@ cd ..
 echo "Building emacs GTK+2 binary ..."
 rm -rf build-gtk
 mkdir build-gtk && cd build-gtk
-../%configure \
+%configure \
 	--with-pop \
 	--with-xpm \
 	--with-jpeg \
@@ -414,7 +415,7 @@ mkdir build-gtk && cd build-gtk
 	--with-x-toolkit=gtk \
 	%{?with_bootstrap:--without-gpm}
 
-%if %{?bootstrap}
+%if "%{bootstrap}" != ""
 %{__make} V=1
 %else
 %{__make} -j1 V=1 bootstrap
@@ -427,7 +428,7 @@ cd ..
 echo "Building emacs motif binary ..."
 rm -rf build-motif
 mkdir build-motif && cd build-motif
-../%configure \
+%configure \
 	--with-pop \
 	--with-xpm \
 	--with-jpeg \
@@ -437,7 +438,7 @@ mkdir build-motif && cd build-motif
 	--with-x-toolkit=motif \
 	%{?with_bootstrap:--without-gpm}
 
-%if %{?bootstrap}
+%if "%{bootstrap}" != ""
 %{__make} V=1
 %else
 %{__make} -j1 V=1 bootstrap
@@ -450,7 +451,7 @@ cd ..
 echo "Building emacs binary without X support ..."
 [ -d build-nox ] && rm -rf build-nox
 mkdir build-nox && cd build-nox
-../%configure \
+%configure \
 	--with-pop \
 	--without-xpm \
 	--without-jpeg \
@@ -460,7 +461,7 @@ mkdir build-nox && cd build-nox
 	--with-x=no \
 	%{?with_bootstrap:--without-gpm}
 
-%if %{?bootstrap}
+%if "%{bootstrap}" != ""
 %{__make} V=1
 %else
 %{__make} -j1 V=1 bootstrap
@@ -717,28 +718,28 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/leim/quail/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/leim/ja-dic/*.el.gz
 
-%if %{with nox} && %{?default_emacs} != "nox"
+%if %{with nox} && "%{default_emacs}" != "nox"
 %files nox
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs-nox
 %{_desktopdir}/emacs-nox.desktop
 %endif
 
-%if %{with athena} && %{?default_emacs} != "athena"
+%if %{with athena} && "%{default_emacs}" != "athena"
 %files athena
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs-athena
 %{_desktopdir}/emacs-athena.desktop
 %endif
 
-%if %{with gtk} && %{?default_emacs} != "gtk"
+%if %{with gtk} && "%{default_emacs}" != "gtk"
 %files gtk
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs-gtk
 %{_desktopdir}/emacs-gtk.desktop
 %endif
 
-%if %{with motif} && %{?default_emacs} != "motif"
+%if %{with motif} && "%{default_emacs}" != "motif"
 %files motif
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs-motif
