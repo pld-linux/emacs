@@ -1,14 +1,12 @@
 # TODO:
-# - package cedit lisp files files
-# - package new (non gtk) desktop file?
 # - package ctags/etags in subpackage?
 #
 # Conditional build:
 %bcond_without	athena		# don't build athena version
-%bcond_without	gtk		# don't build GTK+2 version
+%bcond_without	gtk		# don't build GTK+3 version
 %bcond_without	motif		# don't build motif version
 %bcond_without	nox		# don't build nox version
-%bcond_with	bootstrap	# build bootsrtap version
+%bcond_with	bootstrap	# build bootstrap version
 #
 Summary:	The Emacs text editor for the X Window System
 Summary(de.UTF-8):	GNU Emacs
@@ -18,13 +16,13 @@ Summary(pl.UTF-8):	GNU Emacs - edytor tekstu dla systemu X Window
 Summary(pt_BR.UTF-8):	GNU Emacs
 Summary(tr.UTF-8):	GNU Emacs
 Name:		emacs
-%define	ver	26.3
+%define	ver	30.2
 Version:	%{ver}
-Release:	5
+Release:	1
 License:	GPL v3+
 Group:		Applications/Editors/Emacs
 Source0:	ftp://ftp.gnu.org/pub/gnu/emacs/%{name}-%{version}.tar.xz
-# Source0-md5:	0a2e4b965d31a7cb1930eae3b79df793
+# Source0-md5:	0adba4843ac864ba8c3c9b2a7deea176
 Source1:	%{name}-dot%{name}
 Source2:	%{name}-site-start.el
 Source3:	%{name}.png
@@ -34,25 +32,25 @@ Source6:	%{name}-athena.desktop
 Source7:	%{name}-gtk.desktop
 Source8:	%{name}-motif.desktop
 Source9:	%{name}-nox.desktop
-Patch0:		imagemagick7.patch
-Patch1:		bashizm.patch
+Patch0:		%{name}-file-expand-wildcards-permission.patch
 URL:		http://www.gnu.org/software/emacs/
-BuildRequires:	autoconf
-BuildRequires:	automake
-BuildRequires:	ncurses-devel
 BuildRequires:	freetype-devel
-%{?with_gtk:BuildRequires:	gtk+2-devel}
-BuildRequires:	libdnet-devel
+BuildRequires:	giflib-devel
+BuildRequires:	gnutls-devel
+%{?with_gtk:BuildRequires:	gtk+3-devel}
+BuildRequires:	harfbuzz-devel
+BuildRequires:	lcms2-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libtiff-devel
-BuildRequires:	libtool
-BuildRequires:	giflib-devel
-BuildRequires:	ncurses-devel
+BuildRequires:	libwebp-devel
+BuildRequires:	libxml2-devel
 %{?with_motif:BuildRequires:	motif-devel}
+BuildRequires:	ncurses-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-pythonprov
 BuildRequires:	sed >= 4.0
+BuildRequires:	sqlite3-devel
 BuildRequires:	texinfo
 BuildRequires:	xorg-lib-libX11-devel
 %{?with_athena:BuildRequires:	xorg-lib-libXaw-devel}
@@ -60,6 +58,7 @@ BuildRequires:	xorg-lib-libXext-devel
 BuildRequires:	xorg-lib-libXft-devel
 BuildRequires:	xorg-lib-libXmu-devel
 BuildRequires:	xorg-lib-libXpm-devel
+BuildRequires:	zlib-devel
 Requires:	%{name}-common = %{version}-%{release}
 Requires:	ctags
 Requires:	gnus-pkg-emacs
@@ -271,16 +270,16 @@ The Emacs text editor for X Window System (Athena toolkit version).
 Emacs - edytor tekstu Emacs dla X Window System (wersja Athena).
 
 %package gtk
-Summary:	The Emacs text editor for X Window System (GTK+2 toolkit version)
-Summary(pl.UTF-8):	Emacs - edytor tekstu Emacs dla X Window System (wersja GTK+2)
+Summary:	The Emacs text editor for X Window System (GTK+3 toolkit version)
+Summary(pl.UTF-8):	Emacs - edytor tekstu Emacs dla X Window System (wersja GTK+3)
 Group:		Applications/Editors/Emacs
 Requires:	%{name}-common = %{version}-%{release}
 
 %description gtk
-The Emacs text editor for X Window System (GTK+2 toolkit version).
+The Emacs text editor for X Window System (GTK+3 toolkit version).
 
 %description gtk -l pl.UTF-8
-Emacs - edytor tekstu Emacs dla X Window System (wersja GTK+2).
+Emacs - edytor tekstu Emacs dla X Window System (wersja GTK+3).
 
 %package motif
 Summary:	The Emacs text editor for X Window System (Motif toolkit version)
@@ -371,13 +370,8 @@ exit 1
 
 %setup -q -n %{name}-%{ver}
 %patch -P0 -p1
-%patch -P1 -p1
 
 %build
-cp -f /usr/share/automake/config.* .
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
 
 %define bootstrap ""
 %define configuredir ..
@@ -387,7 +381,6 @@ echo "Building emacs athena binary ..."
 rm -rf build-athena
 mkdir build-athena && cd build-athena
 %configure \
-	--with-pop \
 	--with-xpm \
 	--with-jpeg \
 	--with-tiff \
@@ -396,29 +389,28 @@ mkdir build-athena && cd build-athena
 	--with-x-toolkit=athena \
 	%{?with_bootstrap:--without-gpm}
 
-%{__make} -j1 V=1 bootstrap
+%{__make} V=1 bootstrap
 %define	bootstrap athena
 cd ..
 %endif
 
 %if %{with gtk}
-echo "Building emacs GTK+2 binary ..."
+echo "Building emacs GTK+3 binary ..."
 rm -rf build-gtk
 mkdir build-gtk && cd build-gtk
 %configure \
-	--with-pop \
 	--with-xpm \
 	--with-jpeg \
 	--with-tiff \
 	--with-gif \
 	--with-png \
-	--with-x-toolkit=gtk \
+	--with-x-toolkit=gtk3 \
 	%{?with_bootstrap:--without-gpm}
 
 %if "%{bootstrap}" != ""
 %{__make} V=1
 %else
-%{__make} -j1 V=1 bootstrap
+%{__make} V=1 bootstrap
 %define	bootstrap gtk
 %endif
 cd ..
@@ -429,7 +421,6 @@ echo "Building emacs motif binary ..."
 rm -rf build-motif
 mkdir build-motif && cd build-motif
 %configure \
-	--with-pop \
 	--with-xpm \
 	--with-jpeg \
 	--with-tiff \
@@ -441,7 +432,7 @@ mkdir build-motif && cd build-motif
 %if "%{bootstrap}" != ""
 %{__make} V=1
 %else
-%{__make} -j1 V=1 bootstrap
+%{__make} V=1 bootstrap
 %define	bootstrap motif
 %endif
 cd ..
@@ -452,7 +443,6 @@ echo "Building emacs binary without X support ..."
 [ -d build-nox ] && rm -rf build-nox
 mkdir build-nox && cd build-nox
 %configure \
-	--with-pop \
 	--without-xpm \
 	--without-jpeg \
 	--without-tiff \
@@ -464,7 +454,7 @@ mkdir build-nox && cd build-nox
 %if "%{bootstrap}" != ""
 %{__make} V=1
 %else
-%{__make} -j1 V=1 bootstrap
+%{__make} V=1 bootstrap
 %define	bootstrap nox
 %endif
 cd ..
@@ -516,9 +506,13 @@ install %{SOURCE9} $RPM_BUILD_ROOT%{_desktopdir}
 [ -d build-nox ] && install build-nox/etc/DOC* $RPM_BUILD_ROOT%{_datadir}/emacs/%{ver}/etc
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
-rm $RPM_BUILD_ROOT%{_infodir}/info.info*
 # ERC is in separate spec
 rm -fr $RPM_BUILD_ROOT%{_datadir}/emacs/%{ver}/lisp/erc
+# remove upstream desktop files, we use our own variant-specific ones
+rm -f $RPM_BUILD_ROOT%{_desktopdir}/emacs.desktop
+rm -f $RPM_BUILD_ROOT%{_desktopdir}/emacsclient.desktop
+rm -f $RPM_BUILD_ROOT%{_desktopdir}/emacs-mail.desktop
+rm -f $RPM_BUILD_ROOT%{_desktopdir}/emacsclient-mail.desktop
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -555,6 +549,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/emacs
 %attr(755,root,root) %{_bindir}/emacs-%{ver}
+%attr(755,root,root) %{_bindir}/emacs-%{default_emacs}
 %{_desktopdir}/emacs-%{default_emacs}.desktop
 %{_pixmapsdir}/*
 %{_iconsdir}/hicolor/16x16/apps/emacs*.png
@@ -562,26 +557,34 @@ fi
 %{_iconsdir}/hicolor/32x32/apps/emacs*.png
 %{_iconsdir}/hicolor/48x48/apps/emacs*.png
 %{_iconsdir}/hicolor/128x128/apps/emacs*.png
+%{_iconsdir}/hicolor/scalable/apps/emacs*.ico
 %{_iconsdir}/hicolor/scalable/apps/emacs*.svg
 %{_iconsdir}/hicolor/scalable/mimetypes/emacs*.svg
+%{_datadir}/metainfo/emacs.metainfo.xml
 
 %files common
 %defattr(644,root,root,755)
 %config(noreplace) /etc/skel/.emacs
 %attr(755,root,root) %{_bindir}/ebrowse
 %attr(755,root,root) %{_bindir}/emacsclient
+%attr(755,root,root) %{_bindir}/ctags
+%attr(755,root,root) %{_bindir}/etags
+%{_includedir}/emacs-module.h
+%{_mandir}/man1/ctags.1*
 %{_mandir}/man1/ebrowse*
 %{_mandir}/man1/emacs*
+%{_mandir}/man1/etags*
 %{_infodir}/*
+%{_libdir}/systemd/user/emacs.service
 
 %dir %{_libexecdir}/emacs
 %dir %{_libexecdir}/emacs/%{ver}
 %dir %{_libexecdir}/emacs/%{ver}/*
 
-%attr(755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/hexl
+%attr(755,root,root) %{_libexecdir}/emacs/%{ver}/*-linux*/hexl
 %attr(2755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/movemail
-%attr(755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/profile
-%attr(755,root,mail) %{_libexecdir}/emacs/%{ver}/*-linux*/rcs2log
+%attr(755,root,root) %{_libexecdir}/emacs/%{ver}/*-linux*/rcs2log
+%{_libexecdir}/emacs/%{ver}/*-linux*/emacs-*.pdmp
 
 %dir %{_datadir}/emacs
 %dir %{_datadir}/emacs/%{ver}
@@ -615,56 +618,48 @@ fi
 %dir %{_datadir}/emacs/%{ver}/lisp/term
 %dir %{_datadir}/emacs/%{ver}/lisp/textmodes
 %dir %{_datadir}/emacs/%{ver}/lisp/url
+%dir %{_datadir}/emacs/%{ver}/lisp/use-package
 %dir %{_datadir}/emacs/%{ver}/lisp/vc
 
 %{_datadir}/emacs/site-lisp
 %{_datadir}/emacs/%{ver}/etc
+%{_datadir}/emacs/%{ver}/lisp/COPYING
 %{_datadir}/emacs/%{ver}/lisp/*.el
 %{_datadir}/emacs/%{ver}/lisp/*.elc
 %{_datadir}/emacs/%{ver}/lisp/README
-%{_datadir}/emacs/%{ver}/lisp/calc/*.el
 %{_datadir}/emacs/%{ver}/lisp/calc/*.elc
-%{_datadir}/emacs/%{ver}/lisp/calendar/*.el
 %{_datadir}/emacs/%{ver}/lisp/calendar/*.elc
-%{_datadir}/emacs/%{ver}/lisp/emacs-lisp/*.el
 %{_datadir}/emacs/%{ver}/lisp/emacs-lisp/*.elc
 %{_datadir}/emacs/%{ver}/lisp/emulation/*.elc
 %{_datadir}/emacs/%{ver}/lisp/eshell/*.elc
-%{_datadir}/emacs/%{ver}/lisp/eshell/esh-groups.el
 %{_datadir}/emacs/%{ver}/lisp/international/*.el
 %{_datadir}/emacs/%{ver}/lisp/international/*.elc
 %{_datadir}/emacs/%{ver}/lisp/language/*.elc
 %{_datadir}/emacs/%{ver}/lisp/cedet/*.elc
-%{_datadir}/emacs/%{ver}/lisp/cedet/ede/*.el
 %{_datadir}/emacs/%{ver}/lisp/cedet/ede/*.elc
-%{_datadir}/emacs/%{ver}/lisp/cedet/semantic/*.el
 %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/*.elc
 %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/analyze/*.elc
 %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/bovine/*.elc
 %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/decorate/*.elc
 %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/symref/*.elc
 %{_datadir}/emacs/%{ver}/lisp/cedet/semantic/wisent/*.elc
-%{_datadir}/emacs/%{ver}/lisp/cedet/srecode/*.el
 %{_datadir}/emacs/%{ver}/lisp/cedet/srecode/*.elc
 %{_datadir}/emacs/%{ver}/lisp/image/*.elc
 %{_datadir}/emacs/%{ver}/lisp/mail/blessmail.el
-%{_datadir}/emacs/%{ver}/lisp/mail/rmail-loaddefs.el
 %{_datadir}/emacs/%{ver}/lisp/mail/*.elc
-%{_datadir}/emacs/%{ver}/lisp/mh-e/*.el
 %{_datadir}/emacs/%{ver}/lisp/mh-e/*.elc
-%{_datadir}/emacs/%{ver}/lisp/net/*.el
 %{_datadir}/emacs/%{ver}/lisp/net/*.elc
 %{_datadir}/emacs/%{ver}/lisp/nxml/*.elc
 %{_datadir}/emacs/%{ver}/lisp/obsolete/messcompat.el
 %{_datadir}/emacs/%{ver}/lisp/obsolete/*.elc
-%{_datadir}/emacs/%{ver}/lisp/org/*.el
+%{_datadir}/emacs/%{ver}/lisp/org/org-version.el
 %{_datadir}/emacs/%{ver}/lisp/org/*.elc
 %{_datadir}/emacs/%{ver}/lisp/play/*.elc
 %{_datadir}/emacs/%{ver}/lisp/progmodes/*.elc
 %{_datadir}/emacs/%{ver}/lisp/term/*.elc
-%{_datadir}/emacs/%{ver}/lisp/textmodes/reftex-loaddefs.el
 %{_datadir}/emacs/%{ver}/lisp/textmodes/*.elc
 %{_datadir}/emacs/%{ver}/lisp/url/*.elc
+%{_datadir}/emacs/%{ver}/lisp/use-package/*.elc
 %{_datadir}/emacs/%{ver}/lisp/vc/*.elc
 
 %{_datadir}/emacs/%{ver}/site-lisp/subdirs.el
@@ -702,6 +697,7 @@ fi
 %{_datadir}/emacs/%{ver}/lisp/term/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/textmodes/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/url/*.el.gz
+%{_datadir}/emacs/%{ver}/lisp/use-package/*.el.gz
 %{_datadir}/emacs/%{ver}/lisp/vc/*.el.gz
 
 %files leim
@@ -750,7 +746,6 @@ fi
 %defattr(644,root,root,755)
 %dir %{_datadir}/emacs/%{ver}/lisp/gnus
 %{_datadir}/emacs/%{ver}/lisp/gnus/*.*
-%{_datadir}/emacs/%{ver}/lisp/gnus/.dir-locals.el
 %exclude %{_datadir}/emacs/%{ver}/lisp/gnus/*.el.gz
 
 %files gnus-el

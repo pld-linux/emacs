@@ -1,0 +1,37 @@
+--- emacs-30.2/lisp/files.el.orig	2026-03-15 23:51:55.659022276 +0100
++++ emacs-30.2/lisp/files.el	2026-03-15 23:57:21.716561779 +0100
+@@ -7808,19 +7808,21 @@
+               (push (or dir nondir) contents)
+ 	    (let ((this-dir-contents
+ 		   ;; Filter out "." and ".."
+-		   (delq nil
+-                         (mapcar (lambda (name)
+-                                   (unless (string-match "\\`\\.\\.?\\'"
+-                                                         (file-name-nondirectory
+-                                                          name))
+-                                     name))
+-			         (directory-files
+-                                  (or dir ".") full
+-                                  (if regexp
+-                                      ;; We're matching each file name
+-                                      ;; element separately.
+-                                      (concat "\\`" nondir "\\'")
+-				   (wildcard-to-regexp nondir)))))))
++		   (condition-case nil
++		       (delq nil
++			     (mapcar (lambda (name)
++				       (unless (string-match "\\`\\.\\.?\\'"
++							    (file-name-nondirectory
++							     name))
++					 name))
++				     (directory-files
++				      (or dir ".") full
++				      (if regexp
++					  ;; We're matching each file name
++					  ;; element separately.
++					  (concat "\\`" nondir "\\'")
++					(wildcard-to-regexp nondir)))))
++		     (permission-denied nil))))
+ 	      (setq contents
+ 		    (nconc
+ 		     (if (and dir (not full))

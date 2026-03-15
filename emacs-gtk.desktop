@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=Emacs GTK2
+Name=Emacs GTK3
 Name[ko]=이맥스
-Comment=Emacs text editor - GTK2 version
-Comment[pl]=Edytor tekstu Emacs - wersja GTK2
+Comment=Emacs text editor - GTK3 version
+Comment[pl]=Edytor tekstu Emacs - wersja GTK3
 TryExec=emacs-gtk
 Exec=emacs-gtk
 Icon=emacs
